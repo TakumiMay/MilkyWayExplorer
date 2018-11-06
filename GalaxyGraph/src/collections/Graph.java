@@ -20,6 +20,6 @@ public class Graph <K,T>{
 	 * @return true if exist a vertex, false in other case.
 	 */
 	public boolean exist(K element1, K element2) {
-		return adjacencyList.get(element1).getAdyacenceList().get(element2) == null ? false : true;
+		return adjacencyList.get(element1).getList().get(element2) == null ? false : true;
 	}
 }
