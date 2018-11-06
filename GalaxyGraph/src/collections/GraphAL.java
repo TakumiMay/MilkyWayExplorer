@@ -2,16 +2,16 @@ package collections;
 
 import java.util.HashMap;
 
-public class Graph <K,T>{
+public class GraphAL <K,T>{
 	
-	private HashMap<K, NodeGraph<K,T>> adjacencyList;
+	private HashMap<K, NodeGraphAL<K,T>> adjacencyList;
 
-	public Graph() {
+	public GraphAL() {
 		adjacencyList = new HashMap<>();
 		
 	}
 	
-	public void addElement(K key, NodeGraph<K,T> node) {
+	public void addElement(K key, NodeGraphAL<K,T> node) {
 		adjacencyList.put(key, node);
 	}
 
@@ -21,5 +21,12 @@ public class Graph <K,T>{
 	 */
 	public boolean exist(K element1, K element2) {
 		return adjacencyList.get(element1).getList().get(element2) == null ? false : true;
+	}
+	
+	/**
+	 * Delete a vertex between two nodes
+	 */
+	public void delete(K element1, K element2) {
+		adjacencyList.get(element1).getList().remove(element2);
 	}
 }
