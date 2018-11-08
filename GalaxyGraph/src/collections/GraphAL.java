@@ -4,7 +4,10 @@ import java.util.HashMap;
 
 public class GraphAL <K,T>{
 	
+	private T adjacentTo;
+	private boolean directed;
 	private HashMap<K, NodeGraphAL<K,T>> adjacencyList;
+	
 
 	public GraphAL() {
 		adjacencyList = new HashMap<>();
