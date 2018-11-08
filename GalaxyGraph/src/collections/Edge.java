@@ -2,6 +2,7 @@ package collections;
 
 public class Edge <T>{
 	
+	private T adjacentTo;	
 	private int weight;	
 	
 	public Edge(int weight) {
