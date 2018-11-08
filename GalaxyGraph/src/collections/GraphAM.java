@@ -22,11 +22,11 @@ public class GraphAM <K,T>{
 	 * @param key
 	 * @param node
 	 */
-	public void createNodes(K key, NodeGraphAM<T> node) {
+	public void addNodes(K key, NodeGraphAM<T> node) {
 		nodes.put(key, node);
 	}
 	
-	public void addElementToMatrix(int key1,int key2, int weight) {
+	public void addVertex(int key1,int key2, int weight) {
 //		NodeGraphAM<T> start = null;
 //		NodeGraphAM<T> end = null;
 //		if (directed) {
@@ -46,9 +46,13 @@ public class GraphAM <K,T>{
 	}
 	
 	/**
-	 * Delete a vertex between two nodes
+	 * Delete a edge between two nodes
 	 */
-	public void delete(int element1, int element2) {
+	public void deleteVertex(int element1, int element2) {
 		matrixA[element1][element2] = null;
+	}
+	
+	public void deleteNode(K key) {
+		nodes.remove(key);
 	}
 }

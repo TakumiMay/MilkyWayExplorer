@@ -11,20 +11,20 @@ public class GraphAL <K,T>{
 		
 	}
 	
-	public void addElement(K key, NodeGraphAL<K,T> node) {
+	public void addNode(K key, NodeGraphAL<K,T> node) {
 		adjacencyList.put(key, node);
 	}
 
 	/**
 	 * Tell if there is a connection between two elements or not
-	 * @return true if exist a vertex, false in other case.
+	 * @return true if exist a edge, false in other case.
 	 */
 	public boolean exist(K element1, K element2) {
 		return adjacencyList.get(element1).getList().get(element2) == null ? false : true;
 	}
 	
 	/**
-	 * Delete a vertex between two nodes
+	 * Delete a edge between two nodes
 	 */
 	public void delete(K element1, K element2) {
 		adjacencyList.get(element1).getList().remove(element2);
