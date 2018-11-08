@@ -4,7 +4,8 @@ import java.util.HashMap;
 
 public class NodeGraphAL <K,T> {
 	private T element;
-	private HashMap<K, NodeGraphAL<K,T>> list;
+//	private HashMap<K, NodeGraphAL<K,T>> list;
+	private HashMap<K, Edge<T>> list;
 	
 
 	public NodeGraphAL(T element) {
@@ -23,17 +24,17 @@ public class NodeGraphAL <K,T> {
 	}
 
 
-	public HashMap<K, NodeGraphAL<K,T>> getList() {
+	public HashMap<K, Edge<T>> getList() {
 		return list;
 	}
 
 
-	public void setList(HashMap<K, NodeGraphAL<K,T>> adyacenceList) {
+	public void setList(HashMap<K, Edge<T>> adyacenceList) {
 		this.list = adyacenceList;
 	}
 	
-	public void addToList(K key, NodeGraphAL<K,T>node) {
-		list.put(key, node);
+	public void addEdge(K key, Edge<T> edge) {
+		list.put(key, edge);
 	}
 	
 	
