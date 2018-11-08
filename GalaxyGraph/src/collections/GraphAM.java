@@ -4,17 +4,37 @@ import java.util.HashMap;
 
 public class GraphAM <K,T>{
 	
-	private NodeGraphAM<T>[][] matrixA;
+	
 	private int size;
+	private HashMap<K, NodeGraphAM<T>> nodes;
+	private Edge<T>[][] matrixA;
+	private boolean directed;
 
-	public GraphAM(int size) {
+	public GraphAM(int size, boolean directed) {
 		this.size = size;
-		matrixA = new NodeGraphAM[size][size];
+		nodes = new HashMap<>();
+		this.directed = directed;
+		matrixA = new Edge[size][size];
 		
 	}
+	/**
+	 * Add a Node to the HashMap of node
+	 * @param key
+	 * @param node
+	 */
+	public void createNodes(K key, NodeGraphAM<T> node) {
+		nodes.put(key, node);
+	}
 	
-	public void addElement(int key1,int key2, NodeGraphAM<T> node) {
-		matrixA[key1][key2] = node;
+	public void addElementToMatrix(int key1,int key2, int weight) {
+//		NodeGraphAM<T> start = null;
+//		NodeGraphAM<T> end = null;
+//		if (directed) {
+//			start = nodes.get(key1);
+//			end = nodes.get(key2);
+//		}
+		
+		matrixA[key1][key2] = new Edge<>(weight);
 	}
 
 	/**
