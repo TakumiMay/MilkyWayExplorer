@@ -2,7 +2,7 @@ package collections;
 
 import java.util.HashMap;
 
-public class GraphAM <K,T>{
+public class GraphAM <K,T> implements IGraph<T>{
 	
 	
 	private int size;
@@ -26,7 +26,7 @@ public class GraphAM <K,T>{
 		nodes.put(key, node);
 	}
 	
-	public void addVertex(int key1,int key2, int weight) {
+	public void addEdge(int key1,int key2, int weight) {
 //		NodeGraphAM<T> start = null;
 //		NodeGraphAM<T> end = null;
 //		if (directed) {
@@ -48,7 +48,7 @@ public class GraphAM <K,T>{
 	/**
 	 * Delete a edge between two nodes
 	 */
-	public void deleteVertex(int element1, int element2) {
+	public void deleteEdge(int element1, int element2) {
 		matrixA[element1][element2] = null;
 	}
 	

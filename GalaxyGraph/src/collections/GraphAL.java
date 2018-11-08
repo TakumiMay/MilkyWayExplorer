@@ -2,7 +2,7 @@ package collections;
 
 import java.util.HashMap;
 
-public class GraphAL <K,T>{
+public class GraphAL <K,T> implements IGraph<T>{
 	
 	
 	private boolean directed;
@@ -29,7 +29,9 @@ public class GraphAL <K,T>{
 	/**
 	 * Delete a edge between two nodes
 	 */
-	public void delete(K element1, K element2) {
+	public void deleteEdge(K element1, K element2) {
 		adjacencyList.get(element1).getList().remove(element2);
 	}
+
+	
 }
