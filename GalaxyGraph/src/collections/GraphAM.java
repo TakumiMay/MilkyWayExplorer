@@ -2,12 +2,12 @@ package collections;
 
 import java.util.HashMap;
 
-public class GraphAM <K,T> implements IGraph<T>{
+public class GraphAM <K,T> implements IGraph<K,T>{
 	
 	
 	private int size;
-	private HashMap<K, NodeGraphAM<T>> nodes;
-	private Edge<T>[][] matrixA;
+	private HashMap<K, Node<K,T>> nodes;
+	private Edge<K,T>[][] matrixA;
 	private boolean directed;
 
 	public GraphAM(int size, boolean directed) {
@@ -17,38 +17,43 @@ public class GraphAM <K,T> implements IGraph<T>{
 		matrixA = new Edge[size][size];
 		
 	}
+	
+	
 	/**
 	 * Add a Node to the HashMap of node
 	 * @param key
 	 * @param node
 	 */
-	public void addNodes(K key, NodeGraphAM<T> node) {
+	@Override
+	public void addNode(K key, T element, int position) {
+		Node node = new Node<K, T>(element, position);
 		nodes.put(key, node);
 	}
 	
-	public void addEdge(int key1,int key2, int weight) {
-//		NodeGraphAM<T> start = null;
-//		NodeGraphAM<T> end = null;
-//		if (directed) {
-//			start = nodes.get(key1);
-//			end = nodes.get(key2);
-//		}
-		
-		matrixA[key1][key2] = new Edge<>(weight);
+	public void addEdge(K key1,K key2, int weight) {
+		int p1 = nodes.get(key1).getPosition();
+		int p2 = nodes.get(key1).getPosition();
+		Edge<K, T> e = new Edge<>(weight);
+		e.setAdjacentTo(key2);
+		matrixA[p1][p2] = e;
 	}
 
 	/**
 	 * Tell if there is a connection between two elements or not
 	 * @return true if exist a vertex, false in other case.
 	 */
-	public boolean exist(int element1, int element2) {
-		return matrixA[element1][element2] == null ? false : true;
+	public boolean exist(K element1, K element2) {
+		int p1 = nodes.get(element1).getPosition();
+		int p2 = nodes.get(element1).getPosition();
+		return matrixA[p1][p2] == null ? false : true;
 	}
 	
 	/**
 	 * Delete a edge between two nodes
 	 */
-	public void deleteEdge(int element1, int element2) {
+	public void deleteEdge(K key, K key2) {
+		int element1 = nodes.get(key).getPosition();
+		int element2 = nodes.get(key2).getPosition();
 		matrixA[element1][element2] = null;
 	}
 	

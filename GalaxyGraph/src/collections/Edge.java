@@ -1,8 +1,8 @@
 package collections;
 
-public class Edge <T>{
+public class Edge <K,T>{
 	
-	private T adjacentTo;	
+	private K adjacentTo;	
 	private int weight;	
 	
 	public Edge(int weight) {
@@ -19,6 +19,14 @@ public class Edge <T>{
 		this.weight = weight;
 	}
 
+	public K getAdjacentTo() {
+		return adjacentTo;
+	}
+
+	public void setAdjacentTo(K adjacentTo) {
+		this.adjacentTo = adjacentTo;
+	}
+	
 	
 
 }

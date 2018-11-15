@@ -1,10 +1,12 @@
 package collections;
 
-public interface IGraph<T> {
-	void addEdge(T key1, Node node);
-	void addNode(T key, T key2);
-	boolean exist(T key, T key2);
-	void deleteEdge(K key);
+public interface IGraph<K,T> {
+	void addNode(K key, T element, int position);
+	void addEdge(K key1, K key2, int weight);
+	boolean exist(K key, K key2);
+	void deleteEdge(K key, K key2);
 	void deleteNode(K key);
+//	void bfs();
+//	void dfs();
 
 }
