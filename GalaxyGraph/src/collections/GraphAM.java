@@ -1,6 +1,7 @@
 package collections;
 
 import java.util.HashMap;
+import java.util.PriorityQueue;
 
 public class GraphAM <K,T> implements IGraph<K,T>{
 	
@@ -36,7 +37,7 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 		Edge<K, T> e = new Edge<>(weight);
 		e.setAdjacentTo(key2);
 		matrixA[p1][p2] = e;
-		if (directed) {
+		if (!directed) {
 			matrixA[p2][p1] = e;
 		}
 	}
@@ -115,8 +116,7 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 			for (int j = 0; j < matrixA.length; j++) {
 				floydW[i][j] = matrixA[i][j];
 			}
-		}
-		
+		}	
 		
 		 for(int k = 0; k < size; k++ ){
 		        for(int i = 0; i < size; i++ ){
@@ -133,5 +133,35 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 		return floydW;
 	}
 	
+	/**
+	 * Sort the edges using the weight
+	 * @return A priority queue with the edges sorted.
+	 */
+	public PriorityQueue<Edge<K, T>> sortEdges(){
+		PriorityQueue<Edge<K, T>> result = new PriorityQueue<>();
+		
+		for (int i = 0; i < matrixA.length; i++) {
+			for (int j = 0; j < matrixA.length; j++) {
+				if (matrixA[i][j] != null) {
+					result.add( matrixA[i][j]);	
+				}
+				
+			}
+		}
+		
+		return result;
+	}
+	
+	public void kruskal() {
+		PriorityQueue<Edge<K, T>> pq = sortEdges();
+		HashMap<K, K> fathers = new HashMap<>();
+		for (Node<K, T> n : nodes.values()) {
+			fathers.putAll(m);
+		}
+	
+	}
+	
+	
+	//prim recibe el nodo donde empiezo
 	
 }

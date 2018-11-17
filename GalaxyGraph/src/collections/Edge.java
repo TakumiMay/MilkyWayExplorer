@@ -1,6 +1,6 @@
 package collections;
 
-public class Edge <K,T>{
+public class Edge <K,T> implements Comparable<Edge<K, T>>{
 	
 	private K adjacentTo;	
 	private int weight;	
@@ -27,6 +27,13 @@ public class Edge <K,T>{
 		this.adjacentTo = adjacentTo;
 	}
 	
+
+	
+	@Override
+	public int compareTo(Edge<K, T> o) {
+		
+		return (this.getWeight() - o.getWeight());
+	}
 	
 
 }
