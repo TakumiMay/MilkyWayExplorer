@@ -29,8 +29,9 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 	@Override
 	public void addNode(K key, T element, int position) {
 		Node node = new Node<K, T>(element, position);
+		node.setKey(key);
 		adjacencyList.put(key, node);
-		visited.put((node.getPosition(), false);
+		visited.put(node.getKey(), false);
 	}
 
 	/**
@@ -129,53 +130,95 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 		}
 	}
 	
-	public void dijkstra( Node<K,T> s) {
-//		HashMap distances = new HashMap<K, Integer>();
-//		HashMap visited = new HashMap<K, Boolean>();
+	public void dijkstra(Node s) {
 		
-		for(Node<K, T> s1: adjacencyList.values()) {
-			int m = s1.getPosition();
+		for(Node n: adjacencyList.values()) {
+			K m = (K) n.getKey();
 			distances.put(m, Integer.MAX_VALUE);
 		}
-		Comparator<Edge> ec = new EdgeCompare();
+		//Comparator<Edge> ec = new EdgeCompare();
 		distances.put(s.getPosition(), 0);
-		PriorityQueue queueEdges = new PriorityQueue(ec);
-		PriorityQueue<Node<K,T>> queueNode = new PriorityQueue<Node<K,T>>();
+		PriorityQueue<Edge> queueEdges = new PriorityQueue<Edge>();
+		PriorityQueue<Node> queueNode = new PriorityQueue<Node>();
 		
 		for(Edge e: s.getList().values()) {
 			queueEdges.add(e);
 		}
 		while(!queueEdges.isEmpty()) {
 			int distance = ((Edge<K, T>) queueEdges.peek()).getWeight();
-			Node<K,T> n = adjacencyList.get((((Edge<K,T>) queueEdges.peek()).getAdjacentTo()));
-			distances.put(n.getPosition(), distance);
+			Node n = adjacencyList.get((((Edge<K,T>) queueEdges.peek()).getAdjacentTo()));
+			distances.put(n.getKey(), distance);
 			queueNode.add(n);
 			queueEdges.poll();
 		}
 		
 		while(!queueNode.isEmpty()) {
-			Node<K,T> nodeVisited = queueNode.poll();
-			if(!(visited.get(nodeVisited.getPosition()))){
+			Node nodeVisited = queueNode.poll();
+			if(!((boolean) visited.get(nodeVisited.getKey()))){
 				visited.put(nodeVisited.getKey(), true);
-				relaxEdges(queue, queueNodes, nodeVisit);
+				relaxEdges(queueEdges, queueNode, nodeVisited);
 			}
 		}
 		
 		
 	}
+	
+	public void relaxEdges(PriorityQueue qe, PriorityQueue qn, Node n) {
+		for(Edge e: n.getList().values()) {
+			qe.add(e);
+		}
+		while(!qe.isEmpty()) {
+			int distance = ((Edge<K, T>) qe.peek()).getWeight() + (int)distances.get(n.getKey());
+			K k = adjacencyList.get(((Edge<K, T>) qe.peek()).getAdjacentTo()).getKey();
+			if(distance < (int)distances.get(k)){
+				distances.put( ((Edge<K, T>) qe.peek()).getWeight(), distance);
+			}
+			qn.add(((Edge<K, T>) qe.poll()).getAdjacentTo());
+		}
+	}
+	
+	public void addNode(K key, Node<K,T> n) {
+		n.setKey(key);
+		adjacencyList.put(key, n);
+		visited.put(key, false);
+	}
 
-	//Retorna en un String la ruta desde s hasta t
-//	//Recibe el nodo destino t
-//	static String path(int t) {
-//	    String r="";
-//	    while(prev[t]!=-1){
-//	        r="-"+t+r;
-//	        t=prev[t];
-//	    }
-//	    if(t!=-1){
-//	        r=t+r;
-//	    }
-//	    return r;
-//	}   
+	public static void main(String[] args) {
+		GraphAL<String, Integer> g = new GraphAL<>();
+		Node<String, Integer> a = new Node("A", 10);
+		Node<String, Integer> b = new Node("B", 30);
+		Node<String, Integer> c = new Node("C", 23);
+		Node<String, Integer> d = new Node("D", 5);
+		Node<String, Integer> e = new Node("E", 8);
+		Node<String, Integer> z = new Node("Z", 34);
+		Node<String, Integer> w = new Node("W", 13);
+		g.addNode("A", a);
+		g.addNode("B", b);
+		g.addNode("C", c);
+		g.addNode("D",d);
+		g.addNode("E",e);
+		g.addNode("Z",z);
+		//g.addNode(w);
+		g.addEdge(a.getKey(), b.getKey(), 4);
+		g.addEdge(a.getKey(), c.getKey(), 2);
+		g.addEdge(b.getKey(), d.getKey(), 5);
+		g.addEdge(b.getKey(), c.getKey(), 1);
+		g.addEdge(c.getKey(), d.getKey(), 8);
+		g.addEdge(c.getKey(), e.getKey(), 10);
+		g.addEdge(e.getKey(), z.getKey(), 3);
+		g.addEdge(d.getKey(), e.getKey(), 2);
+		g.addEdge(d.getKey(), z.getKey(), 6);
+		
+		g.dijkstra(a);
+		
+		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+		
+		
+		
+
+		
+		
+		
+	}     
 
 }

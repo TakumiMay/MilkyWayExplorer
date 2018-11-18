@@ -2,7 +2,7 @@ package collections;
 
 import java.util.HashMap;
 
-public class Node <K,T>{
+public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 	private T element;
 	private HashMap<K, Edge<K,T>> list;
 	private int position;
@@ -69,8 +69,8 @@ public class Node <K,T>{
 	}
 
 
-	public void setKey(K key) {
-		this.key = key;
+	public void setKey(K k) {
+		this.key = k;
 	}
 
 	public boolean isVisited() {
@@ -96,4 +96,20 @@ public class Node <K,T>{
 	public void setF(int f) {
 		this.f = f;
 	}
+
+
+	@Override
+	public int compareTo(Node<K, T> o) {
+		// TODO Auto-generated method stub
+		return this.key.compareTo( o.getKey());
+	}
+
+
+	
+
+
+	
+
+
+	
 }
