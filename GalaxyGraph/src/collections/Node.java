@@ -8,14 +8,16 @@ public class Node <K,T>{
 	private int position;
 	private K key;
 	private boolean visited;
-	private int distance;
+	private int d;
+	private int f;
 	
 	public Node(T element, int position) {
 		this.element = element;
 		this.position = position;
 		list = new HashMap<>();
 		visited = false;
-		distance = Integer.MAX_VALUE;
+		d = Integer.MAX_VALUE;
+		f = Integer.MAX_VALUE;
 	}
 
 
@@ -79,12 +81,19 @@ public class Node <K,T>{
 		this.visited = visited;
 	}
 
-	public int getDistance() {
-		return distance;
+	public int getD() {
+		return d;
 	}
 	
-	public void setDistance(int distance) {
-		this.distance = distance;
+	public void setD(int d) {
+		this.d = d;
+	}
+
+	public int getF() {
+		return f;
 	}
 	
+	public void setF(int f) {
+		this.f = f;
+	}
 }

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import sun.misc.Queue;
+
 
 
 public class GraphAL <K,T> implements IGraph<K,T>{
@@ -62,25 +64,52 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 	}
 	
 	public void dfs(GraphAL g) {
-//		Set<K> keys = adjacencyList.keySet();
+		for(Node<K, T> u: adjacencyList.values()) {
+			u.setVisited(false);
+		}
 		this.time = 0;
-		for(Node<K, T> s1: adjacencyList.values()) {
-			if(s1.g) {
+		for(Node<K, T> u: adjacencyList.values()) {
+			if( !(u.isVisited()) ) {
 				dfsVisit(g,u);
 			}
 		}
 	}
 	
 	public void dfsVisit(GraphAL g, Node<K, T> u) {
-		
+		this.time = time+1;
+		u.setD(time);
+//		recorrer los adyacentes al nodo u
+//		for(Node<K, T> v: u.adyacentes) {
+//			if(!(v.isVisited()) ) {
+//				dfsVisit(g, v);
+//			}
+//		}
+		u.setVisited(true);
+		this.time = time+1;
+		u.setF(time);
 	}
 	
-	public void bfs(Node<K, T> u) {
-		
-	}
-	
-	public void bfsVisit() {
-		
+	public void bfs(GraphAL g, Node<K, T> s) throws InterruptedException {
+		for(Node<K, T> u: adjacencyList.values()) {
+			if(s!=u) {
+				u.setVisited(false);
+				u.setD(Integer.MAX_VALUE);
+			}
+		}
+		s.setD(0);
+		Queue<Node<K, T>> q = new Queue<>();
+		q.enqueue(s);
+		while( !(q.isEmpty()) ) {
+			Node<K, T> u = q.dequeue();
+//				recorrer los adyacentes al nodo s
+//				for(Node<K, T> v: s.adyacentes) {
+//				if(!(v.isVisited())) {
+//					v.setD(u.getD()+1);
+//					q.enqueue(v);
+//				}
+//			}
+			u.setVisited(true);
+		}
 	}
 	
 	public void dijkstra( Node<K,T> s) {
@@ -133,7 +162,3 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 //	}   
 
 }
-
-
-	
-
