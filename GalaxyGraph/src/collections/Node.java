@@ -7,11 +7,15 @@ public class Node <K,T>{
 	private HashMap<K, Edge<K,T>> list;
 	private int position;
 	private K key;
- 
+	private boolean visited;
+	private int distance;
+	
 	public Node(T element, int position) {
 		this.element = element;
 		this.position = position;
 		list = new HashMap<>();
+		visited = false;
+		distance = Integer.MAX_VALUE;
 	}
 
 
@@ -65,6 +69,22 @@ public class Node <K,T>{
 
 	public void setKey(K key) {
 		this.key = key;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
+
+	public int getDistance() {
+		return distance;
+	}
+	
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 	
 }
