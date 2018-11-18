@@ -81,6 +81,12 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 		this.time = time+1;
 		u.setD(time);
 //		recorrer los adyacentes al nodo u
+		for (Edge<K, T> s : u.getList().values()) {
+			K key = s.getAdjacentTo();
+			if (!(adjacencyList.get(key).isVisited())) {
+				dfsVisit(adjacencyList.get(key));
+			}
+		}
 //		for(Node<K, T> v: u.adyacentes) {
 //			if(!(v.isVisited()) ) {
 //				dfsVisit(v);
@@ -105,6 +111,14 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 		while( !(q.isEmpty()) ) {
 			Node<K, T> u = q.dequeue();
 //			recorrer los adyacentes al nodo s
+			for (Edge<K, T> edge : s.getList().values()) {
+				K key = edge.getAdjacentTo();
+				Node<K, T> n = adjacencyList.get(key);				
+				if (!(n.isVisited())) {
+					n.setD(u.getD()+1);
+					q.enqueue(n);
+				}
+			}
 //			for(Node<K, T> v: s.adyacentes) {
 //				if(!(v.isVisited())) {
 //					v.setD(u.getD()+1);

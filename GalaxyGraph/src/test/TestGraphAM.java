@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class TestGraphAM {
 	private GraphAM<String, String> graphAM;
 	
 	public void setupStage1() {
-		graphAM = new GraphAM<>(4, true);
+		graphAM = new GraphAM<>(4, false);
 	}
 	
 	public void setupStage2() {
@@ -29,6 +30,13 @@ class TestGraphAM {
 	public void setupStage3() {
 		setupStage2();
 		graphAM.addEdge("Vega", "Altair", 2);
+		graphAM.addEdge("Altair", "Sun", 1);
+		graphAM.addEdge("Sun", "Vega", 6);
+		graphAM.addEdge("GJ876", "Altair", 3);
+	}
+	public void setupStage4() {
+		setupStage2();
+		graphAM.addEdge("", "Altair", 2);
 		graphAM.addEdge("Altair", "Sun", 1);
 		graphAM.addEdge("Sun", "Vega", 6);
 		graphAM.addEdge("GJ876", "Altair", 3);
@@ -64,6 +72,8 @@ class TestGraphAM {
 	@Test
 	public void testPrim() {
 		setupStage3();
+		Queue<String> q = new Queue<String>() {
+		};
 		
 		ArrayList<Node<String, String>> ar = new ArrayList();
 		ar = graphAM.prim("Vega");
