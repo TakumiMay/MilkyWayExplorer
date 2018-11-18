@@ -63,25 +63,27 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 				
 	}
 	
-	public void dfs(GraphAL g) {
+	@Override
+	public void dfs() {
 		for(Node<K, T> u: adjacencyList.values()) {
 			u.setVisited(false);
 		}
 		this.time = 0;
 		for(Node<K, T> u: adjacencyList.values()) {
 			if( !(u.isVisited()) ) {
-				dfsVisit(g,u);
+				dfsVisit(u);
 			}
 		}
 	}
 	
-	public void dfsVisit(GraphAL g, Node<K, T> u) {
+	@Override
+	public void dfsVisit(Node<K, T> u) {
 		this.time = time+1;
 		u.setD(time);
 //		recorrer los adyacentes al nodo u
 //		for(Node<K, T> v: u.adyacentes) {
 //			if(!(v.isVisited()) ) {
-//				dfsVisit(g, v);
+//				dfsVisit(v);
 //			}
 //		}
 		u.setVisited(true);
@@ -89,7 +91,8 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 		u.setF(time);
 	}
 	
-	public void bfs(GraphAL g, Node<K, T> s) throws InterruptedException {
+	@Override
+	public void bfs(Node<K, T> s) {
 		for(Node<K, T> u: adjacencyList.values()) {
 			if(s!=u) {
 				u.setVisited(false);
@@ -101,8 +104,8 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 		q.enqueue(s);
 		while( !(q.isEmpty()) ) {
 			Node<K, T> u = q.dequeue();
-//				recorrer los adyacentes al nodo s
-//				for(Node<K, T> v: s.adyacentes) {
+//			recorrer los adyacentes al nodo s
+//			for(Node<K, T> v: s.adyacentes) {
 //				if(!(v.isVisited())) {
 //					v.setD(u.getD()+1);
 //					q.enqueue(v);

@@ -199,6 +199,27 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 		return route;
 		
 	}
+
+
+	@Override
+	public void bfs(Node<K, T> n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void dfs() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void dfsVisit(Node<K, T> n) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
