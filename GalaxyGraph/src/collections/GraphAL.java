@@ -15,12 +15,14 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 	private HashMap<K, Node<K,T>> adjacencyList;
 	private HashMap distances; 
 	private HashMap visited; 
+	private int time;
 	
 
 	public GraphAL() {
 		adjacencyList = new HashMap<K, Node<K,T>>();
 		distances = new HashMap<K, Integer>();
 		visited = new HashMap<K, Boolean>();
+		time = 0;
 	}
 	@Override
 	public void addNode(K key, T element, int position) {
@@ -60,13 +62,24 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 	}
 	
 	public void dfs(GraphAL g) {
-		Set<K> keys = adjacencyList.keySet();
-      
-//		dfsVisit(g,u);
-		
+//		Set<K> keys = adjacencyList.keySet();
+		this.time = 0;
+		for(Node<K, T> s1: adjacencyList.values()) {
+			if(s1.g) {
+				dfsVisit(g,u);
+			}
+		}
 	}
 	
 	public void dfsVisit(GraphAL g, Node<K, T> u) {
+		
+	}
+	
+	public void bfs(Node<K, T> u) {
+		
+	}
+	
+	public void bfsVisit() {
 		
 	}
 	
