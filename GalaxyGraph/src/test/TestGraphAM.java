@@ -2,12 +2,14 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import org.junit.jupiter.api.Test;
 
 import collections.Edge;
 import collections.GraphAM;
+import collections.Node;
 
 class TestGraphAM {
 	private GraphAM<String, String> graphAM;
@@ -54,18 +56,40 @@ class TestGraphAM {
 				
 	}
 	public void testExist() {
+		setupStage3();
+		assertTrue(graphAM.exist("Vega", "Altair"));
 		
 	}
+	
+	@Test
+	public void testPrim() {
+		setupStage3();
+		
+		ArrayList<Node<String, String>> ar = new ArrayList();
+		ar = graphAM.prim("Vega");
+		System.out.println(ar.size());
+		
+		for (int i = 0; i < ar.size(); i++) {
+			System.out.println(ar.get(i).getKey());
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@Test
 	public void testSortEdges() {
 		setupStage3();
 		PriorityQueue<Edge<String, String>> cola = graphAM.sortEdges();
-		
-		for (int i = 0; i < cola.size(); i++) {
-			System.out.println(cola.poll().getWeight());
-			
-		}	
+		System.out.println(cola.size());
+		int e = cola.peek().getWeight();
+					
 		
 	}
 	

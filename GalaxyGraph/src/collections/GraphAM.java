@@ -29,6 +29,7 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 	@Override
 	public void addNode(K key, T element, int position) {
 		Node<K, T> node = new Node<K, T>(element, position);
+		node.setKey(key);
 		nodes.put(key, node);
 	}
 	
@@ -154,11 +155,17 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 	}
 	
 	public PriorityQueue<Edge<K, T>> sortEdges(PriorityQueue<Edge<K, T>> pq,Node<K, T>source){
+		System.out.println("entré a sort");
 		
 		int i = source.getPosition();
 
-		for (int j = 0; i < matrixA.length; i++) {
-			pq.add(matrixA[i][j]);
+		for (int j = 0; j < matrixA.length; j++) {
+			System.out.println(j);
+			if (matrixA[i][j]!=null) {
+				System.out.println(true);
+				pq.add(matrixA[i][j]);
+			}
+			
 		}
 		return pq;
 	}
@@ -177,17 +184,17 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 		int c = 0;	
 	}
 	
-	public ArrayList<Node<K, T>> prim(Node<K, T> source){
+	public ArrayList<Node<K, T>> prim(K source){
 		PriorityQueue<Edge<K, T>> pq = new PriorityQueue<>();
-		pq = sortEdges(pq,source);
+		pq = sortEdges(pq,nodes.get(source));
 		HashMap<K,Boolean> visited = new HashMap<>();
 		ArrayList<Node<K, T>> route = new ArrayList<>();
 		
-		visited.put(source.getKey(), true);
-		route.add(source);
+		visited.put(source, true);
+		route.add(nodes.get(source));
 		while (route.size()<nodes.size()) {
 			K key = pq.peek().getAdjacentTo();
-			if (visited.get(key)) {
+			if (visited.get(key)!=null) {
 				pq.poll();
 			}
 			else {
