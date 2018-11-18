@@ -1,5 +1,6 @@
 package collections;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -152,14 +153,54 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 		return result;
 	}
 	
+	public PriorityQueue<Edge<K, T>> sortEdges(PriorityQueue<Edge<K, T>> pq,Node<K, T>source){
+		
+		int i = source.getPosition();
+
+		for (int j = 0; i < matrixA.length; i++) {
+			pq.add(matrixA[i][j]);
+		}
+		return pq;
+	}
+	
+	
+
+	
 	public void kruskal() {
 		PriorityQueue<Edge<K, T>> pq = sortEdges();
-		HashMap<K, K> fathers = new HashMap<>();
-		for (Node<K, T> n : nodes.values()) {
-			fathers.putAll(m);
+		HashMap<K, Node<K,T>> fathers = new HashMap<>();
+		HashMap<K, K> keys = new HashMap<>();
+		fathers.putAll(nodes);
+		for(Node<K,T> n: nodes.values()) {
+			keys.put(n.getKey(), n.getKey());
 		}
-	
+		int c = 0;	
 	}
+	
+	public ArrayList<Node<K, T>> prim(Node<K, T> source){
+		PriorityQueue<Edge<K, T>> pq = new PriorityQueue<>();
+		pq = sortEdges(pq,source);
+		HashMap<K,Boolean> visited = new HashMap<>();
+		ArrayList<Node<K, T>> route = new ArrayList<>();
+		
+		visited.put(source.getKey(), true);
+		route.add(source);
+		while (route.size()<nodes.size()) {
+			K key = pq.peek().getAdjacentTo();
+			if (visited.get(key)) {
+				pq.poll();
+			}
+			else {
+				visited.put(key, true);
+				route.add(nodes.get(key));
+				pq = sortEdges(pq, nodes.get(key));
+			}			
+		}		
+		return route;
+		
+	}
+	
+	
 	
 	
 	//prim recibe el nodo donde empiezo
