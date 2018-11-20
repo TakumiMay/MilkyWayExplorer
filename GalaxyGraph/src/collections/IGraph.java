@@ -6,8 +6,5 @@ public interface IGraph<K,T> {
 	boolean exist(K key, K key2);
 	void deleteEdge(K key, K key2);
 	void deleteNode(K key);
-	void bfs(Node<K, T> n);
-	void dfs();
-	void dfsVisit(Node<K, T> n);
 
 }

@@ -3,11 +3,18 @@ package collections;
 import java.util.HashMap;
 
 public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
+	
+	public static final String WHITE = "white";
+	public static final String GRAY = "gray";
+	public static final String BLACK = "black";
 	private T element;
 	private HashMap<K, Edge<K,T>> list;
 	private int position;
 	private K key;
+	//para dfs y bfs:
+	private Node<K, T> predecessor; //para el tree
 	private boolean visited;
+	private String color;
 	private int d;
 	private int f;
 	
@@ -18,6 +25,8 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 		visited = false;
 		d = Integer.MAX_VALUE;
 		f = Integer.MAX_VALUE;
+		color = WHITE;
+		predecessor = null;
 	}
 
 
@@ -104,12 +113,18 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 		return this.key.compareTo( o.getKey());
 	}
 
-
-	
-
-
-	
-
-
+	// para el recorrido dfs y bfs
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	public Node<K, T> getPredecessor() {
+		return predecessor;
+	}
+	public void setPredecessor(Node<K, T> predecessor) {
+		this.predecessor = predecessor;
+	}
 	
 }

@@ -64,71 +64,77 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 				
 	}
 	
-	@Override
 	public void dfs() {
 		for(Node<K, T> u: adjacencyList.values()) {
-			u.setVisited(false);
+			u.setColor(Node.WHITE);
+			u.setPredecessor(null);
 		}
 		this.time = 0;
 		for(Node<K, T> u: adjacencyList.values()) {
-			if( !(u.isVisited()) ) {
+			if(u.getColor()==Node.WHITE) { //un nodo es blanco cuando no ha sido descubierto
 				dfsVisit(u);
 			}
 		}
 	}
-	
-	@Override
 	public void dfsVisit(Node<K, T> u) {
 		this.time = time+1;
 		u.setD(time);
-//		recorrer los adyacentes al nodo u
-		for (Edge<K, T> s : u.getList().values()) {
-			K key = s.getAdjacentTo();
-			if (!(adjacencyList.get(key).isVisited())) {
-				dfsVisit(adjacencyList.get(key));
+		u.setColor(Node.GRAY); //se pinta gris porque ha sido descubierto
+//		recorrer los nodos adyacentes al nodo u
+		for (Edge<K, T> v : u.getList().values()) { //para cada nodo v adyacente a u
+			K key = v.getAdjacentTo();
+			if (adjacencyList.get(key).getColor() == Node.WHITE) { //si v no ha sido descubierto
+				adjacencyList.get(key).setPredecessor(u); //el predecesor de v es u
+				dfsVisit(adjacencyList.get(key)); //visito a v
 			}
 		}
-//		for(Node<K, T> v: u.adyacentes) {
-//			if(!(v.isVisited()) ) {
-//				dfsVisit(v);
-//			}
-//		}
-		u.setVisited(true);
+		u.setColor(Node.BLACK); //se pinta a u de negro pues todos sus adyacentes han sido descubiertos
 		this.time = time+1;
 		u.setF(time);
 	}
 	
-	@Override
 	public void bfs(Node<K, T> s) {
 		for(Node<K, T> u: adjacencyList.values()) {
 			if(s!=u) {
-				u.setVisited(false);
-				u.setD(Integer.MAX_VALUE);
+				u.setColor(Node.WHITE); //se inicializan los nodos blancos
+				u.setD(Integer.MAX_VALUE); //se asignan las distancias como infinito
+				u.setPredecessor(null); //se inicializa predecesor null
 			}
 		}
-		s.setD(0);
-		Queue<Node<K, T>> q = new Queue<>();
+		s.setColor(Node.GRAY); //se descubre a s
+		s.setD(0); //distancia de s a s es cero
+		s.setPredecessor(null); //el padre de s es null pues s sera la raiz del arbol bf
+		Queue<Node<K, T>> q = new Queue<>(); //cola para nodos grises
 		q.enqueue(s);
 		while( !(q.isEmpty()) ) {
 			Node<K, T> u = q.dequeue();
 //			recorrer los adyacentes al nodo s
 			for (Edge<K, T> edge : s.getList().values()) {
 				K key = edge.getAdjacentTo();
-				Node<K, T> n = adjacencyList.get(key);				
-				if (!(n.isVisited())) {
-					n.setD(u.getD()+1);
-					q.enqueue(n);
+				Node<K, T> v = adjacencyList.get(key); //para cada nodo v adyacente a s	
+				if (v.getColor() == Node.WHITE) { //si no ha sido descubierto
+					v.setColor(Node.GRAY); //se pinta gris
+					v.setD(u.getD()+1); //se le asigna la distancia de u +1
+					v.setPredecessor(u); // u es predecesor de v en el arbol bf
+					q.enqueue(v); // se encola v por ser gris
 				}
 			}
-//			for(Node<K, T> v: s.adyacentes) {
-//				if(!(v.isVisited())) {
-//					v.setD(u.getD()+1);
-//					q.enqueue(v);
-//				}
-//			}
-			u.setVisited(true);
+			u.setColor(Node.BLACK); //se pinta de negro a u porque todos sus adyacentes fueron descubiertos
 		}
 	}
+	// PARA PINTAR EL ARBOL BF:
+//	public void printPath(Node<K, T> s, Node<K, T> v) {
+//		if(v == s) {
+//			//print s
+//		} 
+//		else if(v.getPredecessor() == null) {
+//			//print "no path from s to v exists"
+//		}
+//		else {
+//			printPath(s, v.getPredecessor());
+//			//print v
+//		}
+//	}
 	
 	public void dijkstra(Node s) {
 		
