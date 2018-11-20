@@ -13,7 +13,6 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 	private K key;
 	//para dfs y bfs:
 	private Node<K, T> predecessor; //para el tree
-	private boolean visited;
 	private String color;
 	private int d;
 	private int f;
@@ -22,7 +21,7 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 		this.element = element;
 		this.position = position;
 		list = new HashMap<>();
-		visited = false;
+		
 		d = Integer.MAX_VALUE;
 		f = Integer.MAX_VALUE;
 		color = WHITE;
@@ -80,14 +79,6 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 
 	public void setKey(K k) {
 		this.key = k;
-	}
-
-	public boolean isVisited() {
-		return visited;
-	}
-
-	public void setVisited(boolean visited) {
-		this.visited = visited;
 	}
 
 	public int getD() {
