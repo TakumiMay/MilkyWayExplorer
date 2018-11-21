@@ -10,7 +10,7 @@ import sun.misc.Queue;
 
 
 
-public class GraphAL <K,T> implements IGraph<K,T>{
+public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	
 	
 	private boolean directed;
@@ -136,7 +136,7 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 //		}
 //	}
 	
-	public void dijkstra(Node s) {
+	public void dijkstra(Node<K,T> s) {
 		
 		for(Node n: adjacencyList.values()) {
 			K m = (K) n.getKey();
@@ -169,7 +169,7 @@ public class GraphAL <K,T> implements IGraph<K,T>{
 		
 	}
 	
-	public void relaxEdges(PriorityQueue qe, PriorityQueue qn, Node n) {
+	public void relaxEdges(PriorityQueue qe, PriorityQueue qn, Node<K,T> n) {
 		for(Edge e: n.getList().values()) {
 			qe.add(e);
 		}

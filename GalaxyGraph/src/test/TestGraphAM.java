@@ -16,7 +16,7 @@ class TestGraphAM {
 	private GraphAM<String, String> graphAM;
 	
 	public void setupStage1() {
-		graphAM = new GraphAM<>(4, false);
+		graphAM = new GraphAM<>(4, true);
 	}
 	
 	public void setupStage2() {
@@ -33,6 +33,7 @@ class TestGraphAM {
 		graphAM.addEdge("Altair", "Sun", 1);
 		graphAM.addEdge("Sun", "Vega", 6);
 		graphAM.addEdge("GJ876", "Altair", 3);
+		graphAM.addEdge("Sun", "GJ876", 4);
 	}
 	public void setupStage4() {
 		setupStage2();
@@ -72,8 +73,7 @@ class TestGraphAM {
 	@Test
 	public void testPrim() {
 		setupStage3();
-		Queue<String> q = new Queue<String>() {
-		};
+		
 		
 		ArrayList<Node<String, String>> ar = new ArrayList();
 		ar = graphAM.prim("Vega");
@@ -95,10 +95,24 @@ class TestGraphAM {
 	
 	@Test
 	public void testSortEdges() {
+		System.out.println("test sort edges");
 		setupStage3();
-		PriorityQueue<Edge<String, String>> cola = graphAM.sortEdges();
-		System.out.println(cola.size());
-		int e = cola.peek().getWeight();
+//		PriorityQueue<Edge<String, String>> cola = graphAM.sortEdges();
+		PriorityQueue<Edge<String, String>> cola = new PriorityQueue<>();
+		cola = graphAM.sortEdges(cola, graphAM.getNodes().get("Vega"));
+		System.out.println("tamaño :"+cola.size());
+		System.out.println(cola.peek().getWeight());
+//		System.out.println(cola.size());
+//		int e = cola.peek().getWeight();
+//		
+//
+//		while (!cola.isEmpty()) {
+//			System.out.println(cola.poll().getWeight());
+//			
+//		}
+		
+		
+		
 					
 		
 	}

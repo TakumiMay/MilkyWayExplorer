@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-public class GraphAM <K,T> implements IGraph<K,T>{
+public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	
 	
 	private int size;
@@ -155,14 +155,14 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 	}
 	
 	public PriorityQueue<Edge<K, T>> sortEdges(PriorityQueue<Edge<K, T>> pq,Node<K, T>source){
-		System.out.println("entré a sort");
+		
 		
 		int i = source.getPosition();
 
 		for (int j = 0; j < matrixA.length; j++) {
-			System.out.println(j);
+			
 			if (matrixA[i][j]!=null) {
-				System.out.println(true);
+				
 				pq.add(matrixA[i][j]);
 			}
 			
@@ -183,7 +183,11 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 		}
 		int c = 0;	
 	}
-	
+	/**
+	 * 
+	 * @param source Key of the node to start the prim
+	 * @return MST
+	 */
 	public ArrayList<Node<K, T>> prim(K source){
 		PriorityQueue<Edge<K, T>> pq = new PriorityQueue<>();
 		pq = sortEdges(pq,nodes.get(source));
@@ -192,7 +196,8 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 		
 		visited.put(source, true);
 		route.add(nodes.get(source));
-		while (route.size()<nodes.size()) {
+		int c = 0;
+		while (c<nodes.size()-1) {
 			K key = pq.peek().getAdjacentTo();
 			if (visited.get(key)!=null) {
 				pq.poll();
@@ -200,8 +205,10 @@ public class GraphAM <K,T> implements IGraph<K,T>{
 			else {
 				visited.put(key, true);
 				route.add(nodes.get(key));
+				pq.poll();
 				pq = sortEdges(pq, nodes.get(key));
-			}			
+			}	
+			c++;
 		}		
 		return route;
 		
