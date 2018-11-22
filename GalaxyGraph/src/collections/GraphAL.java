@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import sun.misc.Queue;
+
+//import sun.misc.Queue;
 
 
 
@@ -120,10 +121,12 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		s.setColor(Node.GRAY); //se descubre a s
 		s.setD(0); //distancia de s a s es cero
 		s.setPredecessor(null); //el padre de s es null pues s sera la raiz del arbol bf
-		Queue<Node<K, T>> q = new Queue<>(); //cola para nodos grises
-		q.enqueue(s);
+		Queue<Node<K, T>> q = new Queue<>();
+//		
+//		Queue<Node<K, T>> q = new Queue<>(); //cola para nodos grises
+		q.enQueue(s);
 		while( !(q.isEmpty()) ) {
-			Node<K, T> u = q.dequeue();
+			Node<K, T> u = q.deQueue().getInfo();
 //			recorrer los adyacentes al nodo s
 			for (Edge<K, T> edge : s.getList().values()) {
 				K key = edge.getAdjacentTo();
@@ -132,7 +135,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 					v.setColor(Node.GRAY); //se pinta gris
 					v.setD(u.getD()+1); //se le asigna la distancia de u +1
 					v.setPredecessor(u); // u es predecesor de v en el arbol bf
-					q.enqueue(v); // se encola v por ser gris
+					q.enQueue(v); // se encola v por ser gris
 				}
 			}
 			u.setColor(Node.BLACK); //se pinta de negro a u porque todos sus adyacentes fueron descubiertos

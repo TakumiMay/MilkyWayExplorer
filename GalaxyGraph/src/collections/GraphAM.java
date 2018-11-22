@@ -31,8 +31,15 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	public void initializeMatrix() {
 		for (int i = 0; i < matrixA.length; i++) {
 			for (int j = 0; j < matrixA.length; j++) {
-				Edge<K, T> edge = new Edge<>(MAX_WEIGHT);
-				matrixA[i][j] = edge;
+				if (i==j) {
+					Edge<K, T> edge = new Edge<>(0);
+					matrixA[i][j] = edge;
+				}
+				else {
+					Edge<K, T> edge = new Edge<>(MAX_WEIGHT);
+					matrixA[i][j] = edge;
+				}
+				
 			}
 		}
 	}
