@@ -70,17 +70,45 @@ class TestGraphAM {
 		
 	}
 	
+	//Have to improve the test
 	@Test
 	public void testPrim() {
 		setupStage3();
 		
 		
 		ArrayList<Node<String, String>> ar = new ArrayList();
+//		System.out.println(graphAM.getNodes().get("Vega").getKey());
 		ar = graphAM.prim("Vega");
 		System.out.println(ar.size());
 		
 		for (int i = 0; i < ar.size(); i++) {
 			System.out.println(ar.get(i).getKey());
+			
+		}
+	}
+	@Test
+	public void testFloydWarshall() {
+		System.out.println("TEST FLOYD WARSHALL");
+		setupStage3();
+		int floyd [][] = graphAM.floydWarshall();
+//		Edge<String, String> floyd [][] = graphAM.getMatrixA();
+		System.out.println("tamaño matriz: "+floyd.length);
+		
+		for (int i = 0; i < floyd.length; i++) {
+			for (int j = 0; j < floyd.length; j++) {
+				if (floyd[i][j] == Integer.MAX_VALUE) {
+					System.out.print("inf");
+				}
+				else
+				System.out.print(floyd[i][j]+" ");
+				if (j==3) {
+					System.out.println();
+				}
+//				System.out.print(floyd[i][j].getWeight()+" ");
+//				if (j==3) {
+//					System.out.println();
+//				}
+			}
 			
 		}
 	}
@@ -93,27 +121,16 @@ class TestGraphAM {
 	
 	
 	
-	@Test
+//	@Test
 	public void testSortEdges() {
 		System.out.println("test sort edges");
 		setupStage3();
-//		PriorityQueue<Edge<String, String>> cola = graphAM.sortEdges();
-		PriorityQueue<Edge<String, String>> cola = new PriorityQueue<>();
-		cola = graphAM.sortEdges(cola, graphAM.getNodes().get("Vega"));
-		System.out.println("tamaño :"+cola.size());
-		System.out.println(cola.peek().getWeight());
-//		System.out.println(cola.size());
-//		int e = cola.peek().getWeight();
-//		
-//
-//		while (!cola.isEmpty()) {
-//			System.out.println(cola.poll().getWeight());
-//			
-//		}
-		
-		
-		
-					
+		PriorityQueue<Edge<String, String>> cola = graphAM.sortEdges();		
+
+		while (!cola.isEmpty()) {
+			System.out.println(cola.poll().getWeight());
+			
+		}					
 		
 	}
 	

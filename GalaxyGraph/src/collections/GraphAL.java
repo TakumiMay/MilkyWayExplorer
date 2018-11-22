@@ -15,20 +15,30 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	
 	private boolean directed;
 	private HashMap<K, Node<K,T>> adjacencyList;
-	private HashMap distances; 
-	private HashMap visited; 
+	private HashMap<K, Integer> distances; 
+	private HashMap<K, Boolean> visited; 
 	private int time;
 	
 
-	public GraphAL() {
+	public GraphAL(boolean directed) {
+		this.directed = directed;
 		adjacencyList = new HashMap<K, Node<K,T>>();
 		distances = new HashMap<K, Integer>();
 		visited = new HashMap<K, Boolean>();
 		time = 0;
 	}
+	
+	public HashMap<K, Node<K, T>> getAdjacencyList() {
+		return adjacencyList;
+	}
+
+	public void setAdjacencyList(HashMap<K, Node<K, T>> adjacencyList) {
+		this.adjacencyList = adjacencyList;
+	}
+
 	@Override
 	public void addNode(K key, T element, int position) {
-		Node node = new Node<K, T>(element, position);
+		Node<K, T> node = new Node<K, T>(element, position);
 		node.setKey(key);
 		adjacencyList.put(key, node);
 		visited.put(node.getKey(), false);
@@ -53,8 +63,14 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	public void addEdge(K key1, K key2, int weight) {
 		Edge<K, T> e = new Edge<>(weight);
 		Node<K, T> node  = adjacencyList.get(key1);
-		e.setAdjacentTo(key1);
+		e.setAdjacentTo(key2);
 		node.getList().put(key2, e);
+		if (!directed) {
+			Edge<K, T> e2 = new Edge<>(weight);
+			Node<K, T> node2  = adjacencyList.get(key2);
+			e2.setAdjacentTo(key1);
+			node2.getList().put(key1, e2);
+		}
 		
 	}
 
@@ -136,50 +152,50 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 //		}
 //	}
 	
-	public void dijkstra(Node<K,T> s) {
+	public void dijkstra(Node<K,T> nodeP) {
 		
-		for(Node n: adjacencyList.values()) {
-			K m = (K) n.getKey();
-			distances.put(m, Integer.MAX_VALUE);
+		for(Node<K, T> n: adjacencyList.values()) {
+			K key = n.getKey();
+			distances.put(key, Integer.MAX_VALUE);
 		}
 		//Comparator<Edge> ec = new EdgeCompare();
-		distances.put(s.getPosition(), 0);
-		PriorityQueue<Edge> queueEdges = new PriorityQueue<Edge>();
-		PriorityQueue<Node> queueNode = new PriorityQueue<Node>();
+		distances.put(nodeP.getKey(), 0);
+		PriorityQueue<Edge<K, T>> queueEdges = new PriorityQueue<>();
+		PriorityQueue<Node<K, T>> queueNode = new PriorityQueue<>();
 		
-		for(Edge e: s.getList().values()) {
-			queueEdges.add(e);
+		for(Edge<K, T> edge: nodeP.getList().values()) {
+			queueEdges.add(edge);
 		}
 		while(!queueEdges.isEmpty()) {
-			int distance = ((Edge<K, T>) queueEdges.peek()).getWeight();
-			Node n = adjacencyList.get((((Edge<K,T>) queueEdges.peek()).getAdjacentTo()));
+			int distance = queueEdges.peek().getWeight();
+			Node<K, T> n = adjacencyList.get((queueEdges.peek().getAdjacentTo()));
 			distances.put(n.getKey(), distance);
 			queueNode.add(n);
 			queueEdges.poll();
-		}
-		
-		while(!queueNode.isEmpty()) {
-			Node nodeVisited = queueNode.poll();
-			if(!((boolean) visited.get(nodeVisited.getKey()))){
-				visited.put(nodeVisited.getKey(), true);
-				relaxEdges(queueEdges, queueNode, nodeVisited);
+			while(!queueNode.isEmpty()) {
+				Node<K, T> nodeVisited = queueNode.poll();
+				if(!visited.get(nodeVisited.getKey())){
+					visited.put(nodeVisited.getKey(), true);
+					relaxEdges(queueEdges, queueNode, nodeVisited);
+				}
 			}
 		}
-		
 		
 	}
 	
-	public void relaxEdges(PriorityQueue qe, PriorityQueue qn, Node<K,T> n) {
-		for(Edge e: n.getList().values()) {
+	public void relaxEdges(PriorityQueue<Edge<K, T>> qe, PriorityQueue<Node<K, T>> qn, Node<K,T> n) {
+		for(Edge<K, T> e: n.getList().values()) {
 			qe.add(e);
 		}
 		while(!qe.isEmpty()) {
-			int distance = ((Edge<K, T>) qe.peek()).getWeight() + (int)distances.get(n.getKey());
-			K k = adjacencyList.get(((Edge<K, T>) qe.peek()).getAdjacentTo()).getKey();
-			if(distance < (int)distances.get(k)){
-				distances.put( ((Edge<K, T>) qe.peek()).getWeight(), distance);
+			int distance = qe.peek().getWeight() + distances.get(n.getKey());
+			K k = adjacencyList.get(qe.peek().getAdjacentTo()).getKey();
+			if(distance < distances.get(k)){
+//				distances.put( ((Edge<K, T>) qe.peek()).getWeight(), distance);
+				distances.put( qe.peek().getAdjacentTo(), distance);
 			}
-			qn.add(((Edge<K, T>) qe.poll()).getAdjacentTo());
+//			qn.add(((Edge<K, T>) qe.poll()).getAdjacentTo());
+			qn.add(adjacencyList.get(qe.poll().getAdjacentTo()));
 		}
 	}
 	
@@ -190,7 +206,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	}
 
 	public static void main(String[] args) {
-		GraphAL<String, Integer> g = new GraphAL<>();
+		GraphAL<String, Integer> g = new GraphAL<>(false);
 		Node<String, Integer> a = new Node("A", 10);
 		Node<String, Integer> b = new Node("B", 30);
 		Node<String, Integer> c = new Node("C", 23);

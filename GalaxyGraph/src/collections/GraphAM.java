@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
+	
+	/**
+	 * Constant used as an infinite weight in the matrix
+	 */
+	public static final int MAX_WEIGHT = 200000;
 	
 	
 	private int size;
@@ -17,7 +24,17 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		nodes = new HashMap<>();
 		this.directed = directed;
 		matrixA = new Edge[size][size];
+		initializeMatrix();
 		
+	}
+	
+	public void initializeMatrix() {
+		for (int i = 0; i < matrixA.length; i++) {
+			for (int j = 0; j < matrixA.length; j++) {
+				Edge<K, T> edge = new Edge<>(MAX_WEIGHT);
+				matrixA[i][j] = edge;
+			}
+		}
 	}
 	
 	
@@ -38,7 +55,9 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		int p2 = nodes.get(key2).getPosition();
 		Edge<K, T> e = new Edge<>(weight);
 		e.setAdjacentTo(key2);
+		
 		matrixA[p1][p2] = e;
+		matrixA[p1][p1] = new Edge<>(0);
 		if (!directed) {
 			matrixA[p2][p1] = e;
 		}
@@ -49,9 +68,15 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	 * @return true if exist a vertex, false in other case.
 	 */
 	public boolean exist(K element1, K element2) {
+		boolean result;
 		int p1 = nodes.get(element1).getPosition();
 		int p2 = nodes.get(element2).getPosition();
-		return matrixA[p1][p2] == null ? false : true;
+		if (matrixA[p1][p2].getWeight() == MAX_WEIGHT) {
+			result = false;
+		} else {
+			result = true;
+		}
+		return result;
 	}
 	
 	/**
@@ -112,25 +137,56 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		this.directed = directed;
 	}
 	
-	public Edge<K, T>[][] floydWarshall(){
-		Edge<K, T>[][] floydW = new Edge[size][size];
+//	public Edge<K, T>[][] floydWarshall(){
+//		Edge<K, T>[][] floydW = new Edge[size][size];
+//		for (int i = 0; i < matrixA.length; i++) {
+//			for (int j = 0; j < matrixA.length; j++) {
+//				floydW[i][j] = matrixA[i][j];
+//			}
+//		}	
+//		
+//		 for(int k = 0; k < size; k++ ){
+//		        for(int i = 0; i < size; i++ ){
+//		            for(int j = 0; j < size; j++ ){
+//		            	if (floydW[i][k]!=null) {
+//		            		if (floydW[i][k].getWeight() + floydW[k][j].getWeight() < floydW[i][j].getWeight()) {
+//			            		Edge<K, T> newEdge = new Edge<>(floydW[i][k].getWeight() + floydW[k][j].getWeight());
+//			            		floydW[i][j] = newEdge;
+//			            	}
+//						}
+//		            	
+//		            		 
+//		            }
+//		        }
+//		    }
+//		
+//		return floydW;
+//	}
+	
+	public int[][] floydWarshall(){
+		int[][] floydW = new int[size][size];
+		
 		for (int i = 0; i < matrixA.length; i++) {
 			for (int j = 0; j < matrixA.length; j++) {
-				floydW[i][j] = matrixA[i][j];
+				
+				floydW[i][j] = matrixA[i][j].getWeight();
 			}
-		}	
+		}
 		
-		 for(int k = 0; k < size; k++ ){
-		        for(int i = 0; i < size; i++ ){
-		            for(int j = 0; j < size; j++ ){
-		            	if (floydW[i][k].getWeight() + floydW[k][j].getWeight() < floydW[i][j].getWeight()) {
-		            		Edge<K, T> newEdge = new Edge<>(floydW[i][k].getWeight() + floydW[k][j].getWeight());
-		            		floydW[i][j] = newEdge;
-		            	}
-		            		 
-		            }
-		        }
-		    }
+		
+		for (int k = 0; k < size; k++) {
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size; j++) {
+//		            	floydW[i][j] = Math.min(floydW[i][j], (floydW[i][k] + floydW[k][j]));
+					if (floydW[i][k] + floydW[k][j] < floydW[i][j]) {
+
+						floydW[i][j] = floydW[i][k] + floydW[k][j];
+					}
+				}
+			}
+		}
+		
+		
 		
 		return floydW;
 	}
@@ -155,15 +211,14 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	}
 	
 	public PriorityQueue<Edge<K, T>> sortEdges(PriorityQueue<Edge<K, T>> pq,Node<K, T>source){
-		
+		System.out.println(source.getKey());
 		
 		int i = source.getPosition();
 
 		for (int j = 0; j < matrixA.length; j++) {
 			
-			if (matrixA[i][j]!=null) {
-				
-				pq.add(matrixA[i][j]);
+			if (matrixA[i][j].getWeight() != Integer.MAX_VALUE && matrixA[i][j].getWeight() != 0) {				
+				pq.add(matrixA[i][j]);	
 			}
 			
 		}
@@ -190,7 +245,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	 */
 	public ArrayList<Node<K, T>> prim(K source){
 		PriorityQueue<Edge<K, T>> pq = new PriorityQueue<>();
-		pq = sortEdges(pq,nodes.get(source));
+		pq = sortEdges(pq, nodes.get(source));
 		HashMap<K,Boolean> visited = new HashMap<>();
 		ArrayList<Node<K, T>> route = new ArrayList<>();
 		
