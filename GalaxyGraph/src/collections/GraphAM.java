@@ -18,12 +18,18 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	private HashMap<K, Node<K,T>> nodes;
 	private Edge<K,T>[][] matrixA;
 	private boolean directed;
+	private HashMap<K, Integer> distances;
+	private HashMap<K, Boolean> visited; 
+	private int cNodes;
 
 	public GraphAM(int size, boolean directed) {
+		cNodes = 0;
 		this.size = size;
 		nodes = new HashMap<>();
 		this.directed = directed;
 		matrixA = new Edge[size][size];
+		distances = new HashMap<K, Integer>();
+		visited = new HashMap<K, Boolean>();
 		initializeMatrix();
 		
 	}
@@ -52,10 +58,21 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	 */
 	@Override
 	public void addNode(K key, T element, int position) {
+		cNodes++;
 		Node<K, T> node = new Node<K, T>(element, position);
 		node.setKey(key);
 		nodes.put(key, node);
+		visited.put(key, false);
 	}
+	public void addNode(K key, T element) {
+		
+		Node<K, T> node = new Node<K, T>(element, cNodes);
+		node.setKey(key);
+		nodes.put(key, node);
+		cNodes++;
+		visited.put(key, false);
+	}
+	
 	
 	public void addEdge(K key1,K key2, int weight) {
 		int p1 = nodes.get(key1).getPosition();
@@ -72,7 +89,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 
 	/**
 	 * Tell if there is a connection between two elements or not
-	 * @return true if exist a vertex, false in other case.
+	 * @return true if exist an edge, false in other case.
 	 */
 	public boolean exist(K element1, K element2) {
 		boolean result;
@@ -218,7 +235,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	}
 	
 	public PriorityQueue<Edge<K, T>> sortEdges(PriorityQueue<Edge<K, T>> pq,Node<K, T>source){
-		System.out.println(source.getKey());
+		
 		
 		int i = source.getPosition();
 
@@ -245,6 +262,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		}
 		int c = 0;	
 	}
+	//prim recibe el nodo donde empiezo
 	/**
 	 * 
 	 * @param source Key of the node to start the prim
@@ -275,7 +293,97 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		return route;
 		
 	}
+	public void dijkstra(Node<K,T> nodeP) {
+		
+		for(Node<K, T> n: nodes.values()) {
+			K key = n.getKey();
+			distances.put(key, Integer.MAX_VALUE);
+		}
+		//Comparator<Edge> ec = new EdgeCompare();
+		distances.put(nodeP.getKey(), 0);
+		PriorityQueue<Edge<K, T>> queueEdges = new PriorityQueue<>();
+		PriorityQueue<Node<K, T>> queueNode = new PriorityQueue<>();
+		int i = nodeP.getPosition();
+		for (int j = 0; j < matrixA.length; j++) {
+			if (matrixA[i][j].getWeight() != MAX_WEIGHT && matrixA[i][j].getWeight() != 0) {
+				queueEdges.add(matrixA[i][j]);
+			} 
+			
+		}
+		
+		while(!queueEdges.isEmpty()) {
+			int distance = queueEdges.peek().getWeight();
+			Node<K, T> n = nodes.get((queueEdges.peek().getAdjacentTo()));
+			distances.put(n.getKey(), distance);
+			queueNode.add(n);
+			queueEdges.poll();
+			while(!queueNode.isEmpty()) {
+				Node<K, T> nodeVisited = queueNode.poll();
+				if(!visited.get(nodeVisited.getKey())){
+					visited.put(nodeVisited.getKey(), true);
+					relaxEdges(queueEdges, queueNode, nodeVisited);
+				}
+			}
+		}
+		
+	}
 	
-	//prim recibe el nodo donde empiezo
+	public void relaxEdges(PriorityQueue<Edge<K, T>> qe, PriorityQueue<Node<K, T>> qn, Node<K,T> n) {
+		for(Edge<K, T> e: n.getList().values()) {
+			qe.add(e);
+		}
+		while(!qe.isEmpty()) {
+			int distance = qe.peek().getWeight() + distances.get(n.getKey());
+			K k = nodes.get(qe.peek().getAdjacentTo()).getKey();
+			if(distance < distances.get(k)){
+//				distances.put( ((Edge<K, T>) qe.peek()).getWeight(), distance);
+				distances.put( qe.peek().getAdjacentTo(), distance);
+			}
+//			qn.add(((Edge<K, T>) qe.poll()).getAdjacentTo());
+			qn.add(nodes.get(qe.poll().getAdjacentTo()));
+		}
+	}
+	
+	public static void main(String[] args) {
+		GraphAM<String, Integer> g = new GraphAM<>(7,false);
+		Node<String, Integer> a = new Node("A", 10);
+		Node<String, Integer> b = new Node("B", 30);
+		Node<String, Integer> c = new Node("C", 23);
+		Node<String, Integer> d = new Node("D", 5);
+		Node<String, Integer> e = new Node("E", 8);
+		Node<String, Integer> z = new Node("Z", 34);
+		Node<String, Integer> w = new Node("W", 13);
+		g.addNode("A", 10);
+		g.addNode("B", 30);
+		g.addNode("C", 23);
+		g.addNode("D", 5);
+		g.addNode("E", 8);
+		g.addNode("Z", 34);
+		//g.addNode(w);
+		g.addEdge("A", "B", 4);
+		g.addEdge("A", "C", 2);
+		g.addEdge("B", "D", 5);
+		g.addEdge("B", "C", 1);
+		g.addEdge("C", "D", 8);
+		g.addEdge("C", "E", 10);
+		g.addEdge("E", "Z", 3);
+		g.addEdge("D", "E", 2);
+		g.addEdge("D", "Z", 6);
+		
+		g.dijkstra(g.getNodes().get("A"));
+		
+		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+		
+		
+		
+
+		
+		
+		
+	}     
+	
+	
+	
+	
 	
 }

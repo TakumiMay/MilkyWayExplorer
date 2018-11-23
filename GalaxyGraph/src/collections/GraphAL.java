@@ -1,5 +1,6 @@
 package collections;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -142,18 +143,22 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		}
 	}
 	// PARA PINTAR EL ARBOL BF:
-//	public void printPath(Node<K, T> s, Node<K, T> v) {
-//		if(v == s) {
-//			//print s
-//		} 
-//		else if(v.getPredecessor() == null) {
-//			//print "no path from s to v exists"
-//		}
-//		else {
-//			printPath(s, v.getPredecessor());
-//			//print v
-//		}
-//	}
+	public void printPath(Node<K, T> s, Node<K, T> v) {
+		if(v == s) {
+			System.out.println(s.getKey());
+			//print s
+		} 
+		else if(v.getPredecessor() == null) {
+			//print "no path from s to v exists"
+			System.out.println("no existe");
+			
+		}
+		else {
+			printPath(s, v.getPredecessor());
+			System.out.println(v.getKey());
+			//print v
+		}
+	}
 	
 	public void dijkstra(Node<K,T> nodeP) {
 		
@@ -206,6 +211,41 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		n.setKey(key);
 		adjacencyList.put(key, n);
 		visited.put(key, false);
+	}
+	
+	public PriorityQueue<Edge<K, T>> sortEdges(PriorityQueue<Edge<K, T>> pq,Node<K, T>source){
+
+		for (Edge<K, T> e : source.getList().values()) {
+			pq.add(e);
+
+		}
+		return pq;
+	}
+	
+	public ArrayList<Node<K, T>> prim(K source){
+		PriorityQueue<Edge<K, T>> pq = new PriorityQueue<>();
+		pq = sortEdges(pq, adjacencyList.get(source));
+		HashMap<K,Boolean> visited = new HashMap<>();
+		ArrayList<Node<K, T>> route = new ArrayList<>();
+		
+		visited.put(source, true);
+		route.add(adjacencyList.get(source));
+		int c = 0;
+		while (c<adjacencyList.size()-1) {
+			K key = pq.peek().getAdjacentTo();
+			if (visited.get(key)!=null) {
+				pq.poll();
+			}
+			else {
+				visited.put(key, true);
+				route.add(adjacencyList.get(key));
+				pq.poll();
+				pq = sortEdges(pq, adjacencyList.get(key));
+			}	
+			c++;
+		}		
+		return route;
+		
 	}
 
 	public static void main(String[] args) {
