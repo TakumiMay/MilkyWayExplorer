@@ -21,6 +21,8 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	private HashMap<K, Integer> distances;
 	private HashMap<K, Boolean> visited; 
 	private int cNodes;
+	private ArrayList<Integer> otherDistances;
+	public int suma;
 
 	public GraphAM(int size, boolean directed) {
 		cNodes = 0;
@@ -30,6 +32,9 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		matrixA = new Edge[size][size];
 		distances = new HashMap<K, Integer>();
 		visited = new HashMap<K, Boolean>();
+		otherDistances = new ArrayList<>();
+		suma =0;
+		
 		initializeMatrix();
 		
 	}
@@ -224,7 +229,8 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		
 		for (int i = 0; i < matrixA.length; i++) {
 			for (int j = 0; j < matrixA.length; j++) {
-				if (matrixA[i][j] != null) {
+				if (matrixA[i][j].getWeight() != MAX_WEIGHT && matrixA[i][j].getWeight() != 0) {
+//					System.out.println(matrixA[i][j].getWeight());
 					result.add( matrixA[i][j]);	
 				}
 				
@@ -272,9 +278,55 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		PriorityQueue<Edge<K, T>> pq = new PriorityQueue<>();
 		pq = sortEdges(pq, nodes.get(source));
 		HashMap<K,Boolean> visited = new HashMap<>();
+		for(Node<K, T> n: nodes.values()) {
+			K key = n.getKey();
+			visited.put(key, false);
+		}
 		ArrayList<Node<K, T>> route = new ArrayList<>();
+//		for(Node<K, T> n: nodes.values()) {
+//			K key = n.getKey();
+//			distances.put(key, Integer.MAX_VALUE);
+//		}
+//		distances.put(source, 0);
 		
 		visited.put(source, true);
+		route.add(nodes.get(source));
+		int c = 0;
+		while (route.size()!=nodes.size()) {
+			K key = pq.peek().getAdjacentTo();
+			if (visited.get(key)) {
+				pq.poll();
+			}
+			else {
+				visited.put(key, true);
+				route.add(nodes.get(key));
+//				int distance = pq.peek().getWeight() + distances.get(key);
+//				if(distance < distances.get(key)){
+					distances.put(key, pq.peek().getWeight());
+//				}
+				
+				pq.poll();
+				pq = sortEdges(pq, nodes.get(key));
+			}	
+			c++;
+		}		
+		return route;
+		
+	}
+	
+	public ArrayList<Node<K, T>> prim(Edge<K, T> source){
+		PriorityQueue<Edge<K, T>> pq = new PriorityQueue<>();
+		pq = sortEdges(pq, nodes.get(source.getAdjacentTo()));
+		HashMap<K,Boolean> visited = new HashMap<>();
+		ArrayList<Node<K, T>> route = new ArrayList<>();
+//		for(Node<K, T> n: nodes.values()) {
+//			K key = n.getKey();
+//			distances.put(key, Integer.MAX_VALUE);
+//		}
+		distances.put(source.getAdjacentTo(), source.getWeight());
+		otherDistances.add(source.getWeight());
+		
+		visited.put(source.getAdjacentTo(), true);
 		route.add(nodes.get(source));
 		int c = 0;
 		while (c<nodes.size()-1) {
@@ -285,6 +337,12 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 			else {
 				visited.put(key, true);
 				route.add(nodes.get(key));
+//				int distance = pq.peek().getWeight() + distances.get(key);
+//				if(distance < distances.get(key)){
+					distances.put(key, pq.peek().getWeight());
+					otherDistances.add(pq.peek().getWeight());
+//				}
+				
 				pq.poll();
 				pq = sortEdges(pq, nodes.get(key));
 			}	
@@ -293,6 +351,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		return route;
 		
 	}
+	
 	public void dijkstra(Node<K,T> nodeP) {
 		
 		for(Node<K, T> n: nodes.values()) {
@@ -343,44 +402,33 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 			qn.add(nodes.get(qe.poll().getAdjacentTo()));
 		}
 	}
-	
-	public static void main(String[] args) {
-		GraphAM<String, Integer> g = new GraphAM<>(7,false);
-		Node<String, Integer> a = new Node("A", 10);
-		Node<String, Integer> b = new Node("B", 30);
-		Node<String, Integer> c = new Node("C", 23);
-		Node<String, Integer> d = new Node("D", 5);
-		Node<String, Integer> e = new Node("E", 8);
-		Node<String, Integer> z = new Node("Z", 34);
-		Node<String, Integer> w = new Node("W", 13);
-		g.addNode("A", 10);
-		g.addNode("B", 30);
-		g.addNode("C", 23);
-		g.addNode("D", 5);
-		g.addNode("E", 8);
-		g.addNode("Z", 34);
-		//g.addNode(w);
-		g.addEdge("A", "B", 4);
-		g.addEdge("A", "C", 2);
-		g.addEdge("B", "D", 5);
-		g.addEdge("B", "C", 1);
-		g.addEdge("C", "D", 8);
-		g.addEdge("C", "E", 10);
-		g.addEdge("E", "Z", 3);
-		g.addEdge("D", "E", 2);
-		g.addEdge("D", "Z", 6);
-		
-		g.dijkstra(g.getNodes().get("A"));
-		
-		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
-		
-		
-		
 
-		
-		
-		
-	}     
+	public HashMap<K, Boolean> getVisited() {
+		return visited;
+	}
+
+	public void setVisited(HashMap<K, Boolean> visited) {
+		this.visited = visited;
+	}
+
+	public HashMap<K, Integer> getDistances() {
+		return distances;
+	}
+
+	public void setDistances(HashMap<K, Integer> distances) {
+		this.distances = distances;
+	}
+
+	public ArrayList<Integer> getOtherDistances() {
+		return otherDistances;
+	}
+
+	public void setOtherDistances(ArrayList<Integer> otherDistances) {
+		this.otherDistances = otherDistances;
+	}
+	
+	
+	
 	
 	
 	
