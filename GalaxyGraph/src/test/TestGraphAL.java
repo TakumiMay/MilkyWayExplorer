@@ -17,7 +17,7 @@ class TestGraphAL {
 private GraphAL<String, String> graphAL;
 	
 	public void setupStage1() {
-		graphAL = new GraphAL<>(true);
+		graphAL = new GraphAL<>(false);
 	}
 	
 	public void setupStage2() {
@@ -42,6 +42,24 @@ private GraphAL<String, String> graphAL;
 		graphAL.addEdge("Altair", "Sun", 1);
 		graphAL.addEdge("Sun", "Vega", 6);
 		graphAL.addEdge("GJ876", "Altair", 3);
+	}
+	
+	public void setupStage5() {
+		setupStage1();
+		graphAL.addNode("1", "1");
+		graphAL.addNode("2", "2");
+		graphAL.addNode("3", "3");
+		graphAL.addNode("4", "4");
+		graphAL.addNode("5", "5");
+		
+		graphAL.addEdge("2", "1", 1);
+		graphAL.addEdge("2", "5", 1);
+		graphAL.addEdge("2", "4", 1);
+		graphAL.addEdge("3", "4", 1);
+		graphAL.addEdge("3", "2", 1);
+		graphAL.addEdge("4", "5", 1);
+		graphAL.addEdge("1", "5", 1);
+		
 	}
 
 	@Test
@@ -73,33 +91,36 @@ private GraphAL<String, String> graphAL;
 	
 	@Test
 	public void testBFS() {
-		setupStage3();
-		graphAL.bfs(graphAL.getAdjacencyList().get("Vega"));
-		for (Node<String, String> u: graphAL.getAdjacencyList().values()) {
-//			for (Edge<String, String> edge : u.getList().values()) {
-//				System.out.println();
-//			}
-			System.out.println(u.getColor());
-		}
+		setupStage5();
+		Node inicio = graphAL.getAdjacencyList().get("3");
+		graphAL.bfs(inicio);
+//		for (Node<String, String> u: graphAL.getAdjacencyList().values()) {
+////			for (Edge<String, String> edge : u.getList().values()) {
+////				System.out.println();
+////			}
+//			System.out.println(u.getColor());
+//		}
+		Node fin = graphAL.getAdjacencyList().get("1");
+		graphAL.printPath(inicio, fin);
 		
 	}
 	
-	@Test
-	public void testPrim() {
-		System.out.println("TEST PRIM----------------");
-		setupStage3();
-		
-		
-		ArrayList<Node<String, String>> ar = new ArrayList();
-//		System.out.println(graphAM.getNodes().get("Vega").getKey());
-		ar = graphAL.prim("Vega");
-		System.out.println(ar.size());
-		
-		for (int i = 0; i < ar.size(); i++) {
-			System.out.println(ar.get(i).getKey());
-			
-		}
-		System.out.println("FIN TEST PRIM----------------");
-	}
+//	@Test
+//	public void testPrim() {
+//		System.out.println("TEST PRIM----------------");
+//		setupStage3();
+//		
+//		
+//		ArrayList<Node<String, String>> ar = new ArrayList();
+////		System.out.println(graphAM.getNodes().get("Vega").getKey());
+//		ar = graphAL.prim("Vega");
+//		System.out.println(ar.size());
+//		
+//		for (int i = 0; i < ar.size(); i++) {
+//			System.out.println(ar.get(i).getKey());
+//			
+//		}
+//		System.out.println("FIN TEST PRIM----------------");
+//	}
 
 }

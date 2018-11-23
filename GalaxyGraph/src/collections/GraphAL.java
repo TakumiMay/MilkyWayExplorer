@@ -20,6 +20,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	private HashMap<K, Integer> distances; 
 	private HashMap<K, Boolean> visited; 
 	private int time;
+	private int cNodes;
 	
 
 	public GraphAL(boolean directed) {
@@ -28,6 +29,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		distances = new HashMap<K, Integer>();
 		visited = new HashMap<K, Boolean>();
 		time = 0;
+		cNodes = 0;
 	}
 	
 	public HashMap<K, Node<K, T>> getAdjacencyList() {
@@ -40,7 +42,16 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 
 	@Override
 	public void addNode(K key, T element, int position) {
-		Node<K, T> node = new Node<K, T>(element, position);
+		Node<K, T> node = new Node<K, T>(element, cNodes);
+		cNodes++;
+		node.setKey(key);
+		adjacencyList.put(key, node);
+		visited.put(node.getKey(), false);
+	}
+	
+	public void addNode(K key, T element) {
+		Node<K, T> node = new Node<K, T>(element, cNodes);
+		cNodes++;
 		node.setKey(key);
 		adjacencyList.put(key, node);
 		visited.put(node.getKey(), false);
@@ -128,8 +139,8 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		q.enQueue(s);
 		while( !(q.isEmpty()) ) {
 			Node<K, T> u = q.deQueue().getInfo();
-//			recorrer los adyacentes al nodo s
-			for (Edge<K, T> edge : s.getList().values()) {
+//			recorrer los adyacentes al nodo u
+			for (Edge<K, T> edge : u.getList().values()) {
 				K key = edge.getAdjacentTo();
 				Node<K, T> v = adjacencyList.get(key); //para cada nodo v adyacente a s	
 				if (v.getColor() == Node.WHITE) { //si no ha sido descubierto
@@ -145,17 +156,17 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	// PARA PINTAR EL ARBOL BF:
 	public void printPath(Node<K, T> s, Node<K, T> v) {
 		if(v == s) {
-			System.out.println(s.getKey());
+			System.out.println(s.getKey()+"-"+s.getD());
 			//print s
 		} 
 		else if(v.getPredecessor() == null) {
 			//print "no path from s to v exists"
-			System.out.println("no existe");
+			System.out.println("no existe camino desde "+s.getKey()+" hasta "+v.getKey());
 			
 		}
 		else {
 			printPath(s, v.getPredecessor());
-			System.out.println(v.getKey());
+			System.out.println(v.getKey()+"-"+v.getD());
 			//print v
 		}
 	}
@@ -250,33 +261,33 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 
 	public static void main(String[] args) {
 		GraphAL<String, Integer> g = new GraphAL<>(false);
-		Node<String, Integer> a = new Node("A", 10);
-		Node<String, Integer> b = new Node("B", 30);
-		Node<String, Integer> c = new Node("C", 23);
-		Node<String, Integer> d = new Node("D", 5);
-		Node<String, Integer> e = new Node("E", 8);
-		Node<String, Integer> z = new Node("Z", 34);
-		Node<String, Integer> w = new Node("W", 13);
-		g.addNode("A", a);
-		g.addNode("B", b);
-		g.addNode("C", c);
-		g.addNode("D",d);
-		g.addNode("E",e);
-		g.addNode("Z",z);
-		//g.addNode(w);
-		g.addEdge(a.getKey(), b.getKey(), 4);
-		g.addEdge(a.getKey(), c.getKey(), 2);
-		g.addEdge(b.getKey(), d.getKey(), 5);
-		g.addEdge(b.getKey(), c.getKey(), 1);
-		g.addEdge(c.getKey(), d.getKey(), 8);
-		g.addEdge(c.getKey(), e.getKey(), 10);
-		g.addEdge(e.getKey(), z.getKey(), 3);
-		g.addEdge(d.getKey(), e.getKey(), 2);
-		g.addEdge(d.getKey(), z.getKey(), 6);
-		
-		g.dijkstra(a);
-		
-		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+//		Node<String, Integer> a = new Node("A", 10);
+//		Node<String, Integer> b = new Node("B", 30);
+//		Node<String, Integer> c = new Node("C", 23);
+//		Node<String, Integer> d = new Node("D", 5);
+//		Node<String, Integer> e = new Node("E", 8);
+//		Node<String, Integer> z = new Node("Z", 34);
+//		Node<String, Integer> w = new Node("W", 13);
+//		g.addNode("A", a);
+//		g.addNode("B", b);
+//		g.addNode("C", c);
+//		g.addNode("D",d);
+//		g.addNode("E",e);
+//		g.addNode("Z",z);
+//		//g.addNode(w);
+//		g.addEdge(a.getKey(), b.getKey(), 4);
+//		g.addEdge(a.getKey(), c.getKey(), 2);
+//		g.addEdge(b.getKey(), d.getKey(), 5);
+//		g.addEdge(b.getKey(), c.getKey(), 1);
+//		g.addEdge(c.getKey(), d.getKey(), 8);
+//		g.addEdge(c.getKey(), e.getKey(), 10);
+//		g.addEdge(e.getKey(), z.getKey(), 3);
+//		g.addEdge(d.getKey(), e.getKey(), 2);
+//		g.addEdge(d.getKey(), z.getKey(), 6);
+//		
+//		g.dijkstra(a);
+//		
+//		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
 		
 		
 		

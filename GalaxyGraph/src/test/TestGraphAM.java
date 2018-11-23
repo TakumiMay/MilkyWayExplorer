@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
-import java.util.Queue;
 
 import org.junit.jupiter.api.Test;
 
@@ -73,20 +72,18 @@ class TestGraphAM {
 	//Have to improve the test
 	@Test
 	public void testPrim() {
-		System.out.println("TEST PRIM----------------");
 		setupStage3();
 		
 		
 		ArrayList<Node<String, String>> ar = new ArrayList();
 //		System.out.println(graphAM.getNodes().get("Vega").getKey());
 		ar = graphAM.prim("Vega");
-//		System.out.println(ar.size());
+		System.out.println(ar.size());
 		
 		for (int i = 0; i < ar.size(); i++) {
 			System.out.println(ar.get(i).getKey());
 			
 		}
-		System.out.println("FIN TEST PRIM----------------");
 	}
 	@Test
 	public void testFloydWarshall() {
