@@ -94,14 +94,10 @@ private GraphAL<String, String> graphAL;
 		setupStage5();
 		Node inicio = graphAL.getAdjacencyList().get("3");
 		graphAL.bfs(inicio);
-//		for (Node<String, String> u: graphAL.getAdjacencyList().values()) {
-////			for (Edge<String, String> edge : u.getList().values()) {
-////				System.out.println();
-////			}
-//			System.out.println(u.getColor());
-//		}
+
 		Node fin = graphAL.getAdjacencyList().get("1");
-		graphAL.printPath(inicio, fin);
+		System.out.println(graphAL.printPath(inicio, fin, ""));
+		assertTrue(graphAL.printPath(inicio, fin, "").equals("3-0-2-1-1-2"));
 		
 	}
 	

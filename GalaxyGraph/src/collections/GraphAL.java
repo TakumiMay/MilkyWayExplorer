@@ -153,22 +153,26 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			u.setColor(Node.BLACK); //se pinta de negro a u porque todos sus adyacentes fueron descubiertos
 		}
 	}
+	//System.out.println(s.getKey()+"-"+s.getD());
+	//print s
 	// PARA PINTAR EL ARBOL BF:
-	public void printPath(Node<K, T> s, Node<K, T> v) {
+	public String printPath(Node<K, T> s, Node<K, T> v, String path) {	
+		
 		if(v == s) {
-			System.out.println(s.getKey()+"-"+s.getD());
-			//print s
+			path+=s.getKey()+"-"+s.getD();
 		} 
 		else if(v.getPredecessor() == null) {
 			//print "no path from s to v exists"
-			System.out.println("no existe camino desde "+s.getKey()+" hasta "+v.getKey());
+			path="No hay camino entre "+ s.getKey() +" y "+v.getKey();
 			
 		}
 		else {
-			printPath(s, v.getPredecessor());
+			printPath(s, v.getPredecessor(), path);
+			path+=s.getKey()+"-"+s.getD();
 			System.out.println(v.getKey()+"-"+v.getD());
 			//print v
 		}
+		return path;
 	}
 	
 	public void dijkstra(Node<K,T> nodeP) {
