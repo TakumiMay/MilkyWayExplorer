@@ -105,7 +105,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			}
 		}
 	}
-	public void dfsVisit(Node<K, T> u) {
+	private void dfsVisit(Node<K, T> u) {
 		this.time = time+1;
 		u.setD(time);
 		u.setColor(Node.GRAY); //se pinta gris porque ha sido descubierto
@@ -120,6 +120,15 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		u.setColor(Node.BLACK); //se pinta a u de negro pues todos sus adyacentes han sido descubiertos
 		this.time = time+1;
 		u.setF(time);
+	}
+	
+	public PriorityQueue timeStampsNodes() {
+		PriorityQueue visited = new PriorityQueue(new NodeCompare()); //Node compare es para comparar nodos por su atributo D
+		for (Node<K, T> n : adjacencyList.values()) { //Recorre todala lista de adyacencia y agrea a la cola
+			visited.add(n);
+		}
+		return visited;
+		
 	}
 	
 	public void bfs(Node<K, T> s) {
@@ -156,10 +165,11 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	//System.out.println(s.getKey()+"-"+s.getD());
 	//print s
 	// PARA PINTAR EL ARBOL BF:
-	public String printPath(Node<K, T> s, Node<K, T> v, String path) {	
+	public void printPath(Node<K, T> s, Node<K, T> v, String path) {	
 		
 		if(v == s) {
 			path+=s.getKey()+"-"+s.getD();
+			System.out.println(v.getKey()+"-"+v.getD());
 		} 
 		else if(v.getPredecessor() == null) {
 			//print "no path from s to v exists"
@@ -172,7 +182,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			System.out.println(v.getKey()+"-"+v.getD());
 			//print v
 		}
-		return path;
+		//return path;
 	}
 	
 	public void dijkstra(Node<K,T> nodeP) {
