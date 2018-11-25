@@ -244,10 +244,13 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		
 		
 		int i = source.getPosition();
+		System.out.println(source.getKey());
 
 		for (int j = 0; j < matrixA.length; j++) {
 			
-			if (matrixA[i][j].getWeight() != Integer.MAX_VALUE && matrixA[i][j].getWeight() != 0) {				
+			if ((matrixA[i][j].getWeight() != MAX_WEIGHT) && (matrixA[i][j].getWeight() != 0) && (matrixA[i][j]!= null)) {	
+				System.out.println(matrixA[i][j].getWeight());
+				
 				pq.add(matrixA[i][j]);	
 			}
 			
@@ -268,7 +271,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		}
 		int c = 0;	
 	}
-	//prim recibe el nodo donde empiezo
+	
 	/**
 	 * 
 	 * @param source Key of the node to start the prim
@@ -355,20 +358,15 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	public void dijkstra(Node<K,T> nodeP) {
 		
 		for(Node<K, T> n: nodes.values()) {
-			K key = n.getKey();
+			K key = n.getKey();			
 			distances.put(key, Integer.MAX_VALUE);
 		}
+		
 		//Comparator<Edge> ec = new EdgeCompare();
 		distances.put(nodeP.getKey(), 0);
 		PriorityQueue<Edge<K, T>> queueEdges = new PriorityQueue<>();
-		PriorityQueue<Node<K, T>> queueNode = new PriorityQueue<>();
-		int i = nodeP.getPosition();
-		for (int j = 0; j < matrixA.length; j++) {
-			if (matrixA[i][j].getWeight() != MAX_WEIGHT && matrixA[i][j].getWeight() != 0) {
-				queueEdges.add(matrixA[i][j]);
-			} 
-			
-		}
+		PriorityQueue<Node<K, T>> queueNode = new PriorityQueue<>();		
+		queueEdges = sortEdges(queueEdges, nodeP);
 		
 		while(!queueEdges.isEmpty()) {
 			int distance = queueEdges.peek().getWeight();
@@ -388,12 +386,15 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	}
 	
 	public void relaxEdges(PriorityQueue<Edge<K, T>> qe, PriorityQueue<Node<K, T>> qn, Node<K,T> n) {
-		for(Edge<K, T> e: n.getList().values()) {
-			qe.add(e);
-		}
+//		for(Edge<K, T> e: n.getList().values()) {
+//			qe.add(e);
+//		}
+		qe = sortEdges(qe, n);
 		while(!qe.isEmpty()) {
 			int distance = qe.peek().getWeight() + distances.get(n.getKey());
-			K k = nodes.get(qe.peek().getAdjacentTo()).getKey();
+//			K k = nodes.get(qe.peek().getAdjacentTo()).getKey();
+			K k = qe.peek().getAdjacentTo();	
+			
 			if(distance < distances.get(k)){
 //				distances.put( ((Edge<K, T>) qe.peek()).getWeight(), distance);
 				distances.put( qe.peek().getAdjacentTo(), distance);
@@ -427,6 +428,52 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		this.otherDistances = otherDistances;
 	}
 	
+	public static void main(String[] args) {
+		GraphAM<String, Integer> g = new GraphAM<>(6,false);
+//		Node<String, Integer> a = new Node("A", 10);
+//		Node<String, Integer> b = new Node("B", 30);
+//		Node<String, Integer> c = new Node("C", 23);
+//		Node<String, Integer> d = new Node("D", 5);
+//		Node<String, Integer> e = new Node("E", 8);
+//		Node<String, Integer> z = new Node("Z", 34);
+//		Node<String, Integer> w = new Node("W", 13);
+		g.addNode("A", 10);
+		g.addNode("B", 30);
+		g.addNode("C", 23);
+		g.addNode("D", 5);
+		g.addNode("E", 8);
+		g.addNode("Z", 34);
+		System.out.println("Cantidad de nodos: "+g.getNodes().size());
+		
+		//g.addNode(w);
+		g.addEdge("A", "B", 4);
+		g.addEdge("A", "C", 2);
+		g.addEdge("B", "D", 5);
+		g.addEdge("B", "C", 1);
+		g.addEdge("C", "D", 8);
+		g.addEdge("C", "E", 10);
+		g.addEdge("E", "Z", 3);
+		g.addEdge("D", "E", 2);
+		g.addEdge("D", "Z", 6);
+//		for (int i = 0; i < g.size; i++) {
+//			for (int j = 0; j < g.size; j++) {
+//				System.out.print(g.getMatrixA()[i][j].getWeight()+" ");
+//				if (j==g.size-1) {
+//					System.out.println();
+//				}
+//				
+//			}			
+//		}
+		g.dijkstra(g.getNodes().get("A"));
+		
+		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+		
+		
+		
+ 		
+		
+		
+	}  
 	
 	
 	
