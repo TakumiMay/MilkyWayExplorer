@@ -12,6 +12,7 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
+import collections.Edge;
 import collections.Node;
 import model.Star;
 
@@ -24,12 +25,11 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	public GraphPanel(MainWindow gui) {
 		mainW = gui;
 		options =  new OptionsPanel(this);
-		setSize(1500, 1000);
+		setPreferredSize(new Dimension(1500, 1000));
 //		setSize(new Dimension(1000, 1000));
 		setLayout(new BorderLayout());
 		addMouseListener(this);
 		
-
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -37,6 +37,18 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 		g.setColor(Color.WHITE);
 		
 		g.fillRect(0, 0, 800, size.height);
+		for (Node<String, Star> nd : mainW.getNodes().values()) {
+			int posXStart = nd.getElement().getPosX();
+			int posYStart = nd.getElement().getPosY();
+			for (Edge<String, Star> ed : nd.getList().values()) {
+				int posXEnd = mainW.getNodes().get(ed.getAdjacentTo()).getElement().getPosX();
+				int posYEnd = mainW.getNodes().get(ed.getAdjacentTo()).getElement().getPosY();
+				g.drawLine(posXStart, posYStart, posXEnd, posYEnd);
+				g.setColor(Color.BLACK);
+				g.drawString(ed.getWeight()+"", ((posXStart+posXEnd)/2)+20, ((posYStart+posYEnd)/2));
+			}
+		}
+		
 		for (Node<String, Star> st : mainW.getNodes().values()) {
 			Star a = st.getElement();
 			char color = a.getColor();
@@ -62,19 +74,18 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 			
 //			g.fillOval(x, y, s, s);
 			
+//			g.setColor(Color.BLACK);
+//			g.fillOval(200, 10, 50, 50);
+			
+			
+//			g.setColor(Color.BLUE);
+//			g.fillOval(60, 320, 50, 50);
+			
 		
 		}
-		g.setColor(Color.BLACK);
-		g.fillOval(200, 10, 50, 50);
-		
-		g.setColor(Color.BLUE);
-		g.fillOval(60, 320, 50, 50);
-		
-		
-		
-		g.drawLine(200+25, 10+50, 50+30, 320+30);
-		
-		g.drawString("50", ((200+60)/2)+20, (10+320)/2);
+				
+//		g.drawLine(200+25, 10+50, 50+30, 320+30);		
+//		g.drawString("50", ((200+60)/2)+20, (10+320)/2);
 		
 		
 		add(options, BorderLayout.EAST);
@@ -82,10 +93,9 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		// TODO Auto-generated method stub
-		
-		
+		// TODO Auto-generated method stub		
 	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {}
 	@Override
