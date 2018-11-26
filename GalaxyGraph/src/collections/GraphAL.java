@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import Exceptions.NodeException;
+
 
 //import sun.misc.Queue;
 
@@ -30,6 +32,10 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		visited = new HashMap<K, Boolean>();
 		time = 0;
 		cNodes = 0;
+	}
+	
+	public HashMap<K, Integer> getDistances() {
+		return distances;
 	}
 	
 	public HashMap<K, Node<K, T>> getAdjacencyList() {
@@ -122,6 +128,11 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		u.setF(time);
 	}
 	
+	/**
+	 * This method returns a queue with the nodes
+	 * sorted by distance. This method proves that dfs works.
+	 * @return
+	 */
 	public PriorityQueue timeStampsNodes() {
 		PriorityQueue visited = new PriorityQueue(new NodeCompare()); //Node compare es para comparar nodos por su atributo D
 		for (Node<K, T> n : adjacencyList.values()) { //Recorre todala lista de adyacencia y agrea a la cola
@@ -185,29 +196,35 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		//return path;
 	}
 	
-	public void dijkstra(Node<K,T> nodeP) {
-		
-		for(Node<K, T> n: adjacencyList.values()) {
+	/**
+	 * This method modifies the hash of distances
+	 * giving the shortest path between nodeP and the rest
+	 * @param nodeP
+	 */
+	
+	public void dijkstra(K origin) {
+		Node<K,T> nodeP = adjacencyList.get(origin);
+		for(Node<K, T> n: adjacencyList.values()) { //Inicializa todas las distancias de los nodos en infinito
 			K key = n.getKey();
 			distances.put(key, Integer.MAX_VALUE);
 		}
-		//Comparator<Edge> ec = new EdgeCompare();
-		distances.put(nodeP.getKey(), 0);
+
+		distances.put(nodeP.getKey(), 0); //La distancia del nodo origen es cero
 		PriorityQueue<Edge<K, T>> queueEdges = new PriorityQueue<>();
 		PriorityQueue<Node<K, T>> queueNode = new PriorityQueue<>();
 		
-		for(Edge<K, T> edge: nodeP.getList().values()) {
+		for(Edge<K, T> edge: nodeP.getList().values()) {// Saca todas las aristas del nodo origen y agrega a la cola de aristas
 			queueEdges.add(edge);
 		}
 		while(!queueEdges.isEmpty()) {
-			int distance = queueEdges.peek().getWeight();
-			Node<K, T> n = adjacencyList.get((queueEdges.peek().getAdjacentTo()));
-			distances.put(n.getKey(), distance);
-			queueNode.add(n);
-			queueEdges.poll();
+			int distance = queueEdges.peek().getWeight(); //Tomo la de menor peso
+			Node<K, T> n = adjacencyList.get((queueEdges.peek().getAdjacentTo())); //Tomo el nodo de la arista de menor peso
+			distances.put(n.getKey(), distance); //Lo agrego a la hash de distancias
+			queueNode.add(n); //Se agrega también a una cola de nodos
+			queueEdges.poll(); //Saco la arista
 			while(!queueNode.isEmpty()) {
 				Node<K, T> nodeVisited = queueNode.poll();
-				if(!visited.get(nodeVisited.getKey())){
+				if(!visited.get(nodeVisited.getKey())){ //Si no ha sido visitado lo marco
 					visited.put(nodeVisited.getKey(), true);
 					relaxEdges(queueEdges, queueNode, nodeVisited);
 				}
@@ -216,20 +233,47 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		
 	}
 	
+	/**
+	 * This method decides if the distance hash should be replaced
+	 * @param qe
+	 * @param qn
+	 * @param n
+	 */
 	public void relaxEdges(PriorityQueue<Edge<K, T>> qe, PriorityQueue<Node<K, T>> qn, Node<K,T> n) {
-		for(Edge<K, T> e: n.getList().values()) {
+		for(Edge<K, T> e: n.getList().values()) { //Saco todas las aristas del nodo actual, n
 			qe.add(e);
 		}
 		while(!qe.isEmpty()) {
 			int distance = qe.peek().getWeight() + distances.get(n.getKey());
 			K k = adjacencyList.get(qe.peek().getAdjacentTo()).getKey();
-			if(distance < distances.get(k)){
-//				distances.put( ((Edge<K, T>) qe.peek()).getWeight(), distance);
+			if(distance < distances.get(k)){ //Las voy recorriendo y decido si cambiar la distancia
 				distances.put( qe.peek().getAdjacentTo(), distance);
 			}
-//			qn.add(((Edge<K, T>) qe.poll()).getAdjacentTo());
-			qn.add(adjacencyList.get(qe.poll().getAdjacentTo()));
+			qn.add(adjacencyList.get(qe.poll().getAdjacentTo())); //Saco la arista y su nodo lo meto a la cola
 		}
+	}
+	
+	public ArrayList<String> dijkstraPath(K destiny) throws NodeException {
+		PriorityQueue<Node> distancesNodes = new PriorityQueue<>(new NodeCompare());
+		ArrayList<String> path = new ArrayList<String>();
+		if(this.distances.get(destiny) == null) {
+			throw new NodeException("The destiny doesn't exists");
+		}
+		for(Node<K, T> n: adjacencyList.values()) {
+			n.setD(this.distances.get(n.getKey()));
+			distancesNodes.add(n);
+		}
+		boolean stop = false;
+		while(!(distancesNodes.isEmpty()) && !stop) {
+			Node aux = distancesNodes.poll();
+			if(aux.getKey() != destiny) {
+				path.add(""+aux.getKey());
+			}
+			else {
+				stop = true;
+			}
+		}
+		return path;
 	}
 	
 	public void addNode(K key, Node<K,T> n) {
@@ -273,8 +317,8 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		
 	}
 
-	public static void main(String[] args) {
-		GraphAL<String, Integer> g = new GraphAL<>(false);
+	public static void main(String[] args) throws NodeException {
+		GraphAL<String, String> g = new GraphAL<>(false);
 //		Node<String, Integer> a = new Node("A", 10);
 //		Node<String, Integer> b = new Node("B", 30);
 //		Node<String, Integer> c = new Node("C", 23);
@@ -282,26 +326,31 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 //		Node<String, Integer> e = new Node("E", 8);
 //		Node<String, Integer> z = new Node("Z", 34);
 //		Node<String, Integer> w = new Node("W", 13);
-//		g.addNode("A", a);
-//		g.addNode("B", b);
-//		g.addNode("C", c);
-//		g.addNode("D",d);
-//		g.addNode("E",e);
-//		g.addNode("Z",z);
-//		//g.addNode(w);
-//		g.addEdge(a.getKey(), b.getKey(), 4);
-//		g.addEdge(a.getKey(), c.getKey(), 2);
-//		g.addEdge(b.getKey(), d.getKey(), 5);
-//		g.addEdge(b.getKey(), c.getKey(), 1);
-//		g.addEdge(c.getKey(), d.getKey(), 8);
-//		g.addEdge(c.getKey(), e.getKey(), 10);
-//		g.addEdge(e.getKey(), z.getKey(), 3);
-//		g.addEdge(d.getKey(), e.getKey(), 2);
-//		g.addEdge(d.getKey(), z.getKey(), 6);
-//		
-//		g.dijkstra(a);
-//		
-//		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+		g.addNode("A", "1");
+		g.addNode("B", "3");
+		g.addNode("C", "0");
+		g.addNode("D","4");
+		g.addNode("E","3");
+		g.addNode("Z","10");
+		//g.addNode(w);
+		g.addEdge("A", "B", 4);
+		g.addEdge("A", "C", 2);
+		g.addEdge("B", "D", 5);
+		g.addEdge("B", "C", 1);
+		g.addEdge("C", "D", 8);
+		g.addEdge("C", "E", 10);
+		g.addEdge("E", "Z", 3);
+		g.addEdge("D", "E", 2);
+		g.addEdge("D", "Z", 6);
+		
+		
+		g.dijkstra("A");
+		ArrayList<String> bla = g.dijkstraPath("D");
+		for (int i = 0; i < bla.size(); i++) {
+			System.out.println(bla.get(i));
+		}
+		
+		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
 		
 		
 		

@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 
 import org.junit.jupiter.api.Test;
 
+import Exceptions.NodeException;
 import collections.Edge;
 import collections.GraphAL;
 import collections.GraphAM;
@@ -60,6 +61,27 @@ private GraphAL<String, String> graphAL;
 		graphAL.addEdge("3", "2", 1);
 		graphAL.addEdge("4", "5", 1);
 		graphAL.addEdge("1", "5", 1);
+		
+	}
+	
+	public void setupStage6() {
+		setupStage1();
+		graphAL.addNode("A", "1");
+		graphAL.addNode("B", "3");
+		graphAL.addNode("C", "0");
+		graphAL.addNode("D","4");
+		graphAL.addNode("E","3");
+		graphAL.addNode("Z","10");
+	
+		graphAL.addEdge("A", "B", 4);
+		graphAL.addEdge("A", "C", 2);
+		graphAL.addEdge("B", "D", 5);
+		graphAL.addEdge("B", "C", 1);
+		graphAL.addEdge("C", "D", 8);
+		graphAL.addEdge("C", "E", 10);
+		graphAL.addEdge("E", "Z", 3);
+		graphAL.addEdge("D", "E", 2);
+		graphAL.addEdge("D", "Z", 6);
 		
 	}
 
@@ -131,5 +153,22 @@ private GraphAL<String, String> graphAL;
 //		}
 //		System.out.println("FIN TEST PRIM----------------");
 //	}
+	
+	@Test
+	public void testDijkstra() {
+		setupStage6();
+		graphAL.dijkstra("A");
+		ArrayList<String> bla;
+		try {
+			bla = graphAL.dijkstraPath("D");
+			for (int i = 0; i < bla.size(); i++) {
+				System.out.println(bla.get(i));
+			}
+			graphAL.getDistances().forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+		} catch (NodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
