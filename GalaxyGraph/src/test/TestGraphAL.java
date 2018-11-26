@@ -8,11 +8,11 @@ import java.util.PriorityQueue;
 
 import org.junit.jupiter.api.Test;
 
-import Exceptions.NodeException;
 import collections.Edge;
 import collections.GraphAL;
 import collections.GraphAM;
 import collections.Node;
+import exceptions.NodeException;
 
 class TestGraphAL {
 

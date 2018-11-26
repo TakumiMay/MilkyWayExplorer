@@ -18,10 +18,10 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	private HashMap<K, Node<K,T>> nodes;
 	private Edge<K,T>[][] matrixA;
 	private boolean directed;
-	private HashMap<K, Integer> distances;
+	private HashMap<K, Double> distances;
 	private HashMap<K, Boolean> visited; 
 	private int cNodes;
-	private ArrayList<Integer> otherDistances;
+	private ArrayList<Double> otherDistances;
 	public int suma;
 
 	public GraphAM(int size, boolean directed) {
@@ -30,7 +30,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		nodes = new HashMap<>();
 		this.directed = directed;
 		matrixA = new Edge[size][size];
-		distances = new HashMap<K, Integer>();
+		distances = new HashMap<K, Double>();
 		visited = new HashMap<K, Boolean>();
 		otherDistances = new ArrayList<>();
 		suma =0;
@@ -79,7 +79,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 	}
 	
 	
-	public void addEdge(K key1,K key2, int weight) {
+	public void addEdge(K key1,K key2, double weight) {
 		int p1 = nodes.get(key1).getPosition();
 		int p2 = nodes.get(key2).getPosition();
 		Edge<K, T> e = new Edge<>(weight);
@@ -194,8 +194,8 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 //		return floydW;
 //	}
 	
-	public int[][] floydWarshall(){
-		int[][] floydW = new int[size][size];
+	public double[][] floydWarshall(){
+		double[][] floydW = new double[size][size];
 		
 		for (int i = 0; i < matrixA.length; i++) {
 			for (int j = 0; j < matrixA.length; j++) {
@@ -373,17 +373,17 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		
 		for(Node<K, T> n: nodes.values()) {
 			K key = n.getKey();			
-			distances.put(key, Integer.MAX_VALUE);
+			distances.put(key, Double.MAX_VALUE);
 		}
 		
 		//Comparator<Edge> ec = new EdgeCompare();
-		distances.put(nodeP.getKey(), 0);
+		distances.put(nodeP.getKey(), 0.0);
 		PriorityQueue<Edge<K, T>> queueEdges = new PriorityQueue<>();
 		PriorityQueue<Node<K, T>> queueNode = new PriorityQueue<>();		
 		queueEdges = sortEdges(queueEdges, nodeP);
 		
 		while(!queueEdges.isEmpty()) {
-			int distance = queueEdges.peek().getWeight();
+			double distance = queueEdges.peek().getWeight();
 			Node<K, T> n = nodes.get((queueEdges.peek().getAdjacentTo()));
 			distances.put(n.getKey(), distance);
 			queueNode.add(n);
@@ -391,7 +391,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 			while(!queueNode.isEmpty()) {
 				Node<K, T> nodeVisited = queueNode.poll();
 				System.out.print("Distancias: ");
-				for(int a: distances.values()) {
+				for(double a: distances.values()) {
 					System.out.print(a+" ");
 				}
 				System.out.println();
@@ -412,7 +412,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		
 		qe = sortEdges(qe, n);
 		while(!qe.isEmpty()) {
-			int distance = qe.peek().getWeight() + distances.get(n.getKey());
+			double distance = qe.peek().getWeight() + distances.get(n.getKey());
 //			K k = nodes.get(qe.peek().getAdjacentTo()).getKey();
 			K k = qe.peek().getAdjacentTo();	
 //			System.out.println(k+" "+distances.get(k));
@@ -434,19 +434,19 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		this.visited = visited;
 	}
 
-	public HashMap<K, Integer> getDistances() {
+	public HashMap<K, Double> getDistances() {
 		return distances;
 	}
 
-	public void setDistances(HashMap<K, Integer> distances) {
+	public void setDistances(HashMap<K, Double> distances) {
 		this.distances = distances;
 	}
 
-	public ArrayList<Integer> getOtherDistances() {
+	public ArrayList<Double> getOtherDistances() {
 		return otherDistances;
 	}
 
-	public void setOtherDistances(ArrayList<Integer> otherDistances) {
+	public void setOtherDistances(ArrayList<Double> otherDistances) {
 		this.otherDistances = otherDistances;
 	}
 	

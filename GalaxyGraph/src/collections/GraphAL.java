@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import Exceptions.NodeException;
+import exceptions.NodeException;
 
 
 //import sun.misc.Queue;
@@ -19,7 +19,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	
 	private boolean directed;
 	private HashMap<K, Node<K,T>> adjacencyList;
-	private HashMap<K, Integer> distances; 
+	private HashMap<K, Double> distances; 
 	private HashMap<K, Boolean> visited; 
 	private int time;
 	private int cNodes;
@@ -28,13 +28,13 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	public GraphAL(boolean directed) {
 		this.directed = directed;
 		adjacencyList = new HashMap<K, Node<K,T>>();
-		distances = new HashMap<K, Integer>();
+		distances = new HashMap<K, Double>();
 		visited = new HashMap<K, Boolean>();
 		time = 0;
 		cNodes = 0;
 	}
 	
-	public HashMap<K, Integer> getDistances() {
+	public HashMap<K, Double> getDistances() {
 		return distances;
 	}
 	
@@ -79,7 +79,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 	}
 	
 	@Override
-	public void addEdge(K key1, K key2, int weight) {
+	public void addEdge(K key1, K key2, double weight) {
 		Edge<K, T> e = new Edge<>(weight);
 		Node<K, T> node  = adjacencyList.get(key1);
 		e.setAdjacentTo(key2);
@@ -206,10 +206,10 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		Node<K,T> nodeP = adjacencyList.get(origin);
 		for(Node<K, T> n: adjacencyList.values()) { //Inicializa todas las distancias de los nodos en infinito
 			K key = n.getKey();
-			distances.put(key, Integer.MAX_VALUE);
+			distances.put(key, Double.MAX_VALUE);
 		}
 
-		distances.put(nodeP.getKey(), 0); //La distancia del nodo origen es cero
+		distances.put(nodeP.getKey(), 0.0); //La distancia del nodo origen es cero
 		PriorityQueue<Edge<K, T>> queueEdges = new PriorityQueue<>();
 		PriorityQueue<Node<K, T>> queueNode = new PriorityQueue<>();
 		
@@ -217,7 +217,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			queueEdges.add(edge);
 		}
 		while(!queueEdges.isEmpty()) {
-			int distance = queueEdges.peek().getWeight(); //Tomo la de menor peso
+			double distance = queueEdges.peek().getWeight(); //Tomo la de menor peso
 			Node<K, T> n = adjacencyList.get((queueEdges.peek().getAdjacentTo())); //Tomo el nodo de la arista de menor peso
 			distances.put(n.getKey(), distance); //Lo agrego a la hash de distancias
 			queueNode.add(n); //Se agrega también a una cola de nodos
@@ -244,7 +244,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			qe.add(e);
 		}
 		while(!qe.isEmpty()) {
-			int distance = qe.peek().getWeight() + distances.get(n.getKey());
+			double distance = qe.peek().getWeight() + distances.get(n.getKey());
 			K k = adjacencyList.get(qe.peek().getAdjacentTo()).getKey();
 			if(distance < distances.get(k)){ //Las voy recorriendo y decido si cambiar la distancia
 				distances.put( qe.peek().getAdjacentTo(), distance);
@@ -260,7 +260,8 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			throw new NodeException("The destiny doesn't exists");
 		}
 		for(Node<K, T> n: adjacencyList.values()) {
-			n.setD(this.distances.get(n.getKey()));
+			double d = this.distances.get(n.getKey());
+			n.setD((int)d);
 			distancesNodes.add(n);
 		}
 		boolean stop = false;

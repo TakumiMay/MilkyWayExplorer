@@ -89,7 +89,7 @@ class TestGraphAM {
 	public void testFloydWarshall() {
 		System.out.println("TEST FLOYD WARSHALL");
 		setupStage3();
-		int floyd [][] = graphAM.floydWarshall();
+		double floyd [][] = graphAM.floydWarshall();
 //		Edge<String, String> floyd [][] = graphAM.getMatrixA();
 		System.out.println("tamaño matriz: "+floyd.length);
 		
