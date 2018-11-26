@@ -1,9 +1,13 @@
 package guInterface;
 
+import java.util.HashMap;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import collections.Node;
 import model.GraphApp;
+import model.Star;
 
 public class MainWindow extends JFrame {
 
@@ -19,7 +23,7 @@ public class MainWindow extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage((new ImageIcon("imgs/star_icon.png")).getImage());
-		setLocationRelativeTo(null);
+//		setLocationRelativeTo(this);
 		
 		main = new MainPanel(this);
 		app = new GraphApp();
@@ -41,5 +45,9 @@ public class MainWindow extends JFrame {
 		MainWindow gui = new MainWindow();
 		gui.setVisible(true);
 		
+	}
+	
+	public HashMap<String, Node<String, Star>> getNodes(){
+		return app.getAl().getAdjacencyList();
 	}
 }
