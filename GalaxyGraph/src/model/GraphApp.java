@@ -68,7 +68,7 @@ public class GraphApp {
 		al.getAdjacencyList().get("Sirio A").getElement().setPos(255, 355);
 		
 		al.addNode("Sirio B", new Star("Sirio B", " 228 millones", "1.018 masas solares", Star.WHITE, 0));
-		al.getAdjacencyList().get("Sirio B").getElement().setPos(270, 402);
+		al.getAdjacencyList().get("Sirio B").getElement().setPos(270, 420);
 		
 		al.addNode("Tau Ceti", new Star("Tau Ceti", " 5.8 billones", "0.783 masas solares", Star.YELLOW, 0));
 		al.getAdjacencyList().get("Tau Ceti").getElement().setPos(150, 431);
@@ -80,7 +80,7 @@ public class GraphApp {
 		al.getAdjacencyList().get("Ross 154").getElement().setPos(627, 326);
 		
 		al.addNode("Ross 248", new Star("Ross 248", " 1.3 billones", "0.136 masas solares", Star.RED, 0));
-		al.getAdjacencyList().get("Ross 248").getElement().setPos(665, 365);
+		al.getAdjacencyList().get("Ross 248").getElement().setPos(670, 370);
 		
 		al.addEdge("Sol", "Próxima Centauri", 4.24);
 		al.addEdge("Próxima Centauri", "Alfa Centauri A", 0.237);
