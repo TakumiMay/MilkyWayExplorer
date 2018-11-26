@@ -8,8 +8,9 @@ public class GraphApp {
 	private GraphAM<String, Star> am;
 
 	public GraphApp() {
-		al = new GraphAL<>(false);
-		am = new GraphAM<>(15, false);
+		//al = new GraphAL<>(false);
+		//am = new GraphAM<>(15, false);
+		inicializeStars();
 		
 	}
 
@@ -31,7 +32,7 @@ public class GraphApp {
 	
 	public void inicializeStars() {
 		al =new GraphAL(false);
-		am =new GraphAM(15, false);
+		am =new GraphAM(16, false);
 		
 		al.addNode("Sol", new Star("Sun", "4.6 billones", "1 masa solar", Star.YELLOW, 8));
 		al.getAdjacencyList().get("Sol").getElement().setPos(395, 295);
@@ -109,9 +110,9 @@ public class GraphApp {
 		
 		
 		
-		al.addEdge("Sol", "Sirio A", 8.55);
+		//al.addEdge("Sol", "Sirio A", 8.55);
 		
-		al.addEdge("Próxima Centauri", "Sirio A", 6.1);
+		//al.addEdge("Próxima Centauri", "Sirio A", 6.1);
 		
 		//al.addEdge("Sol", "Alfa Centauri A", 4.36);
 		//al.addEdge("Sol", "Sirio B", 8.55);
