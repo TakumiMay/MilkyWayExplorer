@@ -56,21 +56,21 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 			int x = a.getPosX()-7;
 			int y =a.getPosY()-7;
 			if (color == Star.BLUE) {
-				s = 40;
+				s = 35;
 				g.setColor(new Color(83, 138, 213));
 			} else if (color == Star.BROWN) {
-				s = 20;
+				s = 15;
 				g.setColor(new Color(184, 71, 47));
-				s = 25;
+				s = 20;
 			} else if (color == Star.RED) {
-				s = 28;
+				s = 23;
 				g.setColor(new Color(232, 57, 48));
 //				g.setColor(Color.GREEN);
 			} else if (color == Star.WHITE) {
-				s = 35;
+				s = 30;
 				g.setColor(Color.WHITE);
 			} else if (color == Star.YELLOW) {
-				s = 30;
+				s = 25;
 				g.setColor(new Color(235, 235, 6));
 			}
 			
