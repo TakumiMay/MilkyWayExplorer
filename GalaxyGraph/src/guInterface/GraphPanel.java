@@ -34,7 +34,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	
 	public void paintComponent(Graphics g) {
 		Dimension size = getSize();
-		g.setColor(Color.WHITE);
+		g.setColor(Color.DARK_GRAY);
 		
 		g.fillRect(0, 0, 800, size.height);
 		for (Node<String, Star> nd : mainW.getNodes().values()) {
@@ -45,7 +45,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 				int posYEnd = mainW.getNodes().get(ed.getAdjacentTo()).getElement().getPosY();
 				g.drawLine(posXStart, posYStart, posXEnd, posYEnd);
 				g.setColor(Color.BLACK);
-				g.drawString(ed.getWeight()+"", ((posXStart+posXEnd)/2)+20, ((posYStart+posYEnd)/2));
+				g.drawString(ed.getWeight()+"", ((posXStart+posXEnd)/2), ((posYStart+posYEnd)/2));
 			}
 		}
 		
@@ -53,8 +53,8 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 			Star a = st.getElement();
 			char color = a.getColor();
 			int s = 0;
-			int x = a.getPosX();
-			int y =a.getPosY();
+			int x = a.getPosX()-7;
+			int y =a.getPosY()-7;
 			if (color == Star.BLUE) {
 				s = 40;
 				g.setColor(new Color(83, 138, 213));
@@ -63,7 +63,9 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 				g.setColor(new Color(184, 71, 47));
 				s = 25;
 			} else if (color == Star.RED) {
+				s = 28;
 				g.setColor(new Color(232, 57, 48));
+//				g.setColor(Color.GREEN);
 			} else if (color == Star.WHITE) {
 				s = 35;
 				g.setColor(Color.WHITE);
@@ -73,6 +75,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 			}
 			
 			g.fillOval(x, y, s, s);
+			g.drawString(st.getKey(), x, y);
 			
 //			g.setColor(Color.BLACK);
 //			g.fillOval(200, 10, 50, 50);
