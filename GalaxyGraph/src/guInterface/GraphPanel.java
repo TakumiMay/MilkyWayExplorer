@@ -53,8 +53,8 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 			Star a = st.getElement();
 			char color = a.getColor();
 			int s = 0;
-//			int x = a.getPosX();
-//			int y =a.getPosY();
+			int x = a.getPosX();
+			int y =a.getPosY();
 			if (color == Star.BLUE) {
 				s = 40;
 				g.setColor(new Color(83, 138, 213));
@@ -72,7 +72,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 				g.setColor(new Color(235, 235, 6));
 			}
 			
-//			g.fillOval(x, y, s, s);
+			g.fillOval(x, y, s, s);
 			
 //			g.setColor(Color.BLACK);
 //			g.fillOval(200, 10, 50, 50);
