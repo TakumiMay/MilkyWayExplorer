@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import collections.GraphAL;
 import collections.Node;
 import model.GraphApp;
 import model.Star;
@@ -50,6 +51,9 @@ public class MainWindow extends JFrame {
 	
 	public HashMap<String, Node<String, Star>> getNodes(){
 		return app.getAl().getAdjacencyList();
+	}
+	public GraphAL<String, Star> getGraphAL(){
+		return app.getAl();
 	}
 	
 }

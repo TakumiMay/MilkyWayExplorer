@@ -253,9 +253,9 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		}
 	}
 	
-	public ArrayList<String> dijkstraPath(K destiny) throws NodeException {
+	public ArrayList<K> dijkstraPath(K destiny) throws NodeException {
 		PriorityQueue<Node> distancesNodes = new PriorityQueue<>(new NodeCompare());
-		ArrayList<String> path = new ArrayList<String>();
+		ArrayList<K> path = new ArrayList<K>();
 		if(this.distances.get(destiny) == null) {
 			throw new NodeException("The destiny doesn't exists");
 		}
@@ -268,7 +268,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		while(!(distancesNodes.isEmpty()) && !stop) {
 			Node aux = distancesNodes.poll();
 			if(aux.getKey() != destiny) {
-				path.add(""+aux.getKey());
+				path.add((K) aux.getKey());
 			}
 			else {
 				stop = true;
@@ -301,7 +301,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		visited.put(source, true);
 		route.add(adjacencyList.get(source));
 		int c = 0;
-		while (c<adjacencyList.size()-1) {
+		while (c!=adjacencyList.size()) {
 			K key = pq.peek().getAdjacentTo();
 			if (visited.get(key)!=null) {
 				pq.poll();
@@ -309,6 +309,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			else {
 				visited.put(key, true);
 				route.add(adjacencyList.get(key));
+				distances.put(key, pq.peek().getWeight());
 				pq.poll();
 				pq = sortEdges(pq, adjacencyList.get(key));
 			}	

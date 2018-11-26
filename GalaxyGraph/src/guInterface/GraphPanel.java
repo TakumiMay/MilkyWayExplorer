@@ -10,25 +10,38 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Iterator;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import collections.Edge;
 import collections.Node;
+import javafx.scene.control.Button;
 import model.Star;
 
 public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 
+	public static final String DIJKSTRA = "d"; 
 	private MainWindow mainW; 
 	
 	private OptionsPanel options;
 	
+	private DijkstraWindow dw;
+	
+	private JButton btnDijs;
+	
 	public GraphPanel(MainWindow gui) {
+		dw = new DijkstraWindow(mainW);
+		dw.setVisible(false);
 		mainW = gui;
 		options =  new OptionsPanel(this);
 		setPreferredSize(new Dimension(1500, 1000));
 //		setSize(new Dimension(1000, 1000));
 		setLayout(new BorderLayout());
 		addMouseListener(this);
+		btnDijs = new JButton("Dijkstra");
+		btnDijs.addActionListener(this);
+		btnDijs.setActionCommand(DIJKSTRA);
+		add(btnDijs, BorderLayout.SOUTH);
 		
 	}
 	
@@ -44,6 +57,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 				int posXEnd = mainW.getNodes().get(ed.getAdjacentTo()).getElement().getPosX();
 				int posYEnd = mainW.getNodes().get(ed.getAdjacentTo()).getElement().getPosY();
 				g.drawLine(posXStart, posYStart, posXEnd, posYEnd);
+				
 				g.setColor(Color.BLACK);
 				g.drawString(ed.getWeight()+"", ((posXStart+posXEnd)/2), ((posYStart+posYEnd)/2));
 			}
@@ -64,8 +78,8 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 				s = 20;
 			} else if (color == Star.RED) {
 				s = 23;
-				g.setColor(new Color(232, 57, 48));
-//				g.setColor(Color.GREEN);
+//				g.setColor(new Color(232, 57, 48));
+				g.setColor(Color.RED);
 			} else if (color == Star.WHITE) {
 				s = 30;
 				g.setColor(Color.WHITE);
@@ -96,7 +110,10 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		// TODO Auto-generated method stub		
+		if (event.getActionCommand().equals(DIJKSTRA)) {
+			System.out.println("btn");
+			dw.setVisible(true);
+		}
 	}
 	
 	@Override
