@@ -32,6 +32,7 @@ public class MainWindow extends JFrame {
 		graph = new GraphPanel(this);
 		main.setVisible(false);
 		graph.setVisible(true);
+		add(graph);
 		
 	}
 	
