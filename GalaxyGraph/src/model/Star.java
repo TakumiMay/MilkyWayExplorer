@@ -21,9 +21,14 @@ public class Star {
 	private char color;
 	private int planets;
 	
+	/**
+	 * To paint
+	 */
 	private int posX;
 	private int posY;
 	
+	
+
 	public Star(String name, String age, String size, char color, int planets) {
 		super();
 		this.name = name;
@@ -33,6 +38,29 @@ public class Star {
 		this.planets = planets;
 		this.posX = 0;
 		this.posY = 0;
+		
+		
+	}
+	public int getPosX() {
+		return posX;
+	}
+	
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+	
+	public int getPosY() {
+		return posY;
+	}
+	
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+	
+	public void setPos(int x, int y) {
+		this.posX = x;
+		this.posY = y;
+	
 	}
 
 	public String getName() {
@@ -81,8 +109,11 @@ public class Star {
 		GraphAM<String, Star> am =new GraphAM(15, false);
 		
 		al.addNode("Sol", new Star("Sun", "4.6 billones", "1 masa solar", Star.YELLOW, 8));
+		al.getAdjacencyList().get("Sol").getElement().setPos(195, 245);
 		al.addNode("Próxima Centauri", new Star("Próxima Centauri", "4.85 billones", "0.123 masas solares", Star.RED, 1));
+		al.getAdjacencyList().get("Próxima Centauri").getElement().setPos(198, 315);
 		al.addNode("Alfa Centauri A", new Star("Alfa Centauri A", "4.4 billones", "1.100 masas solares", Star.YELLOW, 0));
+		al.getAdjacencyList().get("Alfa Centauri A").getElement().setPos(195, 245);
 		al.addNode("Alfa Centauri B", new Star("Alfa Centauri B", "6.5 billones", "0.907 masas solares", Star.RED, 1));
 		al.addNode("Estrella de Barnard", new Star("Estrella de Barnard", "10 billones", "0.144 masas solares", Star.RED, 1));
 		al.addNode("Luhman 16A", new Star("Luhman 16A", "700 millones", "33.5 masas jovianas", Star.BROWN, 0));
@@ -100,10 +131,34 @@ public class Star {
 		al.addEdge("Sol", "Próxima Centauri", 4.24);
 		al.addEdge("Próxima Centauri", "Alfa Centauri A", 0.237);
 		al.addEdge("Próxima Centauri", "Alfa Centauri B", 0.237);
-		al.addEdge("Sol", "Sirio A", 8.55);
-		al.addEdge("Sirio A", "Sirio B", 0.00031);
+		al.addEdge("Sol", "Estrella de Barnard", 5.96);
+		al.addEdge("Estrella de Barnard", "Luhman 16A", 1.36);
+		al.addEdge("Luhman 16A", "Luhman 16B", 4.7);
+		al.addEdge("Sol", "WISE 0855-0714", 7.2);
+		al.addEdge("WISE 0855-0714","Luhman 16A" , 5.2);
+		al.addEdge("WISE 0855-0714","Lalande 21185" , 1.0);
+		al.addEdge("Lalande 21185", "Sirio A" , 4.1);
+		al.addEdge("Sirio A", "Sirio B", 0.0031);
+		al.addEdge("Sirio B","Próxima Centauri", 6.0);
+		al.addEdge("Sirio B","Tau Ceti", 1.2);
+		al.addEdge("Tau Ceti", "YZ Ceti", 0.3);
+		al.addEdge("Alfa Centauri B","Wolf 359" , 3.4);
+		al.addEdge("Wolf 359", "Ross 248" , 4.4);
+		al.addEdge("Ross 248", "Ross 154" , 0.012);
+		al.addEdge("Ross 154", "Estrella de Barnard", 7.2);
 		
-		al.addEdge("Próxima Centauri", "Sirio A",6.1);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		al.addEdge("Sol", "Sirio A", 8.55);
+		
+		al.addEdge("Próxima Centauri", "Sirio A", 6.1);
 		
 		//al.addEdge("Sol", "Alfa Centauri A", 4.36);
 		//al.addEdge("Sol", "Sirio B", 8.55);
