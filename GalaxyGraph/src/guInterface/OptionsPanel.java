@@ -32,7 +32,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		
 		GridBagConstraints constrains = new GridBagConstraints();
 		
-		setPreferredSize(new Dimension(400, 500));
+		setPreferredSize(new Dimension(200, 1000));
 		
 		btnNewNode = new JButton("Add node");
 		btnNewNode.addActionListener(this);

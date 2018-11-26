@@ -24,23 +24,25 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	public GraphPanel(MainWindow gui) {
 		mainW = gui;
 		options =  new OptionsPanel(this);
-		setPreferredSize(new Dimension(1000, 1000));
+		setSize(1500, 1000);
+//		setSize(new Dimension(1000, 1000));
 		setLayout(new BorderLayout());
 		addMouseListener(this);
-//		add(options, BorderLayout.EAST);
+		
+
 	}
 	
 	public void paintComponent(Graphics g) {
 		Dimension size = getSize();
 		g.setColor(Color.WHITE);
 		
-		g.fillRect(0, 0, 500, size.height);
+		g.fillRect(0, 0, 800, size.height);
 		for (Node<String, Star> st : mainW.getNodes().values()) {
 			Star a = st.getElement();
 			char color = a.getColor();
 			int s = 0;
-//			int x = a.getX();
-//			int y =a.getY();
+//			int x = a.getPosX();
+//			int y =a.getPosY();
 			if (color == Star.BLUE) {
 				s = 40;
 				g.setColor(new Color(83, 138, 213));
@@ -75,7 +77,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 		g.drawString("50", ((200+60)/2)+20, (10+320)/2);
 		
 		
-		
+		add(options, BorderLayout.EAST);
 	}
 	
 	@Override

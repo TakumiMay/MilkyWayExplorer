@@ -1,5 +1,6 @@
 package guInterface;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -19,7 +20,7 @@ public class MainWindow extends JFrame {
 	
 	public MainWindow() {
 		setTitle("Milky Way Explorer");
-		//setSize(800,800);
+		setPreferredSize(new Dimension(1000, 600));
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage((new ImageIcon("imgs/star_icon.png")).getImage());
@@ -50,4 +51,5 @@ public class MainWindow extends JFrame {
 	public HashMap<String, Node<String, Star>> getNodes(){
 		return app.getAl().getAdjacencyList();
 	}
+	
 }
