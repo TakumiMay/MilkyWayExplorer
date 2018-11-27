@@ -25,7 +25,7 @@ public class DijkstraWindow extends JFrame implements ActionListener{
 		setVisible(true);
 		setPreferredSize(new Dimension(1000, 600));
 		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 	}
 	
@@ -37,6 +37,7 @@ public class DijkstraWindow extends JFrame implements ActionListener{
 		gui.getGraphAL().dijkstra("Sol");
 		try {
 			ArrayList<String> alDijsktra = gui.getGraphAL().dijkstraPath("Luhman 16B");
+//			System.out.println(alDijsktra.size());
 			
 			int posXStart = gui.getNodes().get(alDijsktra.get(0)).getElement().getPosX();
 			int posYStart = gui.getNodes().get(alDijsktra.get(0)).getElement().getPosY();

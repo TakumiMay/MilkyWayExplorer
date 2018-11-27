@@ -16,6 +16,7 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 	private String color;
 	private int d;
 	private int f;
+	private double distanceNode;
 	
 	public Node(T element, int position) {
 		this.element = element;
@@ -27,6 +28,22 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 		color = WHITE;
 		predecessor = null;
 	}
+	
+	
+
+
+	public double getDistanceNode() {
+		return distanceNode;
+	}
+
+
+
+
+	public void setDistanceNode(double distanceNode) {
+		this.distanceNode = distanceNode;
+	}
+
+
 
 
 	public T getElement() {
@@ -96,6 +113,8 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 	public void setF(int f) {
 		this.f = f;
 	}
+	
+	
 
 
 	@Override

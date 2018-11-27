@@ -7,7 +7,7 @@ public class NodeCompare implements Comparator<Node> {
 	@Override
 	public int compare(Node o1, Node o2) {
 		
-		if(o1.getD() < o2.getD()) {
+		if(o1.getDistanceNode() < o2.getDistanceNode()) {
 			return -1;
 		}
 		else {

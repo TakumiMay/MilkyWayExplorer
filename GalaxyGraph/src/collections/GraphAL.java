@@ -260,14 +260,17 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			throw new NodeException("The destiny doesn't exists");
 		}
 		for(Node<K, T> n: adjacencyList.values()) {
+			
 			double d = this.distances.get(n.getKey());
-			n.setD((int)d);
+			n.setDistanceNode(d);
 			distancesNodes.add(n);
 		}
 		boolean stop = false;
 		while(!(distancesNodes.isEmpty()) && !stop) {
 			Node aux = distancesNodes.poll();
+			System.out.println(aux.getKey()+" "+distances.get(aux.getKey()));
 			if(aux.getKey() != destiny) {
+//				System.out.println(aux.getKey());
 				path.add((K) aux.getKey());
 			}
 			else {
@@ -319,47 +322,41 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		
 	}
 
-	public static void main(String[] args) throws NodeException {
-		GraphAL<String, String> g = new GraphAL<>(false);
-//		Node<String, Integer> a = new Node("A", 10);
-//		Node<String, Integer> b = new Node("B", 30);
-//		Node<String, Integer> c = new Node("C", 23);
-//		Node<String, Integer> d = new Node("D", 5);
-//		Node<String, Integer> e = new Node("E", 8);
-//		Node<String, Integer> z = new Node("Z", 34);
-//		Node<String, Integer> w = new Node("W", 13);
-		g.addNode("A", "1");
-		g.addNode("B", "3");
-		g.addNode("C", "0");
-		g.addNode("D","4");
-		g.addNode("E","3");
-		g.addNode("Z","10");
-		//g.addNode(w);
-		g.addEdge("A", "B", 4);
-		g.addEdge("A", "C", 2);
-		g.addEdge("B", "D", 5);
-		g.addEdge("B", "C", 1);
-		g.addEdge("C", "D", 8);
-		g.addEdge("C", "E", 10);
-		g.addEdge("E", "Z", 3);
-		g.addEdge("D", "E", 2);
-		g.addEdge("D", "Z", 6);
-		
-		
-		g.dijkstra("A");
-		ArrayList<String> bla = g.dijkstraPath("D");
-		for (int i = 0; i < bla.size(); i++) {
-			System.out.println(bla.get(i));
-		}
-		
-		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
-		
-		
-		
-
-		
-		
-		
-	}     
+//	public static void main(String[] args) throws NodeException {
+//		GraphAL<String, String> g = new GraphAL<>(false);
+////		Node<String, Integer> a = new Node("A", 10);
+////		Node<String, Integer> b = new Node("B", 30);
+////		Node<String, Integer> c = new Node("C", 23);
+////		Node<String, Integer> d = new Node("D", 5);
+////		Node<String, Integer> e = new Node("E", 8);
+////		Node<String, Integer> z = new Node("Z", 34);
+////		Node<String, Integer> w = new Node("W", 13);
+//		g.addNode("A", "1");
+//		g.addNode("B", "3");
+//		g.addNode("C", "0");
+//		g.addNode("D","4");
+//		g.addNode("E","3");
+//		g.addNode("Z","10");
+//		//g.addNode(w);
+//		g.addEdge("A", "B", 4);
+//		g.addEdge("A", "C", 2);
+//		g.addEdge("B", "D", 5);
+//		g.addEdge("B", "C", 1);
+//		g.addEdge("C", "D", 8);
+//		g.addEdge("C", "E", 10);
+//		g.addEdge("E", "Z", 3);
+//		g.addEdge("D", "E", 2);
+//		g.addEdge("D", "Z", 6);
+//		
+//		
+//		g.dijkstra("A");
+//		ArrayList<String> bla = g.dijkstraPath("D");
+//		for (int i = 0; i < bla.size(); i++) {
+//			System.out.println(bla.get(i));
+//		}
+//		
+//		g.distances.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+//		
+//	}     
 
 }

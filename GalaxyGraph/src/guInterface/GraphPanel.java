@@ -130,7 +130,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getActionCommand().equals(DIJKSTRA)) {
-			System.out.println("btn");
+				
 			dw.setVisible(true);
 		}
 	}
