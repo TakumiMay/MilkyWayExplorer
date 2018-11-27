@@ -2,8 +2,12 @@ package guInterface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -30,7 +34,15 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	private JButton btnDijs;
 	
 	public GraphPanel(MainWindow gui) {
+<<<<<<< HEAD
 		
+=======
+		Image ima = Toolkit.getDefaultToolkit().createImage("./imgs/telescope.png");
+		Cursor cursin = Toolkit.getDefaultToolkit().createCustomCursor(ima, new Point(10,10), "cursor");
+		setCursor(cursin);
+		dw = new DijkstraWindow(mainW);
+		dw.setVisible(false);
+>>>>>>> branch 'master' of https://github.com/TakumiMay/GalaxyGraph.git
 		mainW = gui;
 		options =  new OptionsPanel(this);
 		setPreferredSize(new Dimension(1500, 1000));
@@ -72,20 +84,25 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 			int y =a.getPosY()-7;
 			if (color == Star.BLUE) {
 				s = 35;
+				a.setArea(s,s);
 				g.setColor(new Color(83, 138, 213));
 			} else if (color == Star.BROWN) {
 				s = 15;
+				a.setArea(s,s);
 				g.setColor(new Color(184, 71, 47));
-				s = 20;
+				//s = 20;
 			} else if (color == Star.RED) {
 				s = 23;
+				a.setArea(s,s);
 //				g.setColor(new Color(232, 57, 48));
 				g.setColor(Color.RED);
 			} else if (color == Star.WHITE) {
 				s = 30;
+				a.setArea(s,s);
 				g.setColor(Color.WHITE);
 			} else if (color == Star.YELLOW) {
 				s = 25;
+				a.setArea(s,s);
 				g.setColor(new Color(235, 235, 6));
 			}
 			
@@ -125,6 +142,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	public void mouseExited(MouseEvent e) {}
 	@Override
 	public void mousePressed(MouseEvent e) {
+		
 		System.out.println(e.getX());
 		System.out.println(e.getY());
 	}

@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Rectangle;
+
 import collections.GraphAL;
 import collections.GraphAM;
 
@@ -26,7 +28,9 @@ public class Star {
 	 */
 	private int posX;
 	private int posY;
-	
+	private int high;
+	private int wide;
+	private Rectangle area;
 	
 
 	public Star(String name, String age, String size, char color, int planets) {
@@ -38,9 +42,22 @@ public class Star {
 		this.planets = planets;
 		this.posX = 0;
 		this.posY = 0;
-		
+		high = 0;
+		wide = 0;
 		
 	}
+	
+	public void setArea(int high, int wide) {
+		this.high = high;
+		this.wide = wide;
+		area = new Rectangle(posX, posY, wide, high);
+		
+	}
+	
+	public Rectangle getArea() {
+		return area;
+	}
+
 	public int getPosX() {
 		return posX;
 	}
