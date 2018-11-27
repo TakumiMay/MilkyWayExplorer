@@ -1,18 +1,73 @@
 package model;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+
 import collections.GraphAL;
 import collections.GraphAM;
+import collections.Node;
 
 public class GraphApp {
+	private boolean workingOnAL;
 	private GraphAL<String, Star> al;
 	private GraphAM<String, Star> am;
+	private HashMap<String, String> images;
 
 	public GraphApp() {
 		//al = new GraphAL<>(false);
 		//am = new GraphAM<>(15, false);
+		workingOnAL= true;
 		inicializeStars();
+		images = new HashMap<>();
 		
 	}
+	
+	
+	
+	public Star searchStarbyPos(int x, int y) {
+
+		if(workingOnAL) {
+			Collection<Node<String, Star>> hash = al.getAdjacencyList().values();
+			for (Iterator<Node<String, Star>> iterator = hash.iterator(); iterator.hasNext();) {
+				Node<String, Star> node =  iterator.next();
+				if(node.getElement().getArea().contains(x, y)) {
+					return node.getElement();
+				}
+				
+				
+			}
+			return null;
+			
+		}
+		else {
+			Collection<Node<String, Star>> hash = am.getNodes().values();
+			for (Iterator<Node<String, Star>> iterator = hash.iterator(); iterator.hasNext();) {
+				Node<String, Star> node =  iterator.next();
+				if(node.getElement().getArea().contains(x, y)) {
+					return node.getElement();
+				}
+				
+				
+			}
+			return null;
+		}
+		
+	}
+	
+	
+
+	public HashMap<String, String> getPositions() {
+		return images;
+	}
+
+
+
+	public void setPositions(HashMap<String, String> positions) {
+		this.images = positions;
+	}
+
+
 
 	public GraphAL<String, Star> getAl() {
 		return al;
@@ -34,7 +89,7 @@ public class GraphApp {
 		al =new GraphAL(false);
 		am =new GraphAM(16, false);
 		
-		al.addNode("Sol", new Star("Sun", "4.6 billones", "1 masa solar", Star.YELLOW, 8));
+		al.addNode("Sol", new Star("Sol", "4.6 billones", "1 masa solar", Star.YELLOW, 8));
 		al.getAdjacencyList().get("Sol").getElement().setPos(395, 295);
 		
 		al.addNode("Próxima Centauri", new Star("Próxima Centauri", "4.85 billones", "0.123 masas solares", Star.RED, 1));
@@ -55,7 +110,7 @@ public class GraphApp {
 		al.addNode("Luhman 16B", new Star("Luhman 16B", "700 millones", "28.6 masas jovianas", Star.BROWN, 0));
 		al.getAdjacencyList().get("Luhman 16B").getElement().setPos(600, 212);
 		
-		al.addNode("WISE 0855-0714", new Star("WISE 0855-0714", "7.3 millones", "6.5 masas jovianas", Star.BROWN, 0));
+		al.addNode("WISE 0855-0714", new Star("WISE 0855-0714", "7.3 millones", "6.5 masas jovianas", Star.BLUE, 0));
 		al.getAdjacencyList().get("WISE 0855-0714").getElement().setPos(375, 215);
 		
 		al.addNode("Wolf 359", new Star("Wolf 359", "225 millones", "0.085 masas solares", Star.RED, 0));
@@ -103,7 +158,7 @@ public class GraphApp {
 		
 		
 		
-		am.addNode("Sol", new Star("Sun", "4.6 billones", "1 masa solar", Star.YELLOW, 8));
+		am.addNode("Sol", new Star("Sol", "4.6 billones", "1 masa solar", Star.YELLOW, 8));
 		am.getNodes().get("Sol").getElement().setPos(395, 295);
 		
 		am.addNode("Próxima Centauri", new Star("Próxima Centauri", "4.85 billones", "0.123 masas solares", Star.RED, 1));
@@ -124,7 +179,7 @@ public class GraphApp {
 		am.addNode("Luhman 16B", new Star("Luhman 16B", "700 millones", "28.6 masas jovianas", Star.BROWN, 0));
 		am.getNodes().get("Luhman 16B").getElement().setPos(600, 212);
 		
-		am.addNode("WISE 0855-0714", new Star("WISE 0855-0714", "7.3 millones", "6.5 masas jovianas", Star.BROWN, 0));
+		am.addNode("WISE 0855-0714", new Star("WISE 0855-0714", "7.3 millones", "6.5 masas jovianas", Star.BLUE, 0));
 		am.getNodes().get("WISE 0855-0714").getElement().setPos(375, 215);
 		
 		am.addNode("Wolf 359", new Star("Wolf 359", "225 millones", "0.085 masas solares", Star.RED, 0));
@@ -169,7 +224,11 @@ public class GraphApp {
 		am.addEdge("Alfa Centauri B","Wolf 359" , 3.4);
 		am.addEdge("Wolf 359", "Ross 248" , 4.4);
 		am.addEdge("Ross 248", "Ross 154" , 0.012);
-		am.addEdge("Ross 154", "Estrella de Barnard", 7.2);;
+		am.addEdge("Ross 154", "Estrella de Barnard", 7.2);
+		
+		//images.put("Sol", value)
+		
+		
 		
 	}
 	

@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Iterator;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -53,12 +54,14 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 		dw = new DijkstraWindow(mainW);
 		dw.setVisible(false);
 		add(btnDijs, BorderLayout.SOUTH);
+		add(options, BorderLayout.EAST);
 		
 	}
 	
 	public void paintComponent(Graphics g) {
 		Dimension size = getSize();
-		g.setColor(Color.DARK_GRAY);
+		g.drawImage(new ImageIcon("imgs/foreground1.gif").getImage(), 0, 0, size.width, size.height, this);
+		//g.setColor(Color.DARK_GRAY);
 		
 		g.fillRect(0, 0, 800, size.height);
 		for (Node<String, Star> nd : mainW.getNodes().values()) {
@@ -121,7 +124,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 //		g.drawString("50", ((200+60)/2)+20, (10+320)/2);
 		
 		
-		add(options, BorderLayout.EAST);
+		
 	}
 	
 	@Override

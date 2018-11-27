@@ -46,7 +46,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		
 		add(btnNewNode, constrains);
 		
-		JLabel emptySpace = new JLabel("");
+		JLabel emptySpace = new JLabel("Hola");
 		emptySpace.setPreferredSize(new Dimension(150, 30));
 		constrains.gridy = 1;
 		add(emptySpace, constrains);
@@ -62,6 +62,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		constrains.gridheight = 1;
 		
 		add(btnShortPath, constrains);
+		btnShortPath.setVisible(true);
 	
 	}
 	
