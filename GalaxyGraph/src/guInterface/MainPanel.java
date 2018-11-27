@@ -27,10 +27,8 @@ public class MainPanel extends JPanel implements ActionListener{
 	public MainPanel(MainWindow gui) {
 		mainW = gui;
 		setLayout(new GridBagLayout());
-		
+		setPreferredSize(new Dimension(1000, 600));
 		GridBagConstraints constrains = new GridBagConstraints();
-		
-		setPreferredSize(new Dimension(400, 500));
 		
 		btnGoPaintGraph = new JButton("Paint Galaxy Graph");
 		btnGoPaintGraph.addActionListener(this);

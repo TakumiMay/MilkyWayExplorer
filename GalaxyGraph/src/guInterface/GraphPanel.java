@@ -1,6 +1,5 @@
 package guInterface;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -8,68 +7,43 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import collections.Edge;
 import collections.Node;
-import javafx.scene.control.Button;
 import model.Star;
 
-public class GraphPanel extends JPanel implements ActionListener, MouseListener{
-
-	public static final String DIJKSTRA = "d"; 
-	private MainWindow mainW; 
+public class GraphPanel extends JPanel implements MouseListener{
 	
-	private OptionsPanel options;
+	private ContainerPanel mainPanel;
 	
-	private DijkstraWindow dw;
-	
-	private JButton btnDijs;
-	
-	public GraphPanel(MainWindow gui) {
-
+	public GraphPanel(ContainerPanel mainP) {
+		mainPanel = mainP;
+		setPreferredSize(new Dimension(800, 600));
+		
 		Image ima = Toolkit.getDefaultToolkit().createImage("./imgs/telescope.png");
 		Cursor cursin = Toolkit.getDefaultToolkit().createCustomCursor(ima, new Point(10,10), "cursor");
 		setCursor(cursin);
-		dw = new DijkstraWindow(mainW);
-		dw.setVisible(false);
 
-		mainW = gui;
-		options =  new OptionsPanel(this);
-		setPreferredSize(new Dimension(1500, 1000));
-//		setSize(new Dimension(1000, 1000));
-		setLayout(new BorderLayout());
 		addMouseListener(this);
-		btnDijs = new JButton("Dijkstra");
-		btnDijs.addActionListener(this);
-		btnDijs.setActionCommand(DIJKSTRA);
-		dw = new DijkstraWindow(mainW);
-		dw.setVisible(false);
-		add(btnDijs, BorderLayout.SOUTH);
-		add(options, BorderLayout.EAST);
-		
 	}
 	
 	public void paintComponent(Graphics g) {
 		Dimension size = getSize();
+		g.setColor(Color.DARK_GRAY);
 		g.drawImage(new ImageIcon("imgs/foreground1.gif").getImage(), 0, 0, size.width, size.height, this);
-		//g.setColor(Color.DARK_GRAY);
 		
 		g.fillRect(0, 0, 800, size.height);
-		for (Node<String, Star> nd : mainW.getNodes().values()) {
+		for (Node<String, Star> nd : mainPanel.getNodes().values()) {
 			int posXStart = nd.getElement().getPosX();
 			int posYStart = nd.getElement().getPosY();
 			for (Edge<String, Star> ed : nd.getList().values()) {
-				int posXEnd = mainW.getNodes().get(ed.getAdjacentTo()).getElement().getPosX();
-				int posYEnd = mainW.getNodes().get(ed.getAdjacentTo()).getElement().getPosY();
+				int posXEnd = mainPanel.getNodes().get(ed.getAdjacentTo()).getElement().getPosX();
+				int posYEnd = mainPanel.getNodes().get(ed.getAdjacentTo()).getElement().getPosY();
 				g.drawLine(posXStart, posYStart, posXEnd, posYEnd);
 				
 				g.setColor(Color.BLACK);
@@ -77,7 +51,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 			}
 		}
 		
-		for (Node<String, Star> st : mainW.getNodes().values()) {
+		for (Node<String, Star> st : mainPanel.getNodes().values()) {
 			Star a = st.getElement();
 			char color = a.getColor();
 			int s = 0;
@@ -123,16 +97,6 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 //		g.drawLine(200+25, 10+50, 50+30, 320+30);		
 //		g.drawString("50", ((200+60)/2)+20, (10+320)/2);
 		
-		
-		
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		if (event.getActionCommand().equals(DIJKSTRA)) {
-				
-			dw.setVisible(true);
-		}
 	}
 	
 	@Override
@@ -143,13 +107,9 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	public void mouseExited(MouseEvent e) {}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
 		System.out.println(e.getX());
 		System.out.println(e.getY());
 	}
-
 	@Override
 	public void mouseReleased(MouseEvent e) {}
-
-	
 }

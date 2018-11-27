@@ -22,18 +22,13 @@ public class MainWindow extends JFrame {
 
 	private MainPanel main;
 	
-	private GraphPanel graph;
+	private ContainerPanel graph;
 	
 	private GraphApp app;
 	
-	public MainWindow() {
-		
-		
-
-		
-		
+	public MainWindow() {	
 		setTitle("Milky Way Explorer");
-		setPreferredSize(new Dimension(1000, 600));
+		setSize(new Dimension(1000, 600));
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage((new ImageIcon("imgs/star_icon.png")).getImage());
@@ -47,11 +42,10 @@ public class MainWindow extends JFrame {
 	}
 	
 	public void startApp() {
-		graph = new GraphPanel(this);
+		graph = new ContainerPanel(this);
 		main.setVisible(false);
 		graph.setVisible(true);
 		add(graph);
-		
 	}
 	
 	/**

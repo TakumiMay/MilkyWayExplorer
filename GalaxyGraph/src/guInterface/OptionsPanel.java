@@ -18,21 +18,23 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	public static final String ANOTHER = "another thing";
 	
+	public static final String DIJKSTRA = "d"; 
+	
 	private JButton btnNewNode;
 	
 	private JButton btnShortPath;
 	
 	private JButton btnAnother;
 	
-	private GraphPanel mainPanel; 
+	private JButton btnDijs;
 	
-	public OptionsPanel(GraphPanel main) {
-		mainPanel = main;
+	private ContainerPanel mainPanel; 
+	
+	public OptionsPanel(ContainerPanel mainP) {
+		mainPanel = mainP;
 		setLayout(new GridBagLayout());
-		
-		GridBagConstraints constrains = new GridBagConstraints();
-		
-		setPreferredSize(new Dimension(200, 1000));
+		GridBagConstraints constrains = new GridBagConstraints();	
+		setPreferredSize(new Dimension(200, 600));
 		
 		btnNewNode = new JButton("Add node");
 		btnNewNode.addActionListener(this);
@@ -62,14 +64,31 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		constrains.gridheight = 1;
 		
 		add(btnShortPath, constrains);
-		btnShortPath.setVisible(true);
+		
+		btnDijs = new JButton("Dijkstra");
+		btnDijs.addActionListener(this);
+		btnDijs.setActionCommand(DIJKSTRA);
+		btnDijs.setPreferredSize(new Dimension(150, 30));
 	
+		constrains.gridx = 1;
+		constrains.gridy = 6;
+		constrains.gridwidth = 3;
+		constrains.gridheight = 1;
+		
+		add(btnDijs, constrains);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		// TODO Auto-generated method stub
-		
+		if (event.getActionCommand().equals(DIJKSTRA)) {
+			mainPanel.openDjWindow();
+		} else if(event.getActionCommand().equals(NEW_NODE)) {
+			
+		} else if(event.getActionCommand().equals(SHORT_PATH)) {
+			
+		} else if(event.getActionCommand().equals(ANOTHER)) {
+			
+		}
 	}
 
 }
