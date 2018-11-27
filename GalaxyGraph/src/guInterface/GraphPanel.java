@@ -34,15 +34,13 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	private JButton btnDijs;
 	
 	public GraphPanel(MainWindow gui) {
-<<<<<<< HEAD
-		
-=======
+
 		Image ima = Toolkit.getDefaultToolkit().createImage("./imgs/telescope.png");
 		Cursor cursin = Toolkit.getDefaultToolkit().createCustomCursor(ima, new Point(10,10), "cursor");
 		setCursor(cursin);
 		dw = new DijkstraWindow(mainW);
 		dw.setVisible(false);
->>>>>>> branch 'master' of https://github.com/TakumiMay/GalaxyGraph.git
+
 		mainW = gui;
 		options =  new OptionsPanel(this);
 		setPreferredSize(new Dimension(1500, 1000));
