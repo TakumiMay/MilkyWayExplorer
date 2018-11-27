@@ -14,32 +14,48 @@ import exceptions.NodeException;
 import model.Star;
 
 public class DijkstraWindow extends JFrame implements ActionListener{
-	private MainWindow main;
+	private MainWindow gui;
 
 	private int sizeNode;
 	public DijkstraWindow(MainWindow main) {
 		sizeNode = 0;
-		this.main = main;
+		gui = main;
+		
 		setTitle("Dijkstra");
 		setVisible(true);
 		setPreferredSize(new Dimension(1000, 600));
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		pack();
 	}
 	
 	@Override
-	public void paintComponents(Graphics g) {
-		// TODO Auto-generated method stub
+	public void paint(Graphics g) {
+		
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, 1000, 600);
-		main.getGraphAL().dijkstra("Sol");
+		gui.getGraphAL().dijkstra("Sol");
 		try {
-			ArrayList<String> alDijsktra = main.getGraphAL().dijkstraPath("Luhman 16B");
-			int posX = main.getNodes().get(alDijsktra.get(0)).getElement().getPosX();
-			int posY = main.getNodes().get(alDijsktra.get(0)).getElement().getPosY();
+			ArrayList<String> alDijsktra = gui.getGraphAL().dijkstraPath("Luhman 16B");
 			
-			g.drawOval(posX, posY, sizeNode, sizeNode);
-			for (int i = 1; i < alDijsktra.size(); i++) {
+			int posXStart = gui.getNodes().get(alDijsktra.get(0)).getElement().getPosX();
+			int posYStart = gui.getNodes().get(alDijsktra.get(0)).getElement().getPosY();
+			g.setColor(colors(gui.getNodes().get(alDijsktra.get(0)).getElement().getColor()));
+			g.fillOval(posXStart, posYStart, sizeNode, sizeNode);
+			g.drawString(alDijsktra.get(0), posXStart, posYStart);
+			for (int i = 1; i < alDijsktra.size()-1; i++) {
+				int posXEnd = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosX();
+				int posYEnd = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosY();
+				g.setColor(colors(gui.getNodes().get(alDijsktra.get(i)).getElement().getColor()));
+				g.fillOval(posXEnd, posYEnd, sizeNode, sizeNode);
+				g.drawLine(posXStart, posYStart, posXEnd, posYEnd);
+				g.drawString(alDijsktra.get(i), posXEnd, posYEnd);
+				i++;
+				posXStart = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosX();
+				posYStart = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosY();
+				g.setColor(colors(gui.getNodes().get(alDijsktra.get(i)).getElement().getColor()));
+				g.fillOval(posXStart, posYStart, sizeNode, sizeNode);
+				g.drawString(alDijsktra.get(i), posXStart, posYStart);
 				
 			}
 		} catch (NodeException e) {

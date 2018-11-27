@@ -30,8 +30,7 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 	private JButton btnDijs;
 	
 	public GraphPanel(MainWindow gui) {
-		dw = new DijkstraWindow(mainW);
-		dw.setVisible(false);
+		
 		mainW = gui;
 		options =  new OptionsPanel(this);
 		setPreferredSize(new Dimension(1500, 1000));
@@ -41,6 +40,8 @@ public class GraphPanel extends JPanel implements ActionListener, MouseListener{
 		btnDijs = new JButton("Dijkstra");
 		btnDijs.addActionListener(this);
 		btnDijs.setActionCommand(DIJKSTRA);
+		dw = new DijkstraWindow(mainW);
+		dw.setVisible(false);
 		add(btnDijs, BorderLayout.SOUTH);
 		
 	}
