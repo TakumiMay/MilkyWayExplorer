@@ -352,8 +352,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			}	
 			c++;
 		}		
-		return route;
-		
+		return route;		
 	}
 
 //	public static void main(String[] args) throws NodeException {

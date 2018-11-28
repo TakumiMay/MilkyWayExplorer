@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,10 +10,16 @@ import collections.GraphAM;
 import collections.Node;
 
 public class GraphApp {
+	
 	private boolean workingOnAL;
+	
 	private GraphAL<String, Star> al;
+	
 	private GraphAM<String, Star> am;
+	
 	private HashMap<String, String> images;
+	
+	private String primRoute;
 
 	public GraphApp() {
 		//al = new GraphAL<>(false);
@@ -20,44 +27,31 @@ public class GraphApp {
 		workingOnAL= true;
 		images = new HashMap<>();
 		inicializeStars();
-		
+		primRoute = "";
 	}
-	
-	
-	
-	
 	
 	public boolean isWorkingOnAL() {
 		return workingOnAL;
 	}
-
-
-
-
-
+	
+	public void prim() {
+		ArrayList<Node<String, Star>> aux = al.prim("Sirio A");
+		for (int i = 0; i < aux.size(); i++) {
+			primRoute += aux.get(i).getKey()+"\n";
+		}
+	}
+	
 	public void setWorkingOnAL(boolean workingOnAL) {
 		this.workingOnAL = workingOnAL;
 	}
-
-
-
-
 
 	public HashMap<String, String> getImages() {
 		return images;
 	}
 
-
-
-
-
 	public void setImages(HashMap<String, String> images) {
 		this.images = images;
 	}
-
-
-
-
 
 	public Star searchStarbyPos(int x, int y) {
 
@@ -80,28 +74,19 @@ public class GraphApp {
 				Node<String, Star> node =  iterator.next();
 				if(node.getElement().getArea().contains(x, y)) {
 					return node.getElement();
-				}
-				
-				
+				}		
 			}
 			return null;
-		}
-		
+		}	
 	}
 	
-	
-
 	public HashMap<String, String> getPositions() {
 		return images;
 	}
 
-
-
 	public void setPositions(HashMap<String, String> positions) {
 		this.images = positions;
 	}
-
-
 
 	public GraphAL<String, Star> getAl() {
 		return al;
@@ -275,13 +260,8 @@ public class GraphApp {
 		images.put("Tau Ceti", "stars_images/Tau Ceti.jpg");
 		images.put("WISE 0855-0714", "stars_images/WISE 0855-0714.jpg");
 		images.put("Wolf 359", "stars_images/Wolf 359.jpg");
-		images.put("YZ Ceti", "stars_images/YT Ceti.jpg");
-
-
-		
-		
+		images.put("YZ Ceti", "stars_images/YT Ceti.jpg");	
 		
 	}
-	
 	
 }
