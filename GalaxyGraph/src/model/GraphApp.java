@@ -18,8 +18,8 @@ public class GraphApp {
 		//al = new GraphAL<>(false);
 		//am = new GraphAM<>(15, false);
 		workingOnAL= true;
-		inicializeStars();
 		images = new HashMap<>();
+		inicializeStars();
 		
 	}
 	
@@ -226,7 +226,24 @@ public class GraphApp {
 		am.addEdge("Ross 248", "Ross 154" , 0.012);
 		am.addEdge("Ross 154", "Estrella de Barnard", 7.2);
 		
-		//images.put("Sol", value)
+		images.put("Alfa Centauri A", "stars_images/Alfa Centauri A.jpg");
+		images.put("Alfa Centauri B", "stars_images/Alfa Centauri B.jpg");
+		images.put("Estrella de Barnard", "stars_images/Estrella de Barnard.jpg");
+		images.put("Lalande 21185", "stars_images/Lalande 21185.jpg");
+		images.put("Luhman 16A", "stars_images/Luhman 16A.jpg");
+		images.put("Luhman 16B", "stars_images/Luhman 16B.jpg");
+		images.put("Próxima Centauri", "stars_images/Próxima Centauri.jpg");
+		images.put("Ross 154", "stars_images/Ross 154.jpg");
+		images.put("Ross 248", "stars_images/Ross 248.jpg");
+		images.put("Sirio A", "stars_images/Sirio A.jpg");
+		images.put("Sirio B", "stars_images/Sirio B.jpg");
+		images.put("Sol", "stars_images/Sol.jpg");
+		images.put("Tau Ceti", "stars_images/Tau Ceti.jpg");
+		images.put("WISE 0855-0714", "stars_images/WISE 0855-0714.jpg");
+		images.put("Wolf 359", "stars_images/Wolf 359.jpg");
+		images.put("YZ Ceti", "stars_images/YT Ceti.jpg");
+
+
 		
 		
 		

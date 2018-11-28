@@ -1,14 +1,18 @@
 package guInterface;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class OptionsPanel extends JPanel implements ActionListener {
 
@@ -31,6 +35,21 @@ public class OptionsPanel extends JPanel implements ActionListener {
 	private JButton btnFloyd;
 	
 	private JButton btnBack;
+	
+	
+	private JLabel labImage;
+	private JLabel labName; private JTextField txtName;
+	private JLabel labAge; private JTextField txtAge;
+	private JLabel labColor; private JTextField txtColor;
+	private JLabel labMass; private JTextField txtMass;
+	private JLabel labPlanets; private JTextField txtPlanets;
+	
+	
+	/**
+	 * To see the stars we
+	 */
+	private JPanel starVisualization;
+	private JPanel adjustButtons;
 
 	private ContainerPanel mainPanel;
 
@@ -38,7 +57,47 @@ public class OptionsPanel extends JPanel implements ActionListener {
 		mainPanel = mainP;
 		setLayout(new GridBagLayout());
 		GridBagConstraints constrains = new GridBagConstraints();
+		starVisualization = new JPanel();
+		starVisualization.setLayout(new BorderLayout());
+		adjustButtons = new JPanel();
+		
 		setPreferredSize(new Dimension(200, 600));
+		adjustButtons.setLayout(new GridLayout(5,2));
+		
+		labImage = new JLabel(new ImageIcon("star_images/predeterminated.png"));
+		starVisualization.add(labImage, BorderLayout.CENTER);
+		
+		labName = new JLabel("Nombre: ");
+		txtName= new JTextField();
+		txtName.setEditable(false);
+		adjustButtons.add(labName);
+		adjustButtons.add(txtName);
+		
+		labAge = new JLabel("Edad: ");
+		txtAge= new JTextField();
+		txtAge.setEditable(false);
+		adjustButtons.add(labAge);
+		adjustButtons.add(txtAge);
+		
+		labColor = new JLabel("Color: ");
+		txtColor= new JTextField();
+		txtColor.setEditable(false);
+		adjustButtons.add(labColor);
+		adjustButtons.add(txtColor);
+		
+		labMass = new JLabel("Mass: ");
+		txtMass= new JTextField();
+		txtMass.setEditable(false);
+		adjustButtons.add(labMass);
+		adjustButtons.add(txtMass);
+		
+		labPlanets = new JLabel("Planets: ");
+		txtPlanets= new JTextField();
+		txtPlanets.setEditable(false);
+		adjustButtons.add(labPlanets);
+		adjustButtons.add(txtPlanets);
+		
+		starVisualization.add(adjustButtons, BorderLayout.SOUTH);
 
 		btnNewNode = new JButton("Add node");
 		btnNewNode.addActionListener(this);
@@ -106,7 +165,42 @@ public class OptionsPanel extends JPanel implements ActionListener {
 		constrains.gridheight = 1;
 
 		add(btnBack, constrains);
+		
+		
+		
 	}
+	
+	
+
+	public JTextField getTxtName() {
+		return txtName;
+	}
+
+
+
+	public JTextField getTxtAge() {
+		return txtAge;
+	}
+
+
+
+	public JTextField getTxtColor() {
+		return txtColor;
+	}
+
+
+
+	public JTextField getTxtMass() {
+		return txtMass;
+	}
+
+
+
+	public JTextField getTxtPlanets() {
+		return txtPlanets;
+	}
+
+
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
