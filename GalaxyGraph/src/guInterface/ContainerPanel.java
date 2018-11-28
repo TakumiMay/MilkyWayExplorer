@@ -33,6 +33,20 @@ public class ContainerPanel extends JPanel{
 		add(graph,BorderLayout.WEST);
 		add(options,BorderLayout.EAST);
 	}
+	
+	
+
+	public MainWindow getMainW() {
+		return mainW;
+	}
+
+
+
+	public void setMainW(MainWindow mainW) {
+		this.mainW = mainW;
+	}
+
+
 
 	public HashMap<String, Node<String, Star>> getNodes() {
 		return mainW.getNodes();

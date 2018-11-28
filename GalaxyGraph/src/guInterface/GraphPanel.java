@@ -107,8 +107,10 @@ public class GraphPanel extends JPanel implements MouseListener{
 	public void mouseExited(MouseEvent e) {}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println(e.getX());
-		System.out.println(e.getY());
+//		System.out.println(e.getX());
+//		System.out.println(e.getY());
+		
+		mainPanel.getMainW().searhInfoStar(e.getX(), e.getY());
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {}
