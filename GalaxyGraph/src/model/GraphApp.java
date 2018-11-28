@@ -104,56 +104,82 @@ public class GraphApp {
 		this.am = am;
 	}
 	
+	public void addStar(String name, String age, String mass, char color, int planets) {
+		if(workingOnAL) {
+			al.addNode(name, new Star(name, age, mass, color, planets));
+		}
+		else {
+			am.addNode(name, new Star(name, age, mass, color, planets));
+		}
+	}
+	
+	/**
+	 * Edge between two stars
+	 * @param star1
+	 * @param star2
+	 * @param weight
+	 */
+	public void addPath(String star1, String star2, double weight) {
+		if(workingOnAL) {
+			al.addEdge(star1, star2, weight);
+		}
+		else {
+			am.addEdge(star1, star2, weight);		
+		}
+	}
+	
+	
+	
 	public void inicializeStars() {
 		al =new GraphAL(false);
 		am =new GraphAM(16, false);
 		
-		al.addNode("Sol", new Star("Sol", "4.6 billones", "1 masa solar", Star.YELLOW, 8));
+		al.addNode("Sol", new Star("Sol", "4,6 billones", "1 masa solar", Star.YELLOW, 8));
 		al.getAdjacencyList().get("Sol").getElement().setPos(395, 295);
 		
-		al.addNode("Próxima Centauri", new Star("Próxima Centauri", "4.85 billones", "0.123 masas solares", Star.RED, 1));
+		al.addNode("Próxima Centauri", new Star("Próxima Centauri", "4,85 billones", "0,123 masas solares", Star.RED, 1));
 		al.getAdjacencyList().get("Próxima Centauri").getElement().setPos(395, 380);
 		
-		al.addNode("Alfa Centauri A", new Star("Alfa Centauri A", "4.4 billones", "1.100 masas solares", Star.YELLOW, 0));
+		al.addNode("Alfa Centauri A", new Star("Alfa Centauri A", "4,4 billones", "1,100 masas solares", Star.YELLOW, 0));
 		al.getAdjacencyList().get("Alfa Centauri A").getElement().setPos(350, 440);
 		
-		al.addNode("Alfa Centauri B", new Star("Alfa Centauri B", "6.5 billones", "0.907 masas solares", Star.RED, 1));
+		al.addNode("Alfa Centauri B", new Star("Alfa Centauri B", "6,5 billones", "0,907 masas solares", Star.RED, 1));
 		al.getAdjacencyList().get("Alfa Centauri B").getElement().setPos(435, 430);
 		
-		al.addNode("Estrella de Barnard", new Star("Estrella de Barnard", "10 billones", "0.144 masas solares", Star.RED, 1));
+		al.addNode("Estrella de Barnard", new Star("Estrella de Barnard", "10 billones", "0,144 masas solares", Star.RED, 1));
 		al.getAdjacencyList().get("Estrella de Barnard").getElement().setPos(560, 267);
 		
-		al.addNode("Luhman 16A", new Star("Luhman 16A", "700 millones", "33.5 masas jovianas", Star.BROWN, 0));
+		al.addNode("Luhman 16A", new Star("Luhman 16A", "700 millones", "33,5 masas jovianas", Star.BROWN, 0));
 		al.getAdjacencyList().get("Luhman 16A").getElement().setPos(540, 205);
 		
-		al.addNode("Luhman 16B", new Star("Luhman 16B", "700 millones", "28.6 masas jovianas", Star.BROWN, 0));
+		al.addNode("Luhman 16B", new Star("Luhman 16B", "700 millones", "28,6 masas jovianas", Star.BROWN, 0));
 		al.getAdjacencyList().get("Luhman 16B").getElement().setPos(600, 212);
 		
-		al.addNode("WISE 0855-0714", new Star("WISE 0855-0714", "7.3 millones", "6.5 masas jovianas", Star.BLUE, 0));
+		al.addNode("WISE 0855-0714", new Star("WISE 0855-0714", "7,3 millones", "6,5 masas jovianas", Star.BLUE, 0));
 		al.getAdjacencyList().get("WISE 0855-0714").getElement().setPos(375, 215);
 		
-		al.addNode("Wolf 359", new Star("Wolf 359", "225 millones", "0.085 masas solares", Star.RED, 0));
+		al.addNode("Wolf 359", new Star("Wolf 359", "225 millones", "0,085 masas solares", Star.RED, 0));
 		al.getAdjacencyList().get("Wolf 359").getElement().setPos(525, 388);
 		
-		al.addNode("Lalande 21185", new Star("Lalande 21185", "7.5 billones", "0.46 masas solares", Star.RED, 2));
+		al.addNode("Lalande 21185", new Star("Lalande 21185", "7,5 billones", "0,46 masas solares", Star.RED, 2));
 		al.getAdjacencyList().get("Lalande 21185").getElement().setPos(275, 267);
 		
-		al.addNode("Sirio A", new Star("Sirio A", " 250 millones", "2.063 masas solares", Star.WHITE, 0));
+		al.addNode("Sirio A", new Star("Sirio A", " 250 millones", "2,063 masas solares", Star.WHITE, 0));
 		al.getAdjacencyList().get("Sirio A").getElement().setPos(255, 355);
 		
-		al.addNode("Sirio B", new Star("Sirio B", " 228 millones", "1.018 masas solares", Star.WHITE, 0));
+		al.addNode("Sirio B", new Star("Sirio B", " 228 millones", "1,018 masas solares", Star.WHITE, 0));
 		al.getAdjacencyList().get("Sirio B").getElement().setPos(270, 420);
 		
-		al.addNode("Tau Ceti", new Star("Tau Ceti", " 5.8 billones", "0.783 masas solares", Star.YELLOW, 0));
+		al.addNode("Tau Ceti", new Star("Tau Ceti", " 5,8 billones", "0,783 masas solares", Star.YELLOW, 0));
 		al.getAdjacencyList().get("Tau Ceti").getElement().setPos(150, 431);
 		
-		al.addNode("YZ Ceti", new Star("YZ Ceti", " 5.0 billones", "0.130 masas solares", Star.RED, 3));
+		al.addNode("YZ Ceti", new Star("YZ Ceti", " 5,0 billones", "0,130 masas solares", Star.RED, 3));
 		al.getAdjacencyList().get("YZ Ceti").getElement().setPos(157, 300);
 		
-		al.addNode("Ross 154", new Star("Ross 154", " 1.0 billones", "0.17 masas solares", Star.RED, 0));
+		al.addNode("Ross 154", new Star("Ross 154", " 1,0 billones", "0,17 masas solares", Star.RED, 0));
 		al.getAdjacencyList().get("Ross 154").getElement().setPos(627, 326);
 		
-		al.addNode("Ross 248", new Star("Ross 248", " 1.3 billones", "0.136 masas solares", Star.RED, 0));
+		al.addNode("Ross 248", new Star("Ross 248", " 1,3 billones", "0,136 masas solares", Star.RED, 0));
 		al.getAdjacencyList().get("Ross 248").getElement().setPos(670, 370);
 		
 		al.addEdge("Sol", "Próxima Centauri", 4.24);
@@ -177,52 +203,52 @@ public class GraphApp {
 		
 		
 		
-		am.addNode("Sol", new Star("Sol", "4.6 billones", "1 masa solar", Star.YELLOW, 8));
+		am.addNode("Sol", new Star("Sol", "4,6 billones", "1 masa solar", Star.YELLOW, 8));
 		am.getNodes().get("Sol").getElement().setPos(395, 295);
 		
-		am.addNode("Próxima Centauri", new Star("Próxima Centauri", "4.85 billones", "0.123 masas solares", Star.RED, 1));
+		am.addNode("Próxima Centauri", new Star("Próxima Centauri", "4,85 billones", "0,123 masas solares", Star.RED, 1));
 		am.getNodes().get("Próxima Centauri").getElement().setPos(395, 380);
 		
-		am.addNode("Alfa Centauri A", new Star("Alfa Centauri A", "4.4 billones", "1.100 masas solares", Star.YELLOW, 0));
+		am.addNode("Alfa Centauri A", new Star("Alfa Centauri A", "4,4 billones", "1,100 masas solares", Star.YELLOW, 0));
 		am.getNodes().get("Alfa Centauri A").getElement().setPos(350, 440);
 		
-		am.addNode("Alfa Centauri B", new Star("Alfa Centauri B", "6.5 billones", "0.907 masas solares", Star.RED, 1));
+		am.addNode("Alfa Centauri B", new Star("Alfa Centauri B", "6,5 billones", "0,907 masas solares", Star.RED, 1));
 		am.getNodes().get("Alfa Centauri B").getElement().setPos(435, 430);
 		
-		am.addNode("Estrella de Barnard", new Star("Estrella de Barnard", "10 billones", "0.144 masas solares", Star.RED, 1));
+		am.addNode("Estrella de Barnard", new Star("Estrella de Barnard", "10 billones", "0,144 masas solares", Star.RED, 1));
 		am.getNodes().get("Estrella de Barnard").getElement().setPos(560, 267);
 		
-		am.addNode("Luhman 16A", new Star("Luhman 16A", "700 millones", "33.5 masas jovianas", Star.BROWN, 0));
+		am.addNode("Luhman 16A", new Star("Luhman 16A", "700 millones", "33,5 masas jovianas", Star.BROWN, 0));
 		am.getNodes().get("Luhman 16A").getElement().setPos(540, 205);
 		
-		am.addNode("Luhman 16B", new Star("Luhman 16B", "700 millones", "28.6 masas jovianas", Star.BROWN, 0));
+		am.addNode("Luhman 16B", new Star("Luhman 16B", "700 millones", "28,6 masas jovianas", Star.BROWN, 0));
 		am.getNodes().get("Luhman 16B").getElement().setPos(600, 212);
 		
-		am.addNode("WISE 0855-0714", new Star("WISE 0855-0714", "7.3 millones", "6.5 masas jovianas", Star.BLUE, 0));
+		am.addNode("WISE 0855-0714", new Star("WISE 0855-0714", "7,3 millones", "6,5 masas jovianas", Star.BLUE, 0));
 		am.getNodes().get("WISE 0855-0714").getElement().setPos(375, 215);
 		
-		am.addNode("Wolf 359", new Star("Wolf 359", "225 millones", "0.085 masas solares", Star.RED, 0));
+		am.addNode("Wolf 359", new Star("Wolf 359", "225 millones", "0,085 masas solares", Star.RED, 0));
 		am.getNodes().get("Wolf 359").getElement().setPos(525, 388);
 		
-		am.addNode("Lalande 21185", new Star("Lalande 21185", "7.5 billones", "0.46 masas solares", Star.RED, 2));
+		am.addNode("Lalande 21185", new Star("Lalande 21185", "7,5 billones", "0,46 masas solares", Star.RED, 2));
 		am.getNodes().get("Lalande 21185").getElement().setPos(275, 267);
 		
-		am.addNode("Sirio A", new Star("Sirio A", " 250 millones", "2.063 masas solares", Star.WHITE, 0));
+		am.addNode("Sirio A", new Star("Sirio A", " 250 millones", "2,063 masas solares", Star.WHITE, 0));
 		am.getNodes().get("Sirio A").getElement().setPos(255, 355);
 		
-		am.addNode("Sirio B", new Star("Sirio B", " 228 millones", "1.018 masas solares", Star.WHITE, 0));
+		am.addNode("Sirio B", new Star("Sirio B", " 228 millones", "1,018 masas solares", Star.WHITE, 0));
 		am.getNodes().get("Sirio B").getElement().setPos(270, 420);
 		
-		am.addNode("Tau Ceti", new Star("Tau Ceti", " 5.8 billones", "0.783 masas solares", Star.YELLOW, 0));
+		am.addNode("Tau Ceti", new Star("Tau Ceti", " 5,8 billones", "0,783 masas solares", Star.YELLOW, 0));
 		am.getNodes().get("Tau Ceti").getElement().setPos(150, 431);
 		
-		am.addNode("YZ Ceti", new Star("YZ Ceti", " 5.0 billones", "0.130 masas solares", Star.RED, 3));
+		am.addNode("YZ Ceti", new Star("YZ Ceti", " 5,0 billones", "0,130 masas solares", Star.RED, 3));
 		am.getNodes().get("YZ Ceti").getElement().setPos(157, 300);
 		
-		am.addNode("Ross 154", new Star("Ross 154", " 1.0 billones", "0.17 masas solares", Star.RED, 0));
+		am.addNode("Ross 154", new Star("Ross 154", " 1,0 billones", "0,17 masas solares", Star.RED, 0));
 		am.getNodes().get("Ross 154").getElement().setPos(627, 326);
 		
-		am.addNode("Ross 248", new Star("Ross 248", " 1.3 billones", "0.136 masas solares", Star.RED, 0));
+		am.addNode("Ross 248", new Star("Ross 248", " 1,3 billones", "0,136 masas solares", Star.RED, 0));
 		am.getNodes().get("Ross 248").getElement().setPos(670, 370);
 		
 		

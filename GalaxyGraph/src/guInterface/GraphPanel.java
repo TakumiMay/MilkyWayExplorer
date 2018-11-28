@@ -20,6 +20,8 @@ import model.Star;
 public class GraphPanel extends JPanel implements MouseListener{
 	
 	private ContainerPanel mainPanel;
+	private int x;
+	private int y;
 	
 	public GraphPanel(ContainerPanel mainP) {
 		mainPanel = mainP;
@@ -109,9 +111,29 @@ public class GraphPanel extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 //		System.out.println(e.getX());
 //		System.out.println(e.getY());
+		this.x = e.getX();
+		this.y = e.getY();
+		mainPanel.getMainW().putStarInfoOnVisualizer(e.getX(), e.getY());
 		
-		mainPanel.getMainW().searhInfoStar(e.getX(), e.getY());
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	
 }

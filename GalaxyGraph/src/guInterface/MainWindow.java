@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-
+import javax.swing.JOptionPane;
 
 import collections.GraphAL;
 import collections.Node;
@@ -42,6 +42,13 @@ public class MainWindow extends JFrame {
 	}
 	
 	public void startApp(String GraphRepresentation) {
+		
+		if(GraphRepresentation.equals(MainPanel.LIST_GRAPH)) {
+			changeRepresentation(true);
+		}
+		else {
+			changeRepresentation(false);
+		}
 		main.setVisible(false);
 		graph = new ContainerPanel(this, GraphRepresentation);
 		graph.setVisible(true);
@@ -57,7 +64,7 @@ public class MainWindow extends JFrame {
 	 * @param x
 	 * @param y
 	 */
-	public void searhInfoStar(int x, int y) {
+	public void putStarInfoOnVisualizer(int x, int y) {
 		Star s = app.searchStarbyPos(x, y);
 		if(s!=null) {
 			graph.getOptions().getLabImage().setIcon(new ImageIcon(app.getImages().get(s.getName())));
@@ -87,6 +94,38 @@ public class MainWindow extends JFrame {
 		}
 	}
 	
+	public void addStar() {
+		JOptionPane.showConfirmDialog(this, "Seleccione una posición para la estrella con el puntero");
+		while(app.searchStarbyPos(graph.getGraph().getX(), graph.getGraph().getY())== null) {
+			JOptionPane.showConfirmDialog(this, "Seleccione una posición vacía, donde no haya ninguna otra estrella");	
+		}
+		int xNode = graph.getGraph().getX();
+		int yNode= graph.getGraph().getY();
+		
+		do {
+		JOptionPane.showConfirmDialog(this, "Seleccione una estrella cercana para hacer un camino");
+		while(app.searchStarbyPos(graph.getGraph().getX(), graph.getGraph().getY())!= null) {
+			JOptionPane.showConfirmDialog(this, "No puede seleccionar un lugar vacío, intente de nuevo");	
+		}
+		int xNodeA = graph.getGraph().getX();
+		int yNodeA =graph.getGraph().getY();
+		//add
+		
+		}while(true);
+		
+		
+		
+		
+	}
+	
+	/**
+	 * True if adjacency list, false if adjacency matrix
+	 * @param representation
+	 */
+	public void changeRepresentation(boolean representation) {
+		app.setWorkingOnAL(representation);
+	}
+	
 	public HashMap<String, Node<String, Star>> getNodes(){
 		return app.getAl().getAdjacencyList();
 	}
@@ -94,6 +133,7 @@ public class MainWindow extends JFrame {
 	public GraphAL<String, Star> getGraphAL(){
 		return app.getAl();
 	}
+	
 	
 	public static void main(String[] args) {
 		

@@ -35,6 +35,24 @@ public class ContainerPanel extends JPanel{
 	}
 	
 	
+	
+	
+
+	public GraphPanel getGraph() {
+		return graph;
+	}
+
+
+
+
+
+	public void setGraph(GraphPanel graph) {
+		this.graph = graph;
+	}
+
+
+
+
 
 	public MainWindow getMainW() {
 		return mainW;
