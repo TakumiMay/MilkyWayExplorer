@@ -25,6 +25,40 @@ public class GraphApp {
 	
 	
 	
+	
+	
+	public boolean isWorkingOnAL() {
+		return workingOnAL;
+	}
+
+
+
+
+
+	public void setWorkingOnAL(boolean workingOnAL) {
+		this.workingOnAL = workingOnAL;
+	}
+
+
+
+
+
+	public HashMap<String, String> getImages() {
+		return images;
+	}
+
+
+
+
+
+	public void setImages(HashMap<String, String> images) {
+		this.images = images;
+	}
+
+
+
+
+
 	public Star searchStarbyPos(int x, int y) {
 
 		if(workingOnAL) {

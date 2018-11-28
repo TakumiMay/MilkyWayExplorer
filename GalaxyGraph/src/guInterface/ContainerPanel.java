@@ -33,7 +33,7 @@ public class ContainerPanel extends JPanel{
 		add(graph,BorderLayout.WEST);
 		add(options,BorderLayout.EAST);
 	}
-	
+
 	public HashMap<String, Node<String, Star>> getNodes() {
 		return mainW.getNodes();
 	}
@@ -49,5 +49,13 @@ public class ContainerPanel extends JPanel{
 	public void back() {
 		this.setVisible(false);
 		mainW.setMainPanelVisible();
+	}
+
+	public ContainerOptionsPanel getOptions() {
+		return options;
+	}
+
+	public void setOptions(ContainerOptionsPanel options) {
+		this.options = options;
 	}
 }

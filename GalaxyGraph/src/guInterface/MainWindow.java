@@ -60,6 +60,29 @@ public class MainWindow extends JFrame {
 	public void searhInfoStar(int x, int y) {
 		Star s = app.searchStarbyPos(x, y);
 		if(s!=null) {
+			graph.getOptions().getLabImage().setIcon(new ImageIcon(app.getImages().get(s.getName())));
+			graph.getOptions().getInfo().getTxtName().setText(s.getName());
+			graph.getOptions().getInfo().getTxtAge().setText(s.getAge());
+			switch(s.getColor()) {
+			case Star.BLUE:
+				graph.getOptions().getInfo().getTxtColor().setText("Azul");
+				break;
+			case Star.BROWN:
+				graph.getOptions().getInfo().getTxtColor().setText("Marrón");
+				break;
+			case Star.RED:
+				graph.getOptions().getInfo().getTxtColor().setText("Roja");
+				break;
+			case Star.WHITE:
+				graph.getOptions().getInfo().getTxtColor().setText("Blanca");
+				break;
+			case Star.YELLOW:
+				graph.getOptions().getInfo().getTxtColor().setText("Amarilla");
+				break;
+				
+			}
+			graph.getOptions().getInfo().getTxtMass().setText(s.getSize());
+			graph.getOptions().getInfo().getTxtPlanets().setText(""+s.getPlanets());
 			
 		}
 	}

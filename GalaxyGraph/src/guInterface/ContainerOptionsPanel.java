@@ -34,4 +34,28 @@ public class ContainerOptionsPanel extends JPanel{
 	public ContainerPanel getContainer() {
 		return container;
 	}
+
+	public InfoPanel getInfo() {
+		return info;
+	}
+
+	public void setInfo(InfoPanel info) {
+		this.info = info;
+	}
+
+	public OptionsPanel getOptions() {
+		return options;
+	}
+
+	public void setOptions(OptionsPanel options) {
+		this.options = options;
+	}
+
+	public JLabel getLabImage() {
+		return labImage;
+	}
+
+	public void setLabImage(JLabel labImage) {
+		this.labImage = labImage;
+	}
 }
