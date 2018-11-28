@@ -34,6 +34,20 @@ public class ContainerPanel extends JPanel{
 		add(options,BorderLayout.EAST);
 	}
 	
+	
+	
+	public OptionsPanel getOptions() {
+		return options;
+	}
+
+
+
+	public void setOptions(OptionsPanel options) {
+		this.options = options;
+	}
+
+
+
 	public HashMap<String, Node<String, Star>> getNodes() {
 		return mainW.getNodes();
 	}

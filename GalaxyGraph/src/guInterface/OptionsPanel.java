@@ -172,6 +172,12 @@ public class OptionsPanel extends JPanel implements ActionListener {
 	
 	
 
+	public JLabel getLabImage() {
+		return labImage;
+	}
+
+
+
 	public JTextField getTxtName() {
 		return txtName;
 	}
