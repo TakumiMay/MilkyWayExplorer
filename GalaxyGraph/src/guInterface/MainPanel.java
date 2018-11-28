@@ -12,15 +12,27 @@ import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MainPanel extends JPanel implements ActionListener{
 
-	public static final String GO_PAINT_GRAPH = "go";
+	public static final String LIST_GRAPH = "list";
+	
+	public static final String MATRIX_GRAPH = "matrix";
+
+	public static final String CREDITS = "credits";
 	
 	public static final ImageIcon FONDO_PANEL = new ImageIcon("imgs/galaxyWallpaper.jpg");
 	
-	private JButton btnGoPaintGraph;
+	public static final ImageIcon LOGO = new ImageIcon("imgs/logo.png");
+	
+	private JButton btnGraphList;
+	
+	private JButton btnGraphMatrix;
+	
+	private JButton btnCredits;
 	
 	private MainWindow mainW; 
 	
@@ -30,17 +42,59 @@ public class MainPanel extends JPanel implements ActionListener{
 		setPreferredSize(new Dimension(1000, 600));
 		GridBagConstraints constrains = new GridBagConstraints();
 		
-		btnGoPaintGraph = new JButton("Paint Galaxy Graph");
-		btnGoPaintGraph.addActionListener(this);
-		btnGoPaintGraph.setActionCommand(GO_PAINT_GRAPH);
-		btnGoPaintGraph.setPreferredSize(new Dimension(150, 30));
+		JLabel emptySpace = new JLabel(LOGO);
+		emptySpace.setPreferredSize(new Dimension(310, 110));
+		constrains.gridy = 0;
+		add(emptySpace, constrains);
+		
+		emptySpace = new JLabel("");
+		emptySpace.setPreferredSize(new Dimension(150, 30));
+		constrains.gridy = 1;
+		add(emptySpace, constrains);
+		
+		btnGraphList = new JButton("Grafo por Lista");
+		btnGraphList.addActionListener(this);
+		btnGraphList.setActionCommand(LIST_GRAPH);
+		btnGraphList.setPreferredSize(new Dimension(150, 30));
 		
 		constrains.gridx = 1;//position column
-		constrains.gridy = 0;//position row
+		constrains.gridy = 2;//position row
 		constrains.gridwidth = 3;//columns
 		constrains.gridheight = 1;//rows
 		
-		add(btnGoPaintGraph, constrains);		
+		add(btnGraphList, constrains);
+		emptySpace = new JLabel("");
+		emptySpace.setPreferredSize(new Dimension(150, 30));
+		constrains.gridy = 3;
+		add(emptySpace, constrains);
+		
+		btnGraphMatrix = new JButton("Grafo por Matriz");
+		btnGraphMatrix.addActionListener(this);
+		btnGraphMatrix.setActionCommand(MATRIX_GRAPH);
+		btnGraphMatrix.setPreferredSize(new Dimension(150, 30));
+		
+		constrains.gridx = 1;//position column
+		constrains.gridy = 4;//position row
+		constrains.gridwidth = 3;//columns
+		constrains.gridheight = 1;//rows
+		
+		add(btnGraphMatrix, constrains);
+		emptySpace = new JLabel("");
+		emptySpace.setPreferredSize(new Dimension(150, 30));
+		constrains.gridy = 5;
+		add(emptySpace, constrains);
+		
+		btnCredits = new JButton("Créditos");
+		btnCredits.addActionListener(this);
+		btnCredits.setActionCommand(CREDITS);
+		btnCredits.setPreferredSize(new Dimension(150, 30));
+		
+		constrains.gridx = 1;//position column
+		constrains.gridy = 6;//position row
+		constrains.gridwidth = 3;//columns
+		constrains.gridheight = 1;//rows
+		
+		add(btnCredits, constrains);
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -56,8 +110,12 @@ public class MainPanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
 		
-		if (command == GO_PAINT_GRAPH) {
-			mainW.startApp();
+		if (command.equals(LIST_GRAPH)) {
+			mainW.startApp(LIST_GRAPH);
+		} else if(command.equals(MATRIX_GRAPH)) {
+			mainW.startApp(MATRIX_GRAPH);
+		} else if(command.equals(CREDITS)){
+			JOptionPane.showMessageDialog(this, "Felipe Castillo - Daniel Guzmán - Mayumi Tamura", "Créditos", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 

@@ -15,12 +15,15 @@ public class ContainerPanel extends JPanel{
 	
 	private DijkstraWindow dw;
 	
+	private String graphRepresentation;
+	
 	private GraphPanel graph;
 	
 	private OptionsPanel options;
 	
-	public ContainerPanel(MainWindow main) {
+	public ContainerPanel(MainWindow main, String representation) {
 		mainW = main;
+		graphRepresentation = representation;
 		setLayout(new BorderLayout());
 		setSize(new Dimension(1000,600));
 		graph = new GraphPanel(this);
@@ -39,4 +42,7 @@ public class ContainerPanel extends JPanel{
 		dw.setVisible(true);
 	}
 	
+	public String getGraphRepre() {
+		return graphRepresentation;
+	}
 }

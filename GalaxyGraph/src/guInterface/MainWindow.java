@@ -41,9 +41,9 @@ public class MainWindow extends JFrame {
 		pack();
 	}
 	
-	public void startApp() {
-		graph = new ContainerPanel(this);
+	public void startApp(String GraphRepresentation) {
 		main.setVisible(false);
+		graph = new ContainerPanel(this, GraphRepresentation);
 		graph.setVisible(true);
 		add(graph);
 	}
