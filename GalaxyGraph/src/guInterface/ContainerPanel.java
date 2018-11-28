@@ -19,7 +19,7 @@ public class ContainerPanel extends JPanel{
 	
 	private GraphPanel graph;
 	
-	private OptionsPanel options;
+	private ContainerOptionsPanel options;
 	
 	public ContainerPanel(MainWindow main, String representation) {
 		mainW = main;
@@ -27,7 +27,7 @@ public class ContainerPanel extends JPanel{
 		setLayout(new BorderLayout());
 		setSize(new Dimension(1000,600));
 		graph = new GraphPanel(this);
-		options = new OptionsPanel(this);
+		options = new ContainerOptionsPanel(this);
 		dw = new DijkstraWindow(mainW);
 		dw.setVisible(false);
 		add(graph,BorderLayout.WEST);
