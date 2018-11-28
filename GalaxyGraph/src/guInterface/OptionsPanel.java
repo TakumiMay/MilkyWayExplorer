@@ -119,12 +119,12 @@ public class OptionsPanel extends JPanel implements ActionListener {
 		if (command.equals(DIJKSTRA)) {
 			container.getContainer().openDjWindow();
 		} else if (command.equals(FLOYD)) {
-			String floyd = "";
-			JOptionPane.showMessageDialog(this, floyd, "Floyd", JOptionPane.PLAIN_MESSAGE);
+			String floyd = container.getContainer().getMainW().getFloydMatrix();
+			JOptionPane.showMessageDialog(this, floyd, "Matriz resultante Floyd Warshall:", JOptionPane.PLAIN_MESSAGE);
 		} else if (command.equals(BACK)) {
 			container.getContainer().back();
 		} else if (command.equals(PRIM)) {
-			String prim = "La ruta Prim es: ";
+			String prim = "La ruta Prim es: "+container.getContainer().getMainW().getPrimPath();
 			JOptionPane.showMessageDialog(this, prim, "Prim", JOptionPane.PLAIN_MESSAGE);
 		} else if (command.equals(NEW_NODE)) {
 

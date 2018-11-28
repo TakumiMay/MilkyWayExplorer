@@ -6,5 +6,6 @@
 	<classpathentry kind="src" path="stars_images"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="C:/Users/Esteban/Documents/Labs Estru/ProyectoEstructuras/MilkyWayExplorer/lib/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mayth/git/MilkyWayExplorer/lib/jl1.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

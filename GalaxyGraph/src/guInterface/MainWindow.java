@@ -111,11 +111,11 @@ public class MainWindow extends JFrame {
 		int yNodeA =graph.getGraph().getY();
 		//add
 		
-		}while(true);
+		}while(true);	
 		
-		
-		
-		
+	}
+	public String getPrimPath() {
+		return app.getPrimRoute();
 	}
 	
 	/**
@@ -149,5 +149,10 @@ public class MainWindow extends JFrame {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public String getFloydMatrix() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

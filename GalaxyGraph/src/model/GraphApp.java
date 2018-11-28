@@ -41,6 +41,15 @@ public class GraphApp {
 		}
 	}
 	
+	public String getPrimRoute() {
+		prim();
+		return primRoute;
+	}
+
+	public void setPrimRoute(String primRoute) {
+		this.primRoute = primRoute;
+	}
+
 	public void setWorkingOnAL(boolean workingOnAL) {
 		this.workingOnAL = workingOnAL;
 	}
