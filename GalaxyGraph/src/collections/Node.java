@@ -17,6 +17,7 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 	private int d;
 	private int f;
 	private double distanceNode;
+	private Node<K, T> parent;
 	
 	public Node(T element, int position) {
 		this.element = element;
@@ -27,6 +28,7 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 		f = Integer.MAX_VALUE;
 		color = WHITE;
 		predecessor = null;
+		parent = null;
 	}
 	
 	
@@ -136,5 +138,20 @@ public class Node<K extends Comparable <K>,T> implements Comparable<Node<K,T>>{
 	public void setPredecessor(Node<K, T> predecessor) {
 		this.predecessor = predecessor;
 	}
+
+
+
+
+	public Node<K, T> getParent() {
+		return parent;
+	}
+
+
+
+
+	public void setParent(Node<K, T> parent) {
+		this.parent = parent;
+	}
+	
 	
 }

@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.Stack;
 
 import exceptions.NodeException;
 
@@ -248,9 +249,42 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			K k = adjacencyList.get(qe.peek().getAdjacentTo()).getKey();
 			if(distance < distances.get(k)){ //Las voy recorriendo y decido si cambiar la distancia
 				distances.put( qe.peek().getAdjacentTo(), distance);
+				
+				adjacencyList.get(qe.peek().getAdjacentTo()).setParent(n);//Para llegar al adyacente, paso por el nodo n
 			}
 			qn.add(adjacencyList.get(qe.poll().getAdjacentTo())); //Saco la arista y su nodo lo meto a la cola
 		}
+	}
+	/**
+	 * Show the path between two nodes, call this method after called dijkstra with one node
+	 * @param origin 
+	 * @param destiny
+	 * @return Stack with the route from origin to destiny
+	 */
+	public Node<K, T>[] dijkstra(K origin, K destiny){
+		Stack<Node<K, T>> route = new  Stack<>();
+		
+		Node<K, T> current = adjacencyList.get(destiny);
+		route.push(current);//add the node destiny  to the route
+		//Insert the route from the node destiny, to the origin
+		while (current.getParent() != null) {
+			route.push(current.getParent());
+			current = current.getParent();
+			
+			
+		}
+		route.push(adjacencyList.get(origin));//add the node origin  to the route
+		//At the end the stack is ordered from the origin node, to the destiny in a route
+		
+		//Put the route in the right order in an array
+		Node<K, T>[] path = new Node[route.size()];
+		for (int i = 0; i < path.length; i++) {
+			path[i] = route.pop();
+			
+		}
+		
+		return path;
+			
 	}
 	
 	public ArrayList<K> dijkstraPath(K destiny) throws NodeException {
@@ -268,7 +302,7 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 		boolean stop = false;
 		while(!(distancesNodes.isEmpty()) && !stop) {
 			Node aux = distancesNodes.poll();
-			System.out.println(aux.getKey()+" "+distances.get(aux.getKey()));
+//			System.out.println(aux.getKey()+" "+distances.get(aux.getKey()));
 			if(aux.getKey() != destiny) {
 //				System.out.println(aux.getKey());
 				path.add((K) aux.getKey());

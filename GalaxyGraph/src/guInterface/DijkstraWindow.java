@@ -7,9 +7,13 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Stack;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import collections.Node;
 import exceptions.NodeException;
 import model.Star;
 
@@ -21,47 +25,90 @@ public class DijkstraWindow extends JFrame implements ActionListener{
 		sizeNode = 0;
 		gui = main;
 		
+		exeDijkstra();
+		
 		setTitle("Dijkstra");
 		setVisible(true);
 		setPreferredSize(new Dimension(1000, 600));
 		setResizable(false);
 //		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+
+		
 		pack();
+		
 	}
 	
 	@Override
 	public void paint(Graphics g) {
+		System.out.println("paint");
 		
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, 1000, 600);
-		gui.getGraphAL().dijkstra("Sol");
-		try {
-			ArrayList<String> alDijsktra = gui.getGraphAL().dijkstraPath("Luhman 16B");
-//			System.out.println(alDijsktra.size());
-			
-			int posXStart = gui.getNodes().get(alDijsktra.get(0)).getElement().getPosX();
-			int posYStart = gui.getNodes().get(alDijsktra.get(0)).getElement().getPosY();
-			g.setColor(colors(gui.getNodes().get(alDijsktra.get(0)).getElement().getColor()));
+		
+		Node<String, Star>[] path = gui.getGraphAL().dijkstra("Sol", "YZ Ceti");
+		for (int i = 0; i < path.length-1; i++) {
+			int posXStart = path[i].getElement().getPosX();
+			int posYStart = path[i].getElement().getPosY();
+			g.setColor(colors(path[i].getElement().getColor()));
 			g.fillOval(posXStart, posYStart, sizeNode, sizeNode);
-			g.drawString(alDijsktra.get(0), posXStart, posYStart);
-			for (int i = 1; i < alDijsktra.size()-1; i++) {
-				int posXEnd = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosX();
-				int posYEnd = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosY();
-				g.setColor(colors(gui.getNodes().get(alDijsktra.get(i)).getElement().getColor()));
-				g.fillOval(posXEnd, posYEnd, sizeNode, sizeNode);
-				g.drawLine(posXStart, posYStart, posXEnd, posYEnd);
-				g.drawString(alDijsktra.get(i), posXEnd, posYEnd);
-				i++;
-				posXStart = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosX();
-				posYStart = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosY();
-				g.setColor(colors(gui.getNodes().get(alDijsktra.get(i)).getElement().getColor()));
-				g.fillOval(posXStart, posYStart, sizeNode, sizeNode);
-				g.drawString(alDijsktra.get(i), posXStart, posYStart);
-				
-			}
-		} catch (NodeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			g.drawString(path[i].getElement().getName(), posXStart, posYStart);
+			int posXEnd = path[i+1].getElement().getPosX();
+			int posYEnd = path[i+1].getElement().getPosY();
+			g.setColor(colors(path[i+1].getElement().getColor()));
+			g.fillOval(posXEnd, posYEnd, sizeNode, sizeNode);
+			g.drawString(path[i+1].getElement().getName(), posXEnd, posYEnd);
+			g.setColor(Color.BLACK);
+			g.drawLine(posXStart, posYStart, posXEnd, posYEnd);
+		}
+		
+//		try {
+//			ArrayList<String> alDijsktra = gui.getGraphAL().dijkstraPath("Luhman 16B");
+//			System.out.println(alDijsktra.size());
+//			
+////			int posXStart = gui.getNodes().get(alDijsktra.get(0)).getElement().getPosX();
+////			int posYStart = gui.getNodes().get(alDijsktra.get(0)).getElement().getPosY();
+////			g.setColor(colors(gui.getNodes().get(alDijsktra.get(0)).getElement().getColor()));
+////			g.fillOval(posXStart, posYStart, sizeNode, sizeNode);
+////			g.drawString(alDijsktra.get(0), posXStart, posYStart);
+//			for (int i = 0; i < alDijsktra.size()-1; i++) {
+//				int posXStart = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosX();
+//				int posYStart = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosY();
+//				g.setColor(colors(gui.getNodes().get(alDijsktra.get(i)).getElement().getColor()));
+//				g.fillOval(posXStart, posYStart, sizeNode, sizeNode);
+//				g.drawString(alDijsktra.get(i), posXStart, posYStart);
+//				int posXEnd = gui.getNodes().get(alDijsktra.get(i+1)).getElement().getPosX();
+//				int posYEnd = gui.getNodes().get(alDijsktra.get(i+1)).getElement().getPosY();
+//				g.setColor(colors(gui.getNodes().get(alDijsktra.get(i+1)).getElement().getColor()));
+//				g.fillOval(posXEnd, posYEnd, sizeNode, sizeNode);
+//				g.drawString(alDijsktra.get(i+1), posXEnd, posYEnd);
+//				g.setColor(Color.BLACK);
+//				g.drawLine(posXStart, posYStart, posXEnd, posYEnd);
+//				
+////				i++;
+////				posXStart = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosX();
+////				posYStart = gui.getNodes().get(alDijsktra.get(i)).getElement().getPosY();
+////				g.setColor(colors(gui.getNodes().get(alDijsktra.get(i)).getElement().getColor()));
+////				g.fillOval(posXStart, posYStart, sizeNode, sizeNode);
+////				g.drawString(alDijsktra.get(i), posXStart, posYStart);
+//				
+//			}
+//		} catch (NodeException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+	}
+	public void exeDijkstra() {
+		
+		gui.getGraphAL().dijkstra("Sol");
+//		System.out.println("Cantidad de nodos"+gui.getGraphAL().getAdjacencyList().size());
+//		for (Node<String, Star> distancia : gui.getGraphAL().getAdjacencyList().values()) {
+//			System.out.println(distancia.getKey()+" "+gui.getGraphAL().getDistances().get(distancia.getKey()));
+//		}
+		Node<String, Star>[] path = gui.getGraphAL().dijkstra("Sol", "Sirio A");
+		for (int i = 0; i < path.length; i++) {
+			System.out.println(path[i].getKey());
 		}
 		
 	}
