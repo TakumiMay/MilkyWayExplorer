@@ -260,7 +260,7 @@ public class GraphApp {
 		images.put("Tau Ceti", "stars_images/Tau Ceti.jpg");
 		images.put("WISE 0855-0714", "stars_images/WISE 0855-0714.jpg");
 		images.put("Wolf 359", "stars_images/Wolf 359.jpg");
-		images.put("YZ Ceti", "stars_images/YT Ceti.jpg");	
+		images.put("YZ Ceti", "stars_images/YZ Ceti.jpg");	
 		
 	}
 	

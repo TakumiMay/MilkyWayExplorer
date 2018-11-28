@@ -21,7 +21,8 @@ public class ContainerOptionsPanel extends JPanel{
 		container = containerPanel;
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(200, 600));
-		labImage = new JLabel(new ImageIcon("star_images/predeterminated.png"));
+		ImageIcon ima = new ImageIcon("stars_images/predeterminated.png");
+		labImage = new JLabel(ima);
 		labImage.setPreferredSize(new Dimension(200, 200));
 		info = new InfoPanel(this);
 		options = new OptionsPanel(this);
