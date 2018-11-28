@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
 	
 	private GraphApp app;
 	
-	public MainWindow() {	
+	public MainWindow() {
 		setTitle("Milky Way Explorer");
 		setSize(new Dimension(1000, 600));
 		setResizable(false);
@@ -48,6 +48,10 @@ public class MainWindow extends JFrame {
 		add(graph);
 	}
 	
+	public void setMainPanelVisible() {
+		main.setVisible(true);	
+	}
+	
 	/**
 	 * Search the Star clicked by the user and takes its information
 	 * @param x
@@ -58,6 +62,14 @@ public class MainWindow extends JFrame {
 		if(s!=null) {
 			
 		}
+	}
+	
+	public HashMap<String, Node<String, Star>> getNodes(){
+		return app.getAl().getAdjacencyList();
+	}
+	
+	public GraphAL<String, Star> getGraphAL(){
+		return app.getAl();
 	}
 	
 	public static void main(String[] args) {
@@ -75,12 +87,4 @@ public class MainWindow extends JFrame {
 		}
 		
 	}
-	
-	public HashMap<String, Node<String, Star>> getNodes(){
-		return app.getAl().getAdjacencyList();
-	}
-	public GraphAL<String, Star> getGraphAL(){
-		return app.getAl();
-	}
-	
 }

@@ -45,4 +45,9 @@ public class ContainerPanel extends JPanel{
 	public String getGraphRepre() {
 		return graphRepresentation;
 	}
+
+	public void back() {
+		this.setVisible(false);
+		mainW.setMainPanelVisible();
+	}
 }
