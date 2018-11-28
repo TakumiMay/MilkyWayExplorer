@@ -35,7 +35,7 @@ public class OptionsPanel extends JPanel implements ActionListener {
 		setLayout(new GridBagLayout());
 		GridBagConstraints constrains = new GridBagConstraints();
 		setPreferredSize(new Dimension(200, 600));
-
+		
 		if (mainP.getGraphRepre().equals(MainPanel.LIST_GRAPH)) {
 			btnNewNode = new JButton("Add node");
 			btnNewNode.addActionListener(this);
