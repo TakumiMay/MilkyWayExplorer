@@ -118,7 +118,8 @@ public class GraphPanel extends JPanel implements MouseListener{
 			mainPanel.getMainW().addStar(e.getX(), e.getY());
 		}
 		
-		System.out.println(mainPanel.getMainW().getNodes().get("Hola").getKey());
+
+		
 		
 	}
 	@Override
