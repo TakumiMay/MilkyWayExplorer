@@ -246,18 +246,18 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 		
 		
 		int i = source.getPosition();
-		System.out.print("Encolo aristas de: "+source.getKey() +" ");
+//		System.out.print("Encolo aristas de: "+source.getKey() +" ");
 
 		for (int j = 0; j < matrixA.length; j++) {
 			
 			if ((matrixA[i][j].getWeight() != MAX_WEIGHT) && (matrixA[i][j].getWeight() != 0) && (matrixA[i][j]!= null)) {	
 				
-				System.out.print(matrixA[i][j].getWeight()+" ");
+//				System.out.print(matrixA[i][j].getWeight()+" ");
 				pq.add(matrixA[i][j]);	
 			}
 			
 		}
-		System.out.println();
+//		System.out.println();
 		return pq;
 	}
 	
@@ -390,11 +390,11 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 			queueEdges.poll();
 			while(!queueNode.isEmpty()) {
 				Node<K, T> nodeVisited = queueNode.poll();
-				System.out.print("Distancias: ");
+//				System.out.print("Distancias: ");
 				for(double a: distances.values()) {
-					System.out.print(a+" ");
+//					System.out.print(a+" ");
 				}
-				System.out.println();
+//				System.out.println();
 				if(!visited.get(nodeVisited.getKey())){
 					visited.put(nodeVisited.getKey(), true);
 					
@@ -416,7 +416,7 @@ public class GraphAM <K extends Comparable <K>,T> implements IGraph<K,T>{
 //			K k = nodes.get(qe.peek().getAdjacentTo()).getKey();
 			K k = qe.peek().getAdjacentTo();	
 //			System.out.println(k+" "+distances.get(k));
-			System.out.println(k+" "+qe.peek().getWeight());
+//			System.out.println(k+" "+qe.peek().getWeight());
 			if(distance < distances.get(k)){
 //				distances.put( ((Edge<K, T>) qe.peek()).getWeight(), distance);
 				distances.put( qe.peek().getAdjacentTo(), distance);

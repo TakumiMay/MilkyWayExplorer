@@ -26,7 +26,7 @@ public class DijkstraPaintPanel extends JPanel implements ActionListener{
 
 	@Override
 	public void paint(Graphics g) {
-		System.out.println("paint");
+//		System.out.println("paint");
 		
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, 1000, 600);
@@ -93,7 +93,7 @@ public class DijkstraPaintPanel extends JPanel implements ActionListener{
 //		}
 		Node<String, Star>[] path = window.getGui().getGraphAL().dijkstra("Sol", "Sirio A");
 		for (int i = 0; i < path.length; i++) {
-			System.out.println(path[i].getKey());
+//			System.out.println(path[i].getKey());
 		}
 		
 	}

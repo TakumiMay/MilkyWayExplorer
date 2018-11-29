@@ -174,25 +174,22 @@ public class GraphAL <K extends Comparable <K>,T> implements IGraph<K,T>{
 			u.setColor(Node.BLACK); //se pinta de negro a u porque todos sus adyacentes fueron descubiertos
 		}
 	}
-	//System.out.println(s.getKey()+"-"+s.getD());
-	//print s
+	
 	// PARA PINTAR EL ARBOL BF:
 	public void printPath(Node<K, T> s, Node<K, T> v, String path) {	
 		
 		if(v == s) {
 			path+=s.getKey()+"-"+s.getD();
-			System.out.println(v.getKey()+"-"+v.getD());
+//			System.out.println(v.getKey()+"-"+v.getD());
 		} 
 		else if(v.getPredecessor() == null) {
-			//print "no path from s to v exists"
 			path="No hay camino entre "+ s.getKey() +" y "+v.getKey();
 			
 		}
 		else {
 			printPath(s, v.getPredecessor(), path);
 			path+=s.getKey()+"-"+s.getD();
-			System.out.println(v.getKey()+"-"+v.getD());
-			//print v
+//			System.out.println(v.getKey()+"-"+v.getD());
 		}
 		//return path;
 	}
