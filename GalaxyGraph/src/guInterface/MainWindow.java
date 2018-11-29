@@ -20,11 +20,19 @@ import javazoom.jl.player.Player;
 
 public class MainWindow extends JFrame {
 
+	public static final String MATRIX = "matrix";
+	
+	public static final String LIST = "list";
+	
 	private MainPanel main;
 	
 	private ContainerPanel graph;
 	
 	private GraphApp app;
+	
+	private DijkstraWindow dijkstraW;
+	
+	private String repre;
 	
 	static boolean adding =false;
 	
@@ -35,7 +43,7 @@ public class MainWindow extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage((new ImageIcon("imgs/star_icon.png")).getImage());
 //		setLocationRelativeTo(this);
-		
+		repre = "";
 		main = new MainPanel(this);
 		app = new GraphApp();
 		
@@ -44,12 +52,13 @@ public class MainWindow extends JFrame {
 	}
 	
 	public void startApp(String GraphRepresentation) {
-		
 		if(GraphRepresentation.equals(MainPanel.LIST_GRAPH)) {
 			changeRepresentation(true);
+			this.repre = LIST;
 		}
 		else {
 			changeRepresentation(false);
+			this.repre = MATRIX;
 		}
 		main.setVisible(false);
 		graph = new ContainerPanel(this, GraphRepresentation);
@@ -57,6 +66,14 @@ public class MainWindow extends JFrame {
 		add(graph);
 	}
 	
+	public String getRepre() {
+		return repre;
+	}
+
+	public void setRepre(String repre) {
+		this.repre = repre;
+	}
+
 	public void setMainPanelVisible() {
 		main.setVisible(true);	
 	}
@@ -213,11 +230,16 @@ public class MainWindow extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	public String getFloydMatrix() {
-		// TODO Auto-generated method stub
-		return null;
+		String matrix = app.getFloydMatrix();
+		return matrix;
+	}
+
+	public void dijkstra(String from, String to) {
+		app.dijkstra(from, to, repre);
+		dijkstraW = new DijkstraWindow(this);
+		dijkstraW.setVisible(true);
 	}
 }

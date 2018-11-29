@@ -8,6 +8,7 @@ import java.util.Iterator;
 import collections.GraphAL;
 import collections.GraphAM;
 import collections.Node;
+import guInterface.MainWindow;
 
 public class GraphApp {
 	
@@ -50,6 +51,26 @@ public class GraphApp {
 		this.primRoute = primRoute;
 	}
 
+	public void dijkstra(String origin, String destiny, String repre) {
+		if(repre.equals(MainWindow.LIST)) {
+			al.dijkstra(origin, destiny);
+		} else if(repre.equals(MainWindow.MATRIX)) {
+			am.dijkstra(al.getAdjacencyList().get("Sol"));
+		}
+	}
+	
+	public String getFloydMatrix() {
+		double[][] matrix = am.floydWarshall();
+		String floydMatrix = "";
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length-1; j++) {
+				floydMatrix += matrix[i][j]+" - ";
+			}
+			floydMatrix += matrix[i][matrix.length-1]+"\n";
+		}
+		return floydMatrix;
+	}
+	
 	public void setWorkingOnAL(boolean workingOnAL) {
 		this.workingOnAL = workingOnAL;
 	}
@@ -63,7 +84,6 @@ public class GraphApp {
 	}
 
 	public Star searchStarbyPos(int x, int y) {
-
 		if(workingOnAL) {
 			Collection<Node<String, Star>> hash = al.getAdjacencyList().values();
 			for (Iterator<Node<String, Star>> iterator = hash.iterator(); iterator.hasNext();) {
@@ -71,11 +91,8 @@ public class GraphApp {
 				if(node.getElement().getArea().contains(x, y)) {
 					return node.getElement();
 				}
-				
-				
 			}
 			return null;
-			
 		}
 		else {
 			Collection<Node<String, Star>> hash = am.getNodes().values();

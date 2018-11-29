@@ -30,7 +30,7 @@ public class ContainerPanel extends JPanel{
 		options = new ContainerOptionsPanel(this);
 		dw = new DijkstraWindow(mainW);
 		dw.setVisible(false);
-		add(graph,BorderLayout.WEST);
+		add(graph,BorderLayout.CENTER);
 		add(options,BorderLayout.EAST);
 	}
 

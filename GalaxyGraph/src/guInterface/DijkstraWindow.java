@@ -35,7 +35,7 @@ public class DijkstraWindow extends JFrame {
 	}
 
 	public void dijkstra(String from, String to) {
-		// TODO Auto-generated method stub
-		
+		gui.dijkstra(from, to);
+		this.setVisible(false);
 	}
 }
