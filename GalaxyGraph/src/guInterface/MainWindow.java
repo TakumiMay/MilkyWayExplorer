@@ -119,7 +119,7 @@ public class MainWindow extends JFrame {
 		else if(color.equalsIgnoreCase("Rojo") || color.equalsIgnoreCase("Roja")) {
 			c = Star.RED;
 		}
-		else if(color.equalsIgnoreCase("Amarillo")||color.equalsIgnoreCase("Amarillo")){
+		else if(color.equalsIgnoreCase("Amarillo")||color.equalsIgnoreCase("Amarilla")){
 			c = Star.YELLOW;
 		}
 		else if (color.equalsIgnoreCase("Blanca") || color.equalsIgnoreCase("Blanco")){
@@ -130,7 +130,7 @@ public class MainWindow extends JFrame {
 		}
 		int planets;
 		try {
-			planets = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de planetasque orbitan la estrella"));
+			planets = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de planetas que orbitan la estrella"));
 			
 		}
 		catch(Exception e) {
@@ -169,6 +169,7 @@ public class MainWindow extends JFrame {
 		}while(go);
 		
 		adding = false;
+		graph.getGraph().repaint();
 		
 		
 	}
@@ -185,7 +186,7 @@ public class MainWindow extends JFrame {
 	}
 	
 	public HashMap<String, Node<String, Star>> getNodes(){
-		return app.getAl().getAdjacencyList();
+		return app.getNodes();//getAl().getAdjacencyList();
 	}
 	
 	public GraphAL<String, Star> getGraphAL(){
