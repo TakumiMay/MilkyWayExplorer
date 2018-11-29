@@ -127,6 +127,8 @@ public class OptionsPanel extends JPanel implements ActionListener {
 			String prim = "La ruta Prim es: "+container.getContainer().getMainW().getPrimPath();
 			JOptionPane.showMessageDialog(this, prim, "Prim", JOptionPane.PLAIN_MESSAGE);
 		} else if (command.equals(NEW_NODE)) {
+			JOptionPane.showMessageDialog(this, "Seleccione el lugar donde desea agregar una estrella");
+			MainWindow.adding = true;
 
 		}
 	}

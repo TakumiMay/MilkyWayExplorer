@@ -114,6 +114,9 @@ public class GraphPanel extends JPanel implements MouseListener{
 		this.x = e.getX();
 		this.y = e.getY();
 		mainPanel.getMainW().putStarInfoOnVisualizer(e.getX(), e.getY());
+		if(MainWindow.adding) {
+			mainPanel.getMainW().addStar(e.getX(), e.getY());
+		}
 		
 	}
 	@Override

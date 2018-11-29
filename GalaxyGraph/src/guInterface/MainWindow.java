@@ -26,6 +26,8 @@ public class MainWindow extends JFrame {
 	
 	private GraphApp app;
 	
+	static boolean adding =false;
+	
 	public MainWindow() {
 		setTitle("Milky Way Explorer");
 		setSize(new Dimension(1000, 600));
@@ -94,24 +96,80 @@ public class MainWindow extends JFrame {
 		}
 	}
 	
-	public void addStar() {
-		JOptionPane.showConfirmDialog(this, "Seleccione una posición para la estrella con el puntero");
-		while(app.searchStarbyPos(graph.getGraph().getX(), graph.getGraph().getY())== null) {
-			JOptionPane.showConfirmDialog(this, "Seleccione una posición vacía, donde no haya ninguna otra estrella");	
-		}
-		int xNode = graph.getGraph().getX();
-		int yNode= graph.getGraph().getY();
+	public void addStar(int x, int y) {
 		
+		if(app.searchStarbyPos(x, y)!=null){
+			JOptionPane.showConfirmDialog(this, "Ya hay una estrella en ese lugar. Presione add new node de nuevo");
+			adding = false;
+			return;
+			
+		}
+	
+		String name = JOptionPane.showInputDialog("Ingrese el nombre de la estrella");
+		String age = JOptionPane.showInputDialog("Ingrese la edad de la estrella");
+		String mass = JOptionPane.showInputDialog("Ingrese la masa de la estrella");
+		String color = JOptionPane.showInputDialog("Ingrese el color de la estrella");
+		char c;
+		if(color.equalsIgnoreCase("Azul")) {
+			c = Star.BLUE;
+		}
+		else if(color.equalsIgnoreCase("Cafe") || color.equalsIgnoreCase("Marron")){
+			c = Star.BROWN;
+		}
+		else if(color.equalsIgnoreCase("Rojo") || color.equalsIgnoreCase("Roja")) {
+			c = Star.RED;
+		}
+		else if(color.equalsIgnoreCase("Amarillo")||color.equalsIgnoreCase("Amarillo")){
+			c = Star.YELLOW;
+		}
+		else if (color.equalsIgnoreCase("Blanca") || color.equalsIgnoreCase("Blanco")){
+			c = Star.WHITE;
+		}
+		else {
+			c = Star.YELLOW;
+		}
+		int planets;
+		try {
+			planets = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de planetasque orbitan la estrella"));
+			
+		}
+		catch(Exception e) {
+			JOptionPane.showConfirmDialog(this, "Formato inválido");
+			adding = false;
+			return;
+		}
+		
+		
+		app.addStar(name, age, mass, c, planets);
+		Star s= app.getNodes().get(name).getElement();
+		s.setPos(x, y);
+		boolean go = false;
 		do {
-		JOptionPane.showConfirmDialog(this, "Seleccione una estrella cercana para hacer un camino");
-		while(app.searchStarbyPos(graph.getGraph().getX(), graph.getGraph().getY())!= null) {
-			JOptionPane.showConfirmDialog(this, "No puede seleccionar un lugar vacío, intente de nuevo");	
-		}
-		int xNodeA = graph.getGraph().getX();
-		int yNodeA =graph.getGraph().getY();
-		//add
+			try {
+				String key = JOptionPane.showInputDialog(this, "Escriba el nombre de la estrella a la cual se hará un camino");
+				double peso = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la distancia entre las estrellas"));
+				app.addPath(name, key, peso);
+			}
+			catch(Exception e) {
+				JOptionPane.showConfirmDialog(this, "Formato inválido, intente de nuevo");
+				adding = false;
+				return;
+			}
+			
+			String op = JOptionPane.showInputDialog(this, "¿Desea agregar otra estre adyacente? Si/No");
+			if(op.equalsIgnoreCase("sí") ||op.equalsIgnoreCase("si") ) {
+				go =true;
+			}
+			else {
+				go = false;
+			}
 		
-		}while(true);	
+		
+		
+		}while(go);
+		
+		adding = false;
+		
 		
 	}
 	public String getPrimPath() {

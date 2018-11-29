@@ -89,6 +89,15 @@ public class GraphApp {
 		}	
 	}
 	
+	public HashMap<String,Node<String,Star>> getNodes(){
+		if(workingOnAL) {
+			return al.getAdjacencyList();
+		}
+		else {
+			return am.getNodes();
+		}
+	}
+	
 	public HashMap<String, String> getPositions() {
 		return images;
 	}
