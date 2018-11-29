@@ -170,11 +170,11 @@ public class MainWindow extends JFrame {
 		
 		adding = false;
 		graph.getGraph().repaint();
-		System.out.println(getNodes().get(name).getElement().getName());
-		System.out.println(getNodes().get(name).getElement().getColor());
-		System.out.println(getNodes().get(name).getElement().getAge());
-		System.out.println(getNodes().get(name).getElement().getPosX());
-		System.out.println(getNodes().get(name).getElement().getPosY());
+//		System.out.println(getNodes().get(name).getElement().getName());
+//		System.out.println(getNodes().get(name).getElement().getColor());
+//		System.out.println(getNodes().get(name).getElement().getAge());
+//		System.out.println(getNodes().get(name).getElement().getPosX());
+//		System.out.println(getNodes().get(name).getElement().getPosY());
 		
 		
 		
